@@ -107,12 +107,13 @@ print(
     "************************************Producto********************************************"
 )
 
-# Insert producto
+# Insert producto --> Alex
 nombreprod = "n"
 descripcion = "d"
 fabricantes = ["LG", "Samsung", "Philips", "Appel", "MSI", "Razer", "Xiaomi"]
 stock = ["S", "N"]
 
+# Array para fk
 arrayIdProducto = []
 
 for i in range(0, 30):
@@ -166,6 +167,8 @@ for i in range(0, 30):
                 + abecedario_numerico[random.randint(0, 8)]
         )
 
+    # Comparacion para asegurar que el id producto != a la numercion del array
+
     if idprodcuto == arrayIdProducto:
         print(
             f"insert into producto values{idprodcuto, usuariorandom, redondeado, fabricantess, stock[random.randint(0, 1)], descripcion, fkIdCategoria[random.randint(0, 9)]};"
@@ -182,7 +185,7 @@ print(
     "************************************Agencia paquete********************************************"
 )
 
-# Insert Agencia de Paqueteria
+# Insert Agencia de Paqueteria --> Alex
 
 nombreAgencia = [
     "Fedex",
@@ -196,6 +199,8 @@ nombreAgencia = [
     "Amazon",
     "Najesa",
 ]
+
+# Array para fk
 
 arrayCIF = []
 
@@ -214,7 +219,7 @@ print(
     "************************************Pedidos********************************************"
 )
 
-# Insert Pedidos
+# Insert Pedidos --> Alex
 
 metodoPago = [
     "En efectivo",
@@ -225,6 +230,8 @@ metodoPago = [
     "Transferencia bancaria",
 ]
 estado = ["Preparacion", "Enviado", "Entregado"]
+
+# Array para fk
 
 arrayPedido = []
 
@@ -249,7 +256,7 @@ print(
     "************************************Cliente********************************************"
 )
 
-# Insert cliente
+# Insert cliente --> Alex
 
 usuario = "u"
 direccion = "d"
@@ -315,14 +322,31 @@ print(
     "*****************************************Compra**********************************"
 )
 
-# Insert compra
+# Insert compra --> Alberto
 
 """
 Los inserts de a tabla compra se componen unicamente de las foreing keys de las tablas, producto, cliente
 y pedido
 """
 
+cif_compra = []
+id_pedido_compra = []
+
+for i in range(0, 50):
+    id_producto_compra = random.randint(1000, 9999)
+    id_cliente_compra = random.randint(1000, 9999)
+    cif_compra = arrayCIF[random.randint(0, 9)]
+    id_pedido = random.randint(1000, 9999)
+
+    if id_pedido == id_pedido_compra:
+        id_pedido = random.randint(1000, 9999)
+
+
 # Tabla empleado
+
+print(
+    "***************************************Empleado**********************************"
+)
 
 nombre_emp = "nom"
 
@@ -336,6 +360,29 @@ for i in range(0, 20):
 
     print(f"insert into empleado values {id_empleado, salario, nombre_emp, fecha_incorporacion}")
 
+# Tabla supervisa
+
+print(
+    "*****************************************supervisa**********************************"
+)
+
+for i in range(0, 5):
+    id_empleado_supervisa = random.randint(1111, 9999)
+    id_empleado_supervisado = random.randint(1111, 9999)
+
+    print(f"insert into supervisa values {id_empleado_supervisa, id_empleado_supervisado}")
 
 
-#Tabla supervisa
+print(
+    "****************************************gestion**********************************"
+)
+
+
+#Tabla gestion
+
+for i in range(0, 20):
+    id_empleado_gestiona = random.randint(1000, 9999)
+    cif_gestion = arrayCIF[random.randint(0, 9)]
+    id_pedido = random.randint(3500, 9000)
+
+    print(f"insert into values {id_empleado_gestiona, cif_gestion, id_pedido}")

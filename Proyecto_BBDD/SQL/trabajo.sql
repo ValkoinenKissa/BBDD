@@ -76,8 +76,8 @@ create table compra(
     id_producto numeric(4),
 
     id_cliente numeric(4),
-
-    CIF numeric(7),
+    
+    CIF varchar(9),
 
     id_pedido numeric(4),
 
