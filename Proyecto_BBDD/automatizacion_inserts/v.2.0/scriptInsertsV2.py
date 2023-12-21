@@ -328,27 +328,37 @@ print(
 Los inserts de a tabla compra se componen unicamente de las foreing keys de las tablas, producto, cliente
 y pedido
 """
-
-cif_compra = []
-id_pedido_compra = []
+array_id_producto_compra = []
+array_id_cliente_compra = []
+array_cif_compra = []
+array_id_pedido_compra = []
 
 for i in range(0, 50):
     id_producto_compra = random.randint(1000, 9999)
     id_cliente_compra = random.randint(1000, 9999)
     cif_compra = arrayCIF[random.randint(0, 9)]
-    id_pedido = random.randint(1000, 9999)
+    id_pedido_compra = random.randint(1000, 9999)
 
-    if id_pedido == id_pedido_compra:
-        id_pedido = random.randint(1000, 9999)
+    if (id_producto_compra == arrayIdProducto or id_cliente_compra == arrayCliente or arrayCIF == cif_compra or
+            id_pedido_compra == arrayPedido):
+        id_producto_compra = random.randint(1000, 9999)
+        print(f"insert into compra values{id_pedido_compra, id_cliente_compra,cif_compra, id_pedido_compra};")
+
+    else:
+        print(f"insert into compra values{id_pedido_compra, id_cliente_compra,cif_compra, id_pedido_compra};")
+    array_id_producto_compra.append(id_producto_compra)
+    array_id_cliente_compra.append(id_cliente_compra)
+    array_cif_compra.append(cif_compra)
+    array_id_pedido_compra.append(id_pedido_compra)
 
 
-# Tabla empleado
+# Tabla empleado --> Alberto
 
 print(
     "***************************************Empleado**********************************"
 )
-
 nombre_emp = "nom"
+array_id_empleado = []
 
 for i in range(0, 20):
     anno = str(random.randint(2000, 2023))
@@ -358,31 +368,50 @@ for i in range(0, 20):
     salario = random.randint(1050, 4500)
     id_empleado = random.randint(1000, 9999)
 
-    print(f"insert into empleado values {id_empleado, salario, nombre_emp, fecha_incorporacion}")
+    print(f"insert into empleado values {id_empleado, salario, nombre_emp, fecha_incorporacion};")
 
-# Tabla supervisa
+    array_id_empleado.append(id_empleado)
+
+# Tabla supervisa --> Alberto
 
 print(
     "*****************************************supervisa**********************************"
 )
-
+array_id_empleado_supervisa = []
+array_id_empleado_supervisado = []
 for i in range(0, 5):
     id_empleado_supervisa = random.randint(1111, 9999)
     id_empleado_supervisado = random.randint(1111, 9999)
 
-    print(f"insert into supervisa values {id_empleado_supervisa, id_empleado_supervisado}")
-
+    if id_empleado_supervisa == array_id_empleado or id_empleado_supervisado == array_id_empleado:
+        id_empleado_supervisa = random.randint(1111, 9999)
+        id_empleado_supervisado = random.randint(1111, 9999)
+        print(f"insert into supervisa values ({id_empleado_supervisa}, {id_empleado_supervisado};)")
+    else:
+        print(f"insert into supervisa values ({id_empleado_supervisa}, {id_empleado_supervisado};)")
+    array_id_empleado_supervisa.append(id_empleado_supervisa)
+    array_id_empleado_supervisado.append(id_empleado_supervisado)
 
 print(
     "****************************************gestion**********************************"
 )
 
 
-#Tabla gestion
-
+# Tabla gestion --> Alberto
+array_id_empleado_gestiona = []
+array_cif_gestion = []
+array_id_pedido = []
 for i in range(0, 20):
     id_empleado_gestiona = random.randint(1000, 9999)
     cif_gestion = arrayCIF[random.randint(0, 9)]
     id_pedido = random.randint(3500, 9000)
 
-    print(f"insert into values {id_empleado_gestiona, cif_gestion, id_pedido}")
+    if id_empleado_gestiona == array_id_empleado or cif_gestion == arrayCIF or array_id_pedido == arrayPedido:
+        print(f"insert into gestion values {id_empleado_gestiona, cif_gestion, id_pedido};")
+
+    else:
+        print(f"insert into gestion values {id_empleado_gestiona, cif_gestion, id_pedido};")
+
+    array_id_empleado_gestiona.append(id_empleado_gestiona)
+    array_cif_gestion.append(cif_gestion)
+    array_id_pedido.append(id_pedido)
