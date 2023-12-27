@@ -116,7 +116,7 @@ stock = ["S", "N"]
 # Array para fk
 arrayIdProducto = []
 
-for i in range(0, 30):
+for i in range(0, 40):
     idprodcuto = random.randint(1000, 9999)
     precio = random.uniform(0, 9999)
     redondeado = round(precio, 2)
@@ -167,7 +167,7 @@ for i in range(0, 30):
                 + abecedario_numerico[random.randint(0, 8)]
         )
 
-    # Comparacion para asegurar que el id producto != a la numercion del array
+    # Comparacion para asegurar que el id producto != a la numeracion del array
 
     if idprodcuto == arrayIdProducto:
         print(
@@ -198,13 +198,44 @@ nombreAgencia = [
     "MRV",
     "Amazon",
     "Najesa",
+    "TNT Express",
+    "USPS United States Postal Service",
+    "Royal Mail",
+    "Canada Post",
+    "Correios Brazil",
+    "Japan Post",
+    "Australia Post",
+    "Singapore Post",
+    "Deutsche Post DHL Group",
+    "La Poste France",
+    "Correo Argentino",
+    "Correos de México",
+    "India Post",
+    "China Post"
+    "Korea Post",
+    "Russian Post",
+    "Swiss Post",
+    "Poste Italiane",
+    "PostNord",
+    "An Post Ireland",
+    "PostNL",
+    "SingPost Singapore",
+    "Pos Malaysia",
+    "South African Post Office",
+    "Emirates Post",
+    "Saudi Post",
+    "New Zealand Post",
+    "Swedish Post",
+    "Norwegian post",
+    "Fin post",
+    "Denmark postal service",
 ]
 
 # Array para fk
 
 arrayCIF = []
 
-for i in range(0, 10):
+for i in range(0, 40):
     cif = str(random.randint(10000000, 99999999))
     cifrandom = abecedario_max[random.randint(0, 25)] + cif
     if cifrandom == arrayCIF:
@@ -234,6 +265,7 @@ estado = ["Preparacion", "Enviado", "Entregado"]
 # Array para fk
 
 arrayPedido = []
+array_cif_pedido = []
 
 for i in range(0, 40):
     idPedido = random.randint(1000, 9999)
@@ -251,6 +283,7 @@ for i in range(0, 40):
             f"insert into pedido values{arrayCIF[random.randint(0, 9)], idPedido, metodoPago[random.randint(0, 5)], fecha, estado[random.randint(0, 2)]};"
         )
     arrayPedido.append(idPedido)
+    array_cif_pedido.append(arrayCIF)
 
 print(
     "************************************Cliente********************************************"
@@ -264,7 +297,7 @@ correo = ["@gmail.com", "@hotmail.com", "@outlook.com", "@icloud.com"]
 
 arrayCliente = []
 
-for i in range(0, 30):
+for i in range(0, 40):
     idCliente = random.randint(1000, 9999)
     telefono = random.randint(600000000, 999999999)
     usuariolength = random.randint(0, 2)
@@ -323,35 +356,21 @@ print(
 )
 
 # Insert compra --> Alberto
+# Error
 
 """
-Los inserts de a tabla compra se componen unicamente de las foreing keys de las tablas, producto, cliente
-y pedido
+Los inserts de la tabla compra se componen únicamente de las foreing keys de las tablas producto, cliente y pedido
 """
-array_id_producto_compra = []
-array_id_cliente_compra = []
-array_cif_compra = []
-array_id_pedido_compra = []
 
-for i in range(0, 50):
-    id_producto_compra = random.randint(1000, 9999)
-    id_cliente_compra = random.randint(1000, 9999)
-    cif_compra = arrayCIF[random.randint(0, 9)]
-    id_pedido_compra = random.randint(1000, 9999)
+for i in range(0, 40):
+    id_producto_compra = arrayIdProducto
+    id_cliente_compra = arrayCliente
+    cif_compra = array_cif_pedido[i]
+    id_pedido_compra = arrayPedido
 
-    if (id_producto_compra == arrayIdProducto or id_cliente_compra == arrayCliente or arrayCIF == cif_compra or
-            id_pedido_compra == arrayPedido):
-        id_producto_compra = random.randint(1000, 9999)
-        print(f"insert into compra values{id_pedido_compra, id_cliente_compra,cif_compra, id_pedido_compra};")
-
-    else:
-        print(f"insert into compra values{id_pedido_compra, id_cliente_compra,cif_compra, id_pedido_compra};")
-    array_id_producto_compra.append(id_producto_compra)
-    array_id_cliente_compra.append(id_cliente_compra)
-    array_cif_compra.append(cif_compra)
-    array_id_pedido_compra.append(id_pedido_compra)
-
-
+    print(f"insert into compra values({id_producto_compra[i]}, {id_cliente_compra[i]}, '{cif_compra[i]}', "
+          f"{id_pedido_compra[i]});")
+    
 # Tabla empleado --> Alberto
 
 print(
@@ -395,7 +414,6 @@ for i in range(0, 5):
 print(
     "****************************************gestion**********************************"
 )
-
 
 # Tabla gestion --> Alberto
 array_id_empleado_gestiona = []

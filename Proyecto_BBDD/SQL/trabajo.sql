@@ -35,7 +35,7 @@ create table agencia_de_paqueteria(
 
     CIF varchar(9) primary key,
 
-    nombre varchar(20)
+    nombre varchar(40)
 
     );
 
@@ -123,7 +123,7 @@ create table gestion(
 
     id_empleado numeric(4),
 
-    CIF numeric(7),
+    CIF varchar(9),
 
     id_pedido numeric(4),
 
