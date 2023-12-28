@@ -110,7 +110,7 @@ print(
 # Insert producto --> Alex
 nombreprod = "n"
 descripcion = "d"
-fabricantes = ["LG", "Samsung", "Philips", "Appel", "MSI", "Razer", "Xiaomi"]
+fabricantes = ["LG", "Samsung", "Philips", "Apple", "MSI", "Razer", "Xiaomi"]
 stock = ["S", "N"]
 
 # Array para fk
@@ -267,23 +267,40 @@ estado = ["Preparacion", "Enviado", "Entregado"]
 arrayPedido = []
 array_cif_pedido = []
 
+
+def evaluar_mes(mes_intro):
+    dia_entero = random.randint(1, 31)
+
+    match mes_intro:
+        case 1 | 3 | 5 | 7 | 8 | 10 | 12:
+            dia_entero = random.randint(1, 31)
+        case 4 | 6 | 9 | 11:
+            dia_entero = random.randint(1, 30)
+        case 2:
+            dia_entero = random.randint(1, 28)
+
+    return dia_entero
+
+
 for i in range(0, 40):
     idPedido = random.randint(1000, 9999)
-    anno = str(random.randint(2000, 2023))
+    cif_pedido = arrayCIF[random.randint(0, 9)]
+    anno = str(random.randint(2012, 2023))
     mes = str(random.randint(1, 12))
-    dia = str(random.randint(1, 31))
-    fecha = anno + "-" + mes + "-" + dia
-    if idPedido == arrayPedido:
+    dia = evaluar_mes(mes)
+
+    fecha = f"{anno}-{mes}-{dia}"
+    if idPedido in arrayPedido:
         idPedido = random.randint(1000, 9999)
         print(
-            f"insert into pedido values{arrayCIF[random.randint(0, 9)], idPedido, metodoPago[random.randint(0, 5)], fecha, estado[random.randint(0, 2)]};"
+            f"insert into pedido values{cif_pedido, idPedido, metodoPago[random.randint(0, 5)], fecha, estado[random.randint(0, 2)]};"
         )
     else:
         print(
-            f"insert into pedido values{arrayCIF[random.randint(0, 9)], idPedido, metodoPago[random.randint(0, 5)], fecha, estado[random.randint(0, 2)]};"
+            f"insert into pedido values{cif_pedido, idPedido, metodoPago[random.randint(0, 5)], fecha, estado[random.randint(0, 2)]};"
         )
     arrayPedido.append(idPedido)
-    array_cif_pedido.append(arrayCIF)
+    array_cif_pedido.append(cif_pedido)
 
 print(
     "************************************Cliente********************************************"
@@ -368,11 +385,12 @@ for i in range(0, 40):
     cif_compra = array_cif_pedido[i]
     id_pedido_compra = arrayPedido
 
-    print(f"insert into compra values({id_producto_compra[i]}, {id_cliente_compra[i]}, '{cif_compra[i]}', "
+    print(f"insert into compra values({id_producto_compra[i]}, {id_cliente_compra[i]}, '{cif_compra}', "
           f"{id_pedido_compra[i]});")
-    
+
 # Tabla empleado --> Alberto
 
+"""
 print(
     "***************************************Empleado**********************************"
 )
@@ -433,3 +451,4 @@ for i in range(0, 20):
     array_id_empleado_gestiona.append(id_empleado_gestiona)
     array_cif_gestion.append(cif_gestion)
     array_id_pedido.append(id_pedido)
+"""
