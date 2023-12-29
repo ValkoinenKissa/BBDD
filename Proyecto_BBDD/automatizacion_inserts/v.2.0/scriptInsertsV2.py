@@ -92,7 +92,7 @@ fkIdCategoria = []
 
 for i in range(0, 10):
     idCategoria = random.randint(1000, 9999)
-    if idCategoria == fkIdCategoria:
+    if idCategoria in fkIdCategoria:
         idCategoria = random.randint(1000, 9999)
         print(
             f"insert into categoria values{idCategoria, categoria[i], descripciones[i]};"
@@ -117,7 +117,6 @@ stock = ["S", "N"]
 arrayIdProducto = []
 
 for i in range(0, 40):
-    idprodcuto = random.randint(1000, 9999)
     precio = random.uniform(0, 9999)
     redondeado = round(precio, 2)
     fabricantess = fabricantes[random.randint(0, 6)]
@@ -169,15 +168,14 @@ for i in range(0, 40):
 
     # Comparacion para asegurar que el id producto != a la numeracion del array
 
-    if idprodcuto == arrayIdProducto:
-        print(
-            f"insert into producto values{idprodcuto, usuariorandom, redondeado, fabricantess, stock[random.randint(0, 1)], descripcion, fkIdCategoria[random.randint(0, 9)]};"
-        )
-    else:
+    while True:
         idprodcuto = random.randint(1000, 9999)
-        print(
-            f"insert into producto values{idprodcuto, usuariorandom, redondeado, fabricantess, stock[random.randint(0, 1)], descripcion, fkIdCategoria[random.randint(0, 9)]};"
-        )
+        if idprodcuto not in arrayIdProducto:
+            break
+
+    print(
+        f"insert into producto values{idprodcuto, usuariorandom, redondeado, fabricantess, stock[random.randint(0, 1)], descripcion, fkIdCategoria[random.randint(0, 9)]};"
+    )
 
     arrayIdProducto.append(idprodcuto)
 
@@ -236,14 +234,14 @@ nombreAgencia = [
 arrayCIF = []
 
 for i in range(0, 40):
-    cif = str(random.randint(10000000, 99999999))
-    cifrandom = abecedario_max[random.randint(0, 25)] + cif
-    if cifrandom == arrayCIF:
+
+    while True:
         cif = str(random.randint(10000000, 99999999))
         cifrandom = abecedario_max[random.randint(0, 25)] + cif
-        print(f"insert into agencia_de_paqueteria values{cifrandom, nombreAgencia[i]};")
-    else:
-        print(f"insert into agencia_de_paqueteria values{cifrandom, nombreAgencia[i]};")
+        if cif not in arrayCIF:
+            break
+
+    print(f"insert into agencia_de_paqueteria values{cifrandom, nombreAgencia[i]};")
     arrayCIF.append(cifrandom)
 
 print(
@@ -268,7 +266,14 @@ arrayPedido = []
 array_cif_pedido = []
 
 
-def evaluar_mes(mes_intro):
+# Metódo para validación de fechas (Alberto)
+
+def es_bisiesto(anio):
+    return (anio % 4 == 0 and anio % 100 != 0) or (anio % 400 == 0)
+
+
+def evaluar_mes(mes_intro, anio):
+    check_bisiesto = es_bisiesto(anio)
     dia_entero = random.randint(1, 31)
 
     match mes_intro:
@@ -277,28 +282,26 @@ def evaluar_mes(mes_intro):
         case 4 | 6 | 9 | 11:
             dia_entero = random.randint(1, 30)
         case 2:
-            dia_entero = random.randint(1, 28)
+            dias_febrero = 29 if check_bisiesto else 28
+            dia_entero = random.randint(1, dias_febrero)
 
     return dia_entero
 
 
 for i in range(0, 40):
-    idPedido = random.randint(1000, 9999)
     cif_pedido = arrayCIF[random.randint(0, 9)]
-    anno = str(random.randint(2012, 2023))
-    mes = str(random.randint(1, 12))
-    dia = evaluar_mes(mes)
-
-    fecha = f"{anno}-{mes}-{dia}"
-    if idPedido in arrayPedido:
+    anno = (random.randint(2012, 2023))
+    mes = (random.randint(1, 12))
+    dia = evaluar_mes(mes, anno)
+    while True:
         idPedido = random.randint(1000, 9999)
-        print(
-            f"insert into pedido values{cif_pedido, idPedido, metodoPago[random.randint(0, 5)], fecha, estado[random.randint(0, 2)]};"
-        )
-    else:
-        print(
-            f"insert into pedido values{cif_pedido, idPedido, metodoPago[random.randint(0, 5)], fecha, estado[random.randint(0, 2)]};"
-        )
+        if idPedido not in arrayPedido:
+            break
+    fecha = f"{anno}-{mes}-{dia}"
+
+    print(
+        f"insert into pedido values{cif_pedido, idPedido, metodoPago[random.randint(0, 5)], fecha, estado[random.randint(0, 2)]};"
+    )
     arrayPedido.append(idPedido)
     array_cif_pedido.append(cif_pedido)
 
@@ -306,7 +309,8 @@ print(
     "************************************Cliente********************************************"
 )
 
-# Insert cliente --> Alex
+# Insert cliente --> Alex, mejorado por Alberto
+
 
 usuario = "u"
 direccion = "d"
@@ -315,7 +319,11 @@ correo = ["@gmail.com", "@hotmail.com", "@outlook.com", "@icloud.com"]
 arrayCliente = []
 
 for i in range(0, 40):
-    idCliente = random.randint(1000, 9999)
+    while True:
+        idCliente = random.randint(1000, 9999)
+        if idCliente not in arrayCliente:
+            break
+
     telefono = random.randint(600000000, 999999999)
     usuariolength = random.randint(0, 2)
 
@@ -357,15 +365,11 @@ for i in range(0, 40):
                 + abecedario_numerico[random.randint(0, 8)]
         )
     correousuario = usuariorandom + correo[random.randint(0, 3)]
-    if idCliente == arrayCliente:
-        idCliente = random.randint(1000, 9999)
-        print(
-            f"insert into cliente values{idCliente, usuariorandom, correousuario, telefono, direccion};"
-        )
-    else:
-        print(
-            f"insert into cliente values{idCliente, usuariorandom, correousuario, telefono, direccion};"
-        )
+
+    print(
+        f"insert into cliente values({idCliente}, '{usuariorandom}', '{correousuario}', {telefono}, '{direccion}');"
+    )
+
     arrayCliente.append(idCliente)
 
 print(
@@ -373,11 +377,6 @@ print(
 )
 
 # Insert compra --> Alberto
-# Error
-
-"""
-Los inserts de la tabla compra se componen únicamente de las foreing keys de las tablas producto, cliente y pedido
-"""
 
 for i in range(0, 40):
     id_producto_compra = arrayIdProducto
@@ -390,7 +389,7 @@ for i in range(0, 40):
 
 # Tabla empleado --> Alberto
 
-"""
+
 print(
     "***************************************Empleado**********************************"
 )
@@ -398,12 +397,15 @@ nombre_emp = "nom"
 array_id_empleado = []
 
 for i in range(0, 20):
-    anno = str(random.randint(2000, 2023))
-    mes = str(random.randint(1, 12))
-    dia = str(random.randint(1, 31))
-    fecha_incorporacion = anno + "-" + mes + "-" + dia
+    anno = (random.randint(2010, 2023))
+    mes = (random.randint(1, 12))
+    dia = evaluar_mes(mes, anno)
+    fecha_incorporacion = f"{anno}-{mes}-{dia}"
     salario = random.randint(1050, 4500)
-    id_empleado = random.randint(1000, 9999)
+    while True:
+        id_empleado = random.randint(1000, 9999)
+        if id_empleado not in array_id_empleado:
+            break
 
     print(f"insert into empleado values {id_empleado, salario, nombre_emp, fecha_incorporacion};")
 
@@ -414,41 +416,25 @@ for i in range(0, 20):
 print(
     "*****************************************supervisa**********************************"
 )
-array_id_empleado_supervisa = []
-array_id_empleado_supervisado = []
-for i in range(0, 5):
-    id_empleado_supervisa = random.randint(1111, 9999)
-    id_empleado_supervisado = random.randint(1111, 9999)
 
-    if id_empleado_supervisa == array_id_empleado or id_empleado_supervisado == array_id_empleado:
-        id_empleado_supervisa = random.randint(1111, 9999)
-        id_empleado_supervisado = random.randint(1111, 9999)
-        print(f"insert into supervisa values ({id_empleado_supervisa}, {id_empleado_supervisado};)")
-    else:
-        print(f"insert into supervisa values ({id_empleado_supervisa}, {id_empleado_supervisado};)")
-    array_id_empleado_supervisa.append(id_empleado_supervisa)
-    array_id_empleado_supervisado.append(id_empleado_supervisado)
+for i in range(0, 5):
+    id_empleado_supervisa = array_id_empleado[i]
+
+    while True:
+        id_empleado_supervisado = array_id_empleado[random.randint(0, 9)]
+        if id_empleado_supervisado not in [id_empleado_supervisa]:
+            break
+
+    print(f"insert into supervisa values {id_empleado_supervisa, id_empleado_supervisado};")
 
 print(
     "****************************************gestion**********************************"
 )
 
 # Tabla gestion --> Alberto
-array_id_empleado_gestiona = []
-array_cif_gestion = []
-array_id_pedido = []
 for i in range(0, 20):
-    id_empleado_gestiona = random.randint(1000, 9999)
-    cif_gestion = arrayCIF[random.randint(0, 9)]
-    id_pedido = random.randint(3500, 9000)
+    id_empleado_gestion = array_id_empleado[i]
+    cif_gestion = array_cif_pedido[i]
+    id_pedido_gestion = arrayPedido[i]
 
-    if id_empleado_gestiona == array_id_empleado or cif_gestion == arrayCIF or array_id_pedido == arrayPedido:
-        print(f"insert into gestion values {id_empleado_gestiona, cif_gestion, id_pedido};")
-
-    else:
-        print(f"insert into gestion values {id_empleado_gestiona, cif_gestion, id_pedido};")
-
-    array_id_empleado_gestiona.append(id_empleado_gestiona)
-    array_cif_gestion.append(cif_gestion)
-    array_id_pedido.append(id_pedido)
-"""
+    print(f"insert into gestion values {id_empleado_gestion, cif_gestion, id_pedido_gestion};")
