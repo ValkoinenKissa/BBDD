@@ -82,7 +82,29 @@ select concat(lower(rpad(NOM_AUTOR, 25, "."))) as Autor from libros;
 select dorsal, nombre, edad from ciclista where substring(dorsal, length(dorsal), 1) = substring(edad, length(edad), 1);
 
 
-select nombrepuerto, altura as kilometros, pendiente, categoria from puerto where (categoria = "1" and pendiente > 6) or (categoria = "E" and pendiente < 7) order by kilometros desc;
+SELECT nombrepuerto, altura / 1000 AS kilometros, pendiente, categoria FROM puerto WHERE (categoria = "1" AND pendiente > 6) OR (categoria = "E" AND pendiente < 7) ORDER BY kilometros DESC;
 
 
-select dorsal, nombre, date_add(edad, interval 3 year) as "edad+3" from ciclista where (nombre like "%A" or nombre like "%B") and nomequipo like "%K";
+SELECT dorsal, nombre, edad + 3 as "edad+3", 
+       (SELECT nomequipo FROM equipo WHERE ciclista.nomequipo = equipo.nomequipo) as "equipo con k"
+FROM ciclista
+WHERE (nombre LIKE "A%" OR nombre LIKE "B%") AND nomequipo LIKE "K%";
+
+
+select numetapa, kms * 1000 as metros , salida from etapa where length(salida) > 5 and kms * 1000 < 100000 or length(salida) = 4 order by salida;
+
+
+SELECT nombre, edad, nomequipo FROM ciclista WHERE nomequipo LIKE 'B%' AND ((edad >= 20 AND edad <= 25) OR (edad >= 30 AND edad <= 35));
+
+
+SELECT nombre, edad, nomequipo, (edad - dorsal) AS diferencia FROM ciclista WHERE nombre LIKE "M%" AND nomequipo LIKE "B%" OR nombre LIKE "A%" AND nomequipo LIKE "M%";
+
+SELECT numetapa, (kms * 1000) AS metros, salida FROM etapa WHERE LENGTH(salida) >= 5 AND (kms * 1000) < 100000 OR LENGTH(salida) = 4 ORDER BY salida;
+
+SELECT DISTINCT extension_telefonica_empleado FROM t_empleados ORDER BY extension_telefonica_empleado;
+
+
+SELECT nombre_empleado, comision_empleado, numero_hijos_empleado FROM t_empleados WHERE nombre_empleado LIKE "%a% %a%" AND numero_hijos_empleado = 0 OR comision_empleado IS NULL;
+
+SELECT nombre_empleado, comision_empleado, numero_hijos_empleado 
+FROM t_empleados WHERE LEFT(nombre_empleado, LOCATE(',', nombre_empleado) - 1) LIKE '%a%a%'AND (numero_hijos_empleado = 0 OR comision_empleado IS NULL);
