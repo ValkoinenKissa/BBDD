@@ -13,7 +13,7 @@ create table categoria(
 
 create table producto(
 
-    id_producto numeric(4) primary key,
+    id_producto int primary key,
 
     nombre_producto varchar(25) unique,
 
@@ -43,9 +43,9 @@ create table pedido(
 
     CIF varchar(9),
 
-    id_pedido numeric(4),
+    id_pedido int,
 
-    metodo_pago varchar(30),
+    metodo_pago varchar(30) not null,
 
     fecha_pedido date,
 
@@ -63,23 +63,23 @@ create table cliente(
 
     usuario varchar(20) unique,
 
-    correo varchar(30),
+    correo varchar(30) not null,
 
     telefono numeric(9),
 
-    direccion varchar(30)
+    direccion varchar(90) not null
 
     );
 
 create table compra(
 
-    id_producto numeric(4),
+    id_producto int,
 
     id_cliente numeric(4),
     
     CIF varchar(9),
 
-    id_pedido numeric(4),
+    id_pedido int,
 
     foreign key (id_producto) references producto(id_producto) on delete cascade on update cascade,
 
@@ -97,7 +97,7 @@ create table empleado(
 
     salario decimal(6,2),
 
-    nombre varchar(15),
+    nombre varchar(25),
     
     fecha_incorporacion date,
 
@@ -125,7 +125,7 @@ create table gestion(
 
     CIF varchar(9),
 
-    id_pedido numeric(4),
+    id_pedido int,
 
     foreign key (id_empleado) references empleado(id_empleado) on delete cascade on update cascade,
 

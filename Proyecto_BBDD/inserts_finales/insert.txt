@@ -1,0 +1,543 @@
+************************************Categoria********************************************
+insert into categoria values(5596, 'Smartphones', 'Telefonos inteligentes de ultima generacion');
+insert into categoria values(1688, 'Portatiles', 'Portatiles potentes con el mejor precio del mercado');
+insert into categoria values(3033, 'Ordenadores', 'Los ordenadores mas potentes del mercado');
+insert into categoria values(5707, 'Perifericos', 'Los ultimos perifericos del mercado');
+insert into categoria values(5867, 'Monitores', 'Los monitores con mejor resolucion');
+insert into categoria values(6246, 'Componentes', 'Los componentes mas potentes');
+insert into categoria values(7808, 'Consolas', 'Ultimas novedades en consolas');
+insert into categoria values(4990, 'Videojuegos', 'Los videojuegos mas divertidos');
+insert into categoria values(8784, 'Patinetes', 'Los patinetes mas rapidos');
+insert into categoria values(4827, 'Televisiones', 'Las televisiones mas grandes');
+************************************Producto********************************************
+insert into producto values(4267, 'Xiaomi-Brbwwnj29', 8622.23, 'Xiaomi', 'S', 'Telefono de gama media', 6246);
+insert into producto values(3224, 'Xiaomi-Ymtxd924', 9334.78, 'Xiaomi', 'N', 'Telefono de gama media', 5707);
+insert into producto values(7239, 'Xiaomi-BZhcjxje541', 5592.82, 'Xiaomi', 'S', 'Telefono de gama media', 7808);
+insert into producto values(7901, 'MSI-Cftnv532', 923.0, 'MSI', 'N', 'Monitor de escritorio', 4990);
+insert into producto values(5346, 'Samsung-FMkmpoiw574', 4804.28, 'Samsung', 'N', 'Telefono de gama alta', 6246);
+insert into producto values(1207, 'Philips-Imbbz572', 1831.97, 'Philips', 'N', 'Afeitadora', 4990);
+insert into producto values(4302, 'LG-MTalbzbk523', 7784.49, 'LG', 'S', 'Monitor de escritorio', 5596);
+insert into producto values(8566, 'LG-Pcvzave56', 5384.63, 'LG', 'N', 'Television', 1688);
+insert into producto values(4435, 'Philips-Dkopggo44', 7449.02, 'Philips', 'N', 'Afeitadora', 8784);
+insert into producto values(2042, 'Philips-Danen197', 2414.82, 'Philips', 'S', 'Afeitadora', 7808);
+insert into producto values(6649, 'Philips-Lpammew89', 7611.01, 'Philips', 'S', 'Afeitadora', 8784);
+insert into producto values(7520, 'Samsung-PKhqplpu479', 274.65, 'Samsung', 'S', 'Telefono de gama media', 1688);
+insert into producto values(7617, 'LG-SXdlemlb731', 17.82, 'LG', 'S', 'Television', 5707);
+insert into producto values(3552, 'Razer-WBagostc453', 3524.69, 'Razer', 'S', 'Raton', 8784);
+insert into producto values(5684, 'Apple-Rqwxmkb57', 3587.51, 'Apple', 'S', 'Telefono de gama alta', 8784);
+insert into producto values(8475, 'MSI-Oykyi888', 971.28, 'MSI', 'S', 'Monitor de escritorio', 8784);
+insert into producto values(9193, 'Razer-Lirbg796', 6512.44, 'Razer', 'S', 'Raton', 8784);
+insert into producto values(1155, 'Samsung-Gsemu942', 2124.18, 'Samsung', 'S', 'Monitor de escritorio', 5867);
+insert into producto values(4156, 'LG-UCiguqnk637', 1866.42, 'LG', 'N', 'Television', 5707);
+insert into producto values(7689, 'Xiaomi-WPajthrg863', 7225.14, 'Xiaomi', 'N', 'Telefono de gama media', 3033);
+insert into producto values(1473, 'Apple-GIkidstj131', 5373.25, 'Apple', 'S', 'Telefono de gama media', 5707);
+insert into producto values(9249, 'Xiaomi-Xflak522', 2434.63, 'Xiaomi', 'N', 'Television', 6246);
+insert into producto values(9519, 'Apple-JEizaghz615', 6441.53, 'Apple', 'S', 'Telefono de gama alta', 8784);
+insert into producto values(4387, 'Samsung-XKuafqkf224', 1518.52, 'Samsung', 'N', 'Telefono de gama media', 5867);
+insert into producto values(9387, 'Razer-Qauttur53', 9562.1, 'Razer', 'S', 'Raton', 6246);
+insert into producto values(1498, 'Apple-Mayrobo38', 64.33, 'Apple', 'S', 'Telefono de gama alta', 4827);
+insert into producto values(3232, 'Razer-Rfidlyn79', 4574.98, 'Razer', 'S', 'Raton', 6246);
+insert into producto values(7174, 'Samsung-ZRmlftss479', 2896.91, 'Samsung', 'S', 'Telefono de gama media', 5596);
+insert into producto values(4534, 'Philips-CIfijklv726', 2750.84, 'Philips', 'S', 'Afeitadora', 5707);
+insert into producto values(2168, 'Apple-Raajd639', 4539.01, 'Apple', 'S', 'Telefono de gama alta', 6246);
+insert into producto values(4577, 'LG-Xkikh522', 1363.29, 'LG', 'N', 'Monitor de escritorio', 6246);
+insert into producto values(9728, 'Razer-Yxuhf212', 9984.4, 'Razer', 'S', 'Raton', 7808);
+insert into producto values(7788, 'Philips-Tpbzh146', 1230.65, 'Philips', 'S', 'Afeitadora', 3033);
+insert into producto values(1869, 'Samsung-QXbartic126', 7574.66, 'Samsung', 'N', 'Telefono de gama media', 5867);
+insert into producto values(6935, 'MSI-ZOullvdx629', 7471.68, 'MSI', 'N', 'Monitor de escritorio', 1688);
+insert into producto values(4159, 'Apple-LPhxztra523', 397.69, 'Apple', 'S', 'Telefono de gama alta', 6246);
+insert into producto values(5803, 'LG-QVdvgyjl393', 7692.45, 'LG', 'S', 'Television', 5596);
+insert into producto values(4385, 'MSI-Elakm886', 1099.48, 'MSI', 'S', 'Monitor de escritorio', 5596);
+insert into producto values(9247, 'Razer-Lfokc793', 2683.7, 'Razer', 'N', 'Raton', 6246);
+insert into producto values(5015, 'LG-Iqmoh129', 2016.18, 'LG', 'S', 'Television', 3033);
+insert into producto values(9866, 'Philips-GWuujvni228', 7210.11, 'Philips', 'N', 'Afeitadora', 8784);
+insert into producto values(6781, 'Razer-Ipiuqcc38', 8082.2, 'Razer', 'N', 'Monitor de escritorio', 8784);
+insert into producto values(7842, 'Xiaomi-ENmpvdtw539', 8549.74, 'Xiaomi', 'S', 'Telefono de gama media', 7808);
+insert into producto values(5823, 'LG-TFvqdxwi396', 2958.47, 'LG', 'S', 'Telefono de gama media', 5867);
+insert into producto values(2154, 'Apple-Eexwwal63', 1207.5, 'Apple', 'S', 'Telefono de gama alta', 5867);
+insert into producto values(9054, 'LG-Gdtubwv38', 9562.91, 'LG', 'S', 'Television', 6246);
+insert into producto values(1926, 'Philips-Zavfr349', 4046.38, 'Philips', 'S', 'Afeitadora', 5596);
+insert into producto values(1666, 'Xiaomi-Jbnzwtn56', 6021.21, 'Xiaomi', 'S', 'Telefono de gama media', 5596);
+insert into producto values(8799, 'LG-Rezee273', 1781.35, 'LG', 'N', 'Television', 6246);
+insert into producto values(4707, 'Xiaomi-Dokjopr55', 794.93, 'Xiaomi', 'S', 'Telefono de gama media', 6246);
+insert into producto values(2420, 'Razer-SSrrvpcp834', 7902.46, 'Razer', 'N', 'Raton', 5707);
+insert into producto values(8798, 'Xiaomi-PFdralug716', 8023.07, 'Xiaomi', 'S', 'Telefono de gama media', 1688);
+insert into producto values(9724, 'Razer-Wloht439', 4928.84, 'Razer', 'S', 'Raton', 4827);
+insert into producto values(7741, 'Philips-Ppcrzac79', 8297.59, 'Philips', 'N', 'Afeitadora', 6246);
+insert into producto values(2126, 'Samsung-Skszane19', 8052.8, 'Samsung', 'S', 'Telefono de gama media', 5707);
+insert into producto values(9584, 'Apple-FWivlngr714', 5395.24, 'Apple', 'N', 'Telefono de gama media', 7808);
+insert into producto values(2063, 'Razer-Nwhtw155', 7455.96, 'Razer', 'S', 'Raton', 1688);
+insert into producto values(6412, 'Apple-Rwfjkly99', 5453.04, 'Apple', 'S', 'Telefono de gama media', 7808);
+insert into producto values(4868, 'Philips-YUpppylx479', 5609.87, 'Philips', 'S', 'Afeitadora', 7808);
+insert into producto values(7274, 'Razer-Ttika565', 4609.84, 'Razer', 'N', 'Teclado', 8784);
+insert into producto values(9260, 'MSI-Bpcoc876', 6670.65, 'MSI', 'N', 'Monitor de escritorio', 8784);
+insert into producto values(8285, 'Razer-Fvzvq218', 5776.79, 'Razer', 'N', 'Teclado', 5707);
+insert into producto values(2123, 'Philips-Yitxz979', 4153.69, 'Philips', 'N', 'Afeitadora', 4827);
+insert into producto values(2695, 'MSI-Kulmeae82', 3586.45, 'MSI', 'N', 'Monitor de escritorio', 3033);
+insert into producto values(3374, 'Philips-Hvzbbla32', 7433.21, 'Philips', 'N', 'Afeitadora', 1688);
+insert into producto values(6134, 'LG-Tbmucat82', 3042.93, 'LG', 'S', 'Telefono de gama media', 5867);
+insert into producto values(2896, 'Xiaomi-Esdequq93', 6737.26, 'Xiaomi', 'N', 'Telefono de gama media', 4827);
+insert into producto values(7979, 'Apple-LJyjpilq532', 3300.29, 'Apple', 'S', 'Telefono de gama alta', 3033);
+insert into producto values(4084, 'Samsung-Vhtnm538', 8164.4, 'Samsung', 'N', 'Telefono de gama media', 8784);
+insert into producto values(4562, 'Razer-VJusidmd913', 374.77, 'Razer', 'S', 'Teclado', 7808);
+insert into producto values(1316, 'LG-Caozgze61', 957.34, 'LG', 'N', 'Television', 4990);
+insert into producto values(7882, 'MSI-Mtbtzmr57', 9096.44, 'MSI', 'N', 'Monitor de escritorio', 5596);
+insert into producto values(1517, 'Apple-Dtmcc122', 169.99, 'Apple', 'S', 'Telefono de gama media', 4990);
+insert into producto values(5275, 'Apple-Oqqfp392', 6058.02, 'Apple', 'N', 'Telefono de gama alta', 6246);
+insert into producto values(3638, 'MSI-Ngzrn586', 3720.56, 'MSI', 'S', 'Monitor de escritorio', 6246);
+insert into producto values(5311, 'Razer-Piclt997', 3088.57, 'Razer', 'N', 'Teclado', 7808);
+insert into producto values(2191, 'Apple-HLcfmsxx346', 4091.02, 'Apple', 'N', 'Telefono de gama media', 5596);
+insert into producto values(8443, 'Razer-Ylbojns15', 5901.7, 'Razer', 'N', 'Teclado', 3033);
+insert into producto values(4294, 'LG-Brnzf344', 3682.68, 'LG', 'N', 'Television', 8784);
+insert into producto values(2298, 'Philips-ZBulkjhd443', 707.01, 'Philips', 'N', 'Afeitadora', 7808);
+************************************Agencia paquete********************************************
+insert into agencia_de_paqueteria values('T73203614', 'Fedex');
+insert into agencia_de_paqueteria values('T61049099', 'Correos');
+insert into agencia_de_paqueteria values('Q33782636', 'DHL');
+insert into agencia_de_paqueteria values('N37850252', 'Inpost');
+insert into agencia_de_paqueteria values('P35052597', 'UPS');
+insert into agencia_de_paqueteria values('P73410827', 'T3C');
+insert into agencia_de_paqueteria values('F83148409', 'SEUR');
+insert into agencia_de_paqueteria values('A56251941', 'MRV');
+insert into agencia_de_paqueteria values('I22187016', 'Amazon');
+insert into agencia_de_paqueteria values('N54939601', 'Najesa');
+insert into agencia_de_paqueteria values('I56525154', 'TNT Express');
+insert into agencia_de_paqueteria values('V81947896', 'USPS United States Postal Service');
+insert into agencia_de_paqueteria values('B21472444', 'Royal Mail');
+insert into agencia_de_paqueteria values('Y67861619', 'Canada Post');
+insert into agencia_de_paqueteria values('A27808870', 'Correios Brazil');
+insert into agencia_de_paqueteria values('X50134297', 'Japan Post');
+insert into agencia_de_paqueteria values('P51355412', 'Australia Post');
+insert into agencia_de_paqueteria values('W49602603', 'Singapore Post');
+insert into agencia_de_paqueteria values('F70778208', 'Deutsche Post DHL Group');
+insert into agencia_de_paqueteria values('V80913913', 'La Poste France');
+insert into agencia_de_paqueteria values('O98408079', 'Correo Argentino');
+insert into agencia_de_paqueteria values('D33778863', 'Correos de México');
+insert into agencia_de_paqueteria values('I85176883', 'India Post');
+insert into agencia_de_paqueteria values('K56604354', 'China PostKorea Post');
+insert into agencia_de_paqueteria values('H17826238', 'Russian Post');
+insert into agencia_de_paqueteria values('V96229699', 'Swiss Post');
+insert into agencia_de_paqueteria values('W97421954', 'Poste Italiane');
+insert into agencia_de_paqueteria values('W75096520', 'PostNord');
+insert into agencia_de_paqueteria values('R35079287', 'An Post Ireland');
+insert into agencia_de_paqueteria values('G86362800', 'PostNL');
+insert into agencia_de_paqueteria values('Z24798897', 'SingPost Singapore');
+insert into agencia_de_paqueteria values('V59770855', 'Pos Malaysia');
+insert into agencia_de_paqueteria values('O94722302', 'South African Post Office');
+insert into agencia_de_paqueteria values('B64306981', 'Emirates Post');
+insert into agencia_de_paqueteria values('L63025705', 'Saudi Post');
+insert into agencia_de_paqueteria values('T48413623', 'New Zealand Post');
+insert into agencia_de_paqueteria values('C19556017', 'Swedish Post');
+insert into agencia_de_paqueteria values('W74414194', 'Norwegian post');
+insert into agencia_de_paqueteria values('D79520652', 'Fin post');
+insert into agencia_de_paqueteria values('S77482851', 'Denmark postal service');
+************************************Pedidos********************************************
+insert into pedido values('P73410827', 3617, 'Contra rembolso', '2016-2-23', 'Entregado');
+insert into pedido values('N37850252', 5042, 'Transferencia bancaria', '2020-1-13', 'Entregado');
+insert into pedido values('N37850252', 5773, 'En efectivo', '2018-9-23', 'Enviado');
+insert into pedido values('T61049099', 2787, 'Bizum', '2021-3-5', 'Enviado');
+insert into pedido values('P73410827', 5002, 'Tarjeta credito/debito', '2022-6-24', 'Entregado');
+insert into pedido values('T61049099', 9916, 'Tarjeta credito/debito', '2013-8-6', 'Enviado');
+insert into pedido values('P35052597', 9834, 'Tarjeta credito/debito', '2016-3-26', 'Preparacion');
+insert into pedido values('I22187016', 9751, 'Transferencia bancaria', '2015-5-10', 'Preparacion');
+insert into pedido values('P35052597', 7763, 'En efectivo', '2020-10-4', 'Entregado');
+insert into pedido values('T61049099', 4316, 'Tarjeta credito/debito', '2019-3-3', 'Enviado');
+insert into pedido values('P73410827', 7049, 'Contra rembolso', '2013-11-16', 'Preparacion');
+insert into pedido values('F83148409', 7389, 'Paypal', '2014-6-6', 'Preparacion');
+insert into pedido values('Q33782636', 7762, 'Bizum', '2022-10-20', 'Enviado');
+insert into pedido values('P35052597', 6484, 'Bizum', '2022-7-9', 'Enviado');
+insert into pedido values('N54939601', 3300, 'Transferencia bancaria', '2018-2-4', 'Enviado');
+insert into pedido values('N37850252', 8302, 'En efectivo', '2022-1-27', 'Preparacion');
+insert into pedido values('A56251941', 2234, 'Tarjeta credito/debito', '2016-11-20', 'Enviado');
+insert into pedido values('F83148409', 2209, 'Bizum', '2020-2-26', 'Entregado');
+insert into pedido values('Q33782636', 3352, 'Tarjeta credito/debito', '2022-2-28', 'Entregado');
+insert into pedido values('N54939601', 9208, 'Contra rembolso', '2022-6-19', 'Preparacion');
+insert into pedido values('T61049099', 5063, 'Paypal', '2019-4-14', 'Preparacion');
+insert into pedido values('Q33782636', 1380, 'En efectivo', '2016-7-27', 'Enviado');
+insert into pedido values('T61049099', 2522, 'En efectivo', '2014-7-10', 'Enviado');
+insert into pedido values('T61049099', 1581, 'Contra rembolso', '2022-9-28', 'Entregado');
+insert into pedido values('A56251941', 5636, 'Contra rembolso', '2019-3-23', 'Preparacion');
+insert into pedido values('F83148409', 9517, 'Bizum', '2015-3-16', 'Entregado');
+insert into pedido values('P73410827', 3861, 'Transferencia bancaria', '2013-7-27', 'Preparacion');
+insert into pedido values('N54939601', 2110, 'Transferencia bancaria', '2012-10-29', 'Enviado');
+insert into pedido values('A56251941', 1734, 'Contra rembolso', '2022-3-31', 'Preparacion');
+insert into pedido values('I22187016', 8172, 'Paypal', '2021-10-22', 'Preparacion');
+insert into pedido values('T73203614', 9872, 'En efectivo', '2013-12-1', 'Enviado');
+insert into pedido values('I22187016', 7483, 'Paypal', '2021-1-12', 'Entregado');
+insert into pedido values('F83148409', 3047, 'Contra rembolso', '2014-11-16', 'Enviado');
+insert into pedido values('P73410827', 6999, 'Bizum', '2012-2-23', 'Enviado');
+insert into pedido values('T73203614', 5596, 'Bizum', '2013-6-28', 'Enviado');
+insert into pedido values('T61049099', 5514, 'Paypal', '2014-10-29', 'Entregado');
+insert into pedido values('T73203614', 9511, 'Paypal', '2020-10-18', 'Preparacion');
+insert into pedido values('Q33782636', 6726, 'Contra rembolso', '2014-3-6', 'Enviado');
+insert into pedido values('I22187016', 7863, 'Bizum', '2021-5-24', 'Preparacion');
+insert into pedido values('F83148409', 7776, 'Transferencia bancaria', '2020-1-15', 'Enviado');
+insert into pedido values('P73410827', 1630, 'Paypal', '2015-9-25', 'Preparacion');
+insert into pedido values('P35052597', 6559, 'En efectivo', '2015-2-22', 'Entregado');
+insert into pedido values('T73203614', 5539, 'Contra rembolso', '2021-2-12', 'Entregado');
+insert into pedido values('T73203614', 4005, 'Contra rembolso', '2022-1-14', 'Enviado');
+insert into pedido values('I22187016', 6643, 'Tarjeta credito/debito', '2013-4-18', 'Preparacion');
+insert into pedido values('N54939601', 6089, 'Tarjeta credito/debito', '2012-8-27', 'Preparacion');
+insert into pedido values('N54939601', 7348, 'Contra rembolso', '2013-12-4', 'Entregado');
+insert into pedido values('P35052597', 1208, 'En efectivo', '2015-10-17', 'Entregado');
+insert into pedido values('F83148409', 8650, 'Bizum', '2020-7-9', 'Enviado');
+insert into pedido values('Q33782636', 2286, 'Transferencia bancaria', '2023-8-24', 'Preparacion');
+insert into pedido values('I22187016', 9512, 'Transferencia bancaria', '2021-10-22', 'Enviado');
+insert into pedido values('T61049099', 2042, 'Tarjeta credito/debito', '2015-9-3', 'Enviado');
+insert into pedido values('N54939601', 9292, 'Contra rembolso', '2013-7-30', 'Entregado');
+insert into pedido values('P73410827', 2928, 'Paypal', '2014-4-27', 'Enviado');
+insert into pedido values('I22187016', 9598, 'Paypal', '2013-3-16', 'Preparacion');
+insert into pedido values('P73410827', 8342, 'En efectivo', '2020-6-20', 'Preparacion');
+insert into pedido values('T61049099', 8323, 'Paypal', '2013-1-14', 'Preparacion');
+insert into pedido values('P73410827', 5118, 'Transferencia bancaria', '2022-12-3', 'Enviado');
+insert into pedido values('T73203614', 1192, 'Paypal', '2013-10-28', 'Entregado');
+insert into pedido values('T61049099', 6673, 'Bizum', '2022-7-9', 'Enviado');
+insert into pedido values('T61049099', 1475, 'Bizum', '2017-5-20', 'Enviado');
+insert into pedido values('A56251941', 3043, 'Tarjeta credito/debito', '2012-1-1', 'Enviado');
+insert into pedido values('P73410827', 8280, 'En efectivo', '2021-5-6', 'Entregado');
+insert into pedido values('F83148409', 3606, 'Paypal', '2017-2-16', 'Entregado');
+insert into pedido values('P35052597', 3210, 'Tarjeta credito/debito', '2023-10-3', 'Enviado');
+insert into pedido values('T61049099', 9846, 'Bizum', '2014-8-27', 'Enviado');
+insert into pedido values('P73410827', 2445, 'En efectivo', '2021-2-19', 'Preparacion');
+insert into pedido values('N37850252', 4906, 'Contra rembolso', '2012-5-13', 'Preparacion');
+insert into pedido values('F83148409', 5865, 'Transferencia bancaria', '2012-4-9', 'Entregado');
+insert into pedido values('T61049099', 3040, 'Bizum', '2018-5-27', 'Preparacion');
+insert into pedido values('T73203614', 8623, 'Contra rembolso', '2017-2-28', 'Preparacion');
+insert into pedido values('F83148409', 1817, 'Transferencia bancaria', '2014-11-16', 'Enviado');
+insert into pedido values('N54939601', 9354, 'En efectivo', '2014-4-24', 'Enviado');
+insert into pedido values('A56251941', 6744, 'Tarjeta credito/debito', '2016-5-11', 'Enviado');
+insert into pedido values('T61049099', 8314, 'Bizum', '2014-5-7', 'Entregado');
+insert into pedido values('F83148409', 8877, 'Transferencia bancaria', '2019-11-7', 'Enviado');
+insert into pedido values('T61049099', 3859, 'En efectivo', '2019-9-5', 'Entregado');
+insert into pedido values('N54939601', 9859, 'Contra rembolso', '2020-11-20', 'Enviado');
+insert into pedido values('A56251941', 8631, 'Tarjeta credito/debito', '2014-9-22', 'Enviado');
+insert into pedido values('T61049099', 2105, 'Tarjeta credito/debito', '2022-3-9', 'Entregado');
+************************************Cliente********************************************
+insert into cliente values(4216, 'Vqlcjwv45', 'Vqlcjwv45@icloud.com', 862875458, 'CALLE LEONARDO PRIETO CASTRO 8, 28040 MADRID');
+insert into cliente values(2637, 'Gsbsmcz97', 'Gsbsmcz97@icloud.com', 727787772, 'CALLE MONTALBAN 1, 28014 MADRID
+');
+insert into cliente values(6382, 'Uypkg384', 'Uypkg384@outlook.com', 983848630, 'CARRETERA M-607 2100, 28049 MADRID
+');
+insert into cliente values(2715, 'Qdloh637', 'Qdloh637@gmail.com', 744145472, 'PASEO FERNAN NUÑEZ 10, 28009 MADRID
+');
+insert into cliente values(7996, 'YJfnwuks675', 'YJfnwuks675@gmail.com', 642196409, 'CALLE HEXAGONOS 1, 28011 MADRID
+');
+insert into cliente values(9562, 'GOfrgsfh731', 'GOfrgsfh731@hotmail.com', 850434689, 'PARQUE CASA DE CAMPO (JUNTO AL EMBARCADERO DEL LAGO) , 28011 MADRID
+');
+insert into cliente values(8146, 'Emivk874', 'Emivk874@gmail.com', 877798737, 'PARQUE DEHESA DE LA VILLA 0, 28039 MADRID
+');
+insert into cliente values(2000, 'SZlrvymz282', 'SZlrvymz282@icloud.com', 625044890, 'PASEO FERNAN NUÑEZ 2, 28009 MADRID
+');
+insert into cliente values(6624, 'IHblpfex445', 'IHblpfex445@outlook.com', 936056174, 'AVENIDA SANTUARIO DE VALVERDE 77, 28049 MADRID
+');
+insert into cliente values(7861, 'Rozaqaw23', 'Rozaqaw23@icloud.com', 638187335, 'AVENIDA COMPLUTENSE 40, 28040 MADRID
+');
+insert into cliente values(6143, 'KUoysoao899', 'KUoysoao899@hotmail.com', 603818355, 'CALLE GANADERIA 3, 28011 MADRID
+');
+insert into cliente values(5338, 'SMgdlmdd151', 'SMgdlmdd151@hotmail.com', 920971126, 'CALLE ALCALA 16, 28014 MADRID
+');
+insert into cliente values(7903, 'Wxdoc177', 'Wxdoc177@gmail.com', 704852934, 'CALLE ALCALA 16, 28014 MADRID
+');
+insert into cliente values(9323, 'Euauu322', 'Euauu322@gmail.com', 892482394, 'CALLE PEDRO JUSTO DORADO DELLMANS 11, 28040 MADRID
+');
+insert into cliente values(6192, 'Abkgl254', 'Abkgl254@hotmail.com', 692760054, 'CALLE MONTALBAN 1, 28014 MADRID
+');
+insert into cliente values(2852, 'Ngvst972', 'Ngvst972@icloud.com', 873671045, 'CALLE BUSTAMANTE 16, 28045 MADRID
+');
+insert into cliente values(8020, 'Qzhpv728', 'Qzhpv728@outlook.com', 726355691, 'CALLE MONTALBAN 1, 28014 MADRID
+');
+insert into cliente values(2182, 'Wlsccbp26', 'Wlsccbp26@hotmail.com', 950611687, 'CALLE BUSTAMANTE 16, 28045 MADRID
+');
+insert into cliente values(6019, 'NYqsvnsx116', 'NYqsvnsx116@gmail.com', 966319768, 'CALLE BUSTAMANTE 16, 28045 MADRID
+');
+insert into cliente values(9388, 'Zilyv674', 'Zilyv674@gmail.com', 909416686, 'CALLE MONTALBAN 1, 28014 MADRID
+');
+insert into cliente values(2964, 'Vbyhq538', 'Vbyhq538@icloud.com', 637641770, 'CAMINO SALMEDINA 0, 28051 MADRID
+');
+insert into cliente values(1816, 'Tdzja352', 'Tdzja352@hotmail.com', 735589860, 'CALLE MONTALBAN 1, 28014 MADRID
+');
+insert into cliente values(7119, 'Pecwg247', 'Pecwg247@icloud.com', 835934686, 'CALLE BUSTAMANTE 16, 28045 MADRID
+');
+insert into cliente values(3818, 'Fpldfqe19', 'Fpldfqe19@icloud.com', 677158529, 'CALLE BUSTAMANTE 16, 28045 MADRID
+');
+insert into cliente values(6614, 'Fynyozj62', 'Fynyozj62@gmail.com', 742881570, 'AVENIDA LOS ROSALES 399, 28021 MADRID
+');
+insert into cliente values(9641, 'Pxqbp499', 'Pxqbp499@hotmail.com', 997532126, 'AUTOVIA A-4 600, 28053 MADRID
+');
+insert into cliente values(8405, 'Hcwpl668', 'Hcwpl668@outlook.com', 930518124, 'CAMINO TOMATEROS 1, 28051 MADRID
+');
+insert into cliente values(9525, 'Heuuq424', 'Heuuq424@outlook.com', 808594808, 'CAMINO LA MUÑOZA 1, 28042 MADRID
+');
+insert into cliente values(9782, 'Yzehvuq57', 'Yzehvuq57@gmail.com', 795491746, 'CARRETERA SAN MARTIN DE LA VEGA 6600, 28906 MADRID
+');
+insert into cliente values(6750, 'XSqumwjd496', 'XSqumwjd496@outlook.com', 735592698, 'CARRETERA VALENCIA 19.000, 28526 MADRID
+');
+insert into cliente values(3051, 'CLoniybf183', 'CLoniybf183@outlook.com', 852221427, 'CARRETERA ANTIGUA DE PARACUELLOS DE JARAMA 44, 28042 MADRID
+');
+insert into cliente values(7161, 'Urgoyrr38', 'Urgoyrr38@icloud.com', 834483363, 'CARRETERA EL PARDO 13, 28048 MADRID
+');
+insert into cliente values(4714, 'Iyjzy998', 'Iyjzy998@gmail.com', 753427216, 'AVENIDA RAFAELA YBARRA 0, 28026 MADRID
+');
+insert into cliente values(4360, 'Rplvc156', 'Rplvc156@outlook.com', 824139234, 'CALLE MELENDEZ VALDES 32, 28015 MADRID
+');
+insert into cliente values(8682, 'Vzria691', 'Vzria691@outlook.com', 631402611, 'CALLE PUERTO DE LA CRUZ VERDE 29, 28045 MADRID
+');
+insert into cliente values(4521, 'Hwbvr854', 'Hwbvr854@hotmail.com', 719019223, 'CALLE FACTOR 7, 28013 MADRID
+');
+insert into cliente values(8051, 'Oetzemx77', 'Oetzemx77@gmail.com', 896363145, 'PASEO CASTELLANA 78, 28046 MADRID
+');
+insert into cliente values(6214, 'YCwgweek362', 'YCwgweek362@gmail.com', 981664104, 'CALLE SAN ALEJANDRO 1, 28005 MADRID
+');
+insert into cliente values(9736, 'Zfpwmls28', 'Zfpwmls28@icloud.com', 999511770, 'CALLE FERRAZ 1, 28008 MADRID
+');
+insert into cliente values(2811, 'XXlbmojc377', 'XXlbmojc377@hotmail.com', 813229880, 'PASEO IMPERIAL 93, 28005 MADRID
+');
+insert into cliente values(2626, 'Rhyvwso29', 'Rhyvwso29@icloud.com', 643879094, 'CALLE TORERO 6, 28026 MADRID
+');
+insert into cliente values(6695, 'Pvsatrc12', 'Pvsatrc12@icloud.com', 847576133, 'PASEO ACACIAS 60, 28005 MADRID
+');
+insert into cliente values(9450, 'IIluabrx166', 'IIluabrx166@icloud.com', 781262222, 'CUESTA VEGA 3, 28013 MADRID
+');
+insert into cliente values(3391, 'Qpgxo826', 'Qpgxo826@gmail.com', 636107950, 'PASEO ALAMEDA DE OSUNA 25, 28042 MADRID
+');
+insert into cliente values(3340, 'MLmwvjpe689', 'MLmwvjpe689@icloud.com', 861785149, 'CALLE ROQUETAS DE MAR 10, 28033 MADRID
+');
+insert into cliente values(6222, 'Qhnlm215', 'Qhnlm215@outlook.com', 694031393, 'PLAZA CRUZ VERDE 2, 28005 MADRID
+');
+insert into cliente values(1189, 'Cagpwsl35', 'Cagpwsl35@icloud.com', 968424911, 'CALLE RAIMUNDO FERNANDEZ VILLAVERDE 32, 28003 MADRID
+');
+insert into cliente values(4093, 'Ufwlndx31', 'Ufwlndx31@icloud.com', 755196378, 'PLAZA INDEPENDENCIA 7, 28001 MADRID
+');
+insert into cliente values(6292, 'Lyvag217', 'Lyvag217@icloud.com', 969005081, 'CALLE CAMINO DE LOS VINATEROS 1, 28030 MADRID
+');
+insert into cliente values(4296, 'Xucrfbo95', 'Xucrfbo95@gmail.com', 847401275, 'AVENIDA BRASIL 31, 28020 MADRID
+');
+insert into cliente values(6916, 'NPxkaeej516', 'NPxkaeej516@icloud.com', 740943126, 'CALLE BASILICA 15, 28020 MADRID
+');
+insert into cliente values(7683, 'Woomm125', 'Woomm125@gmail.com', 796655460, 'PLAZA SAN AMARO 4, 28020 MADRID
+');
+insert into cliente values(3085, 'Wqgbxzf57', 'Wqgbxzf57@outlook.com', 851126759, 'CALLE RODRIGUEZ SAN PEDRO 3, 28015 MADRID
+');
+insert into cliente values(6806, 'XYsyyhtx836', 'XYsyyhtx836@gmail.com', 971964886, 'PLAZA CHAMBERI 1, 28010 MADRID
+');
+insert into cliente values(6113, 'MGzasiws917', 'MGzasiws917@icloud.com', 989772259, 'CALLE GENERAL CASTAÑOS 6, 28004 MADRID
+');
+insert into cliente values(2306, 'Pgcgncf88', 'Pgcgncf88@icloud.com', 839307937, 'PLAZA OLAVIDE 16, 28010 MADRID
+');
+insert into cliente values(9797, 'Vuekx845', 'Vuekx845@outlook.com', 848837096, 'CALLE BAILEN 17, 28013 MADRID
+');
+insert into cliente values(5766, 'BIsdhevl154', 'BIsdhevl154@outlook.com', 909790184, 'CUESTA VEGA 1, 28013 MADRID
+');
+insert into cliente values(7902, 'Tswpy716', 'Tswpy716@icloud.com', 832271649, 'CALLE MORERIA 12, 28005 MADRID
+');
+insert into cliente values(9643, 'Bpapn521', 'Bpapn521@outlook.com', 691490989, 'CALLE PRINCIPE DE VERGARA 139, 28002 MADRID
+');
+insert into cliente values(1852, 'Svgxl677', 'Svgxl677@gmail.com', 651256032, 'AVENIDA GENERAL PERON 21, 28020 MADRID
+');
+insert into cliente values(9355, 'IFnpvhuu174', 'IFnpvhuu174@gmail.com', 914498974, 'CALLE BAILEN 2, 28013 MADRID
+');
+insert into cliente values(7405, 'Lhaavqx35', 'Lhaavqx35@icloud.com', 874460366, 'AVENIDA ALBERTO ALCOCER 9, 28036 MADRID
+');
+insert into cliente values(5490, 'Yxutqyy77', 'Yxutqyy77@gmail.com', 615890391, 'CALLE BARCELO 2, 28004 MADRID
+');
+insert into cliente values(8371, 'Unsqh221', 'Unsqh221@icloud.com', 891894696, 'PASEO VIRGEN DEL PUERTO 0, 28005 MADRID
+');
+insert into cliente values(4834, 'Eectf966', 'Eectf966@icloud.com', 805435332, 'CALLE GOYA 2, 28001 MADRID
+');
+insert into cliente values(7760, 'WGntuzul754', 'WGntuzul754@icloud.com', 800516144, 'CALLE DOCTOR FLEMING 1, 28036 MADRID
+');
+insert into cliente values(6092, 'Pkdgy231', 'Pkdgy231@icloud.com', 757572514, 'PASEO CASTELLANA 142, 28046 MADRID
+');
+insert into cliente values(3515, 'AIzzxaht263', 'AIzzxaht263@gmail.com', 647575272, 'PLAZA PAJA 6, 28005 MADRID
+');
+insert into cliente values(7335, 'Nmity282', 'Nmity282@hotmail.com', 895729107, 'CALLE PRINCIPE DE VERGARA 68, 28006 MADRID
+');
+insert into cliente values(3737, 'Mlrjkue11', 'Mlrjkue11@icloud.com', 683069903, 'AVENIDA GRAN VIA DE SAN FRANCISCO 25, 28005 MADRID
+');
+insert into cliente values(2739, 'GTpylnke786', 'GTpylnke786@icloud.com', 860494077, 'CALLE PEÑA GORBEA 17, 28053 MADRID
+');
+insert into cliente values(4999, 'Qrfuhvk15', 'Qrfuhvk15@gmail.com', 991866146, 'PASEO EMBARCADERO 8, 28011 MADRID
+');
+insert into cliente values(4530, 'Soiynjs28', 'Soiynjs28@outlook.com', 981735776, 'PASEO INFANTA ISABEL 1, 28014 MADRID
+');
+insert into cliente values(7967, 'Xkbpk617', 'Xkbpk617@gmail.com', 709998965, 'PASEO INFANTA ISABEL 1, 28014 MADRID
+');
+insert into cliente values(6894, 'Qsjqg413', 'Qsjqg413@hotmail.com', 888298426, 'PLAZA SAN JUAN DE LA CRUZ 10, 28003 MADRID
+');
+insert into cliente values(2936, 'Ahbduip34', 'Ahbduip34@icloud.com', 854663493, 'PLAZA SAN JUAN DE LA CRUZ 10, 28003 MADRID
+');
+insert into cliente values(5239, 'Skrnyci92', 'Skrnyci92@outlook.com', 872444939, 'CALLE BUSTAMANTE , 28045 MADRID
+');
+insert into cliente values(1029, 'Picwrdl25', 'Picwrdl25@icloud.com', 849894192, 'PASEO CHOPERA 10, 28045 MADRID
+');
+insert into cliente values(8897, 'AHoegfki164', 'AHoegfki164@gmail.com', 653132860, 'PASEO DIRECCION 301, 28029 MADRID
+');
+*****************************************Compra**********************************
+insert into compra values(4267, 4216, 'P73410827', 3617);
+insert into compra values(3224, 2637, 'N37850252', 5042);
+insert into compra values(7239, 6382, 'N37850252', 5773);
+insert into compra values(7901, 2715, 'T61049099', 2787);
+insert into compra values(5346, 7996, 'P73410827', 5002);
+insert into compra values(1207, 9562, 'T61049099', 9916);
+insert into compra values(4302, 8146, 'P35052597', 9834);
+insert into compra values(8566, 2000, 'I22187016', 9751);
+insert into compra values(4435, 6624, 'P35052597', 7763);
+insert into compra values(2042, 7861, 'T61049099', 4316);
+insert into compra values(6649, 6143, 'P73410827', 7049);
+insert into compra values(7520, 5338, 'F83148409', 7389);
+insert into compra values(7617, 7903, 'Q33782636', 7762);
+insert into compra values(3552, 9323, 'P35052597', 6484);
+insert into compra values(5684, 6192, 'N54939601', 3300);
+insert into compra values(8475, 2852, 'N37850252', 8302);
+insert into compra values(9193, 8020, 'A56251941', 2234);
+insert into compra values(1155, 2182, 'F83148409', 2209);
+insert into compra values(4156, 6019, 'Q33782636', 3352);
+insert into compra values(7689, 9388, 'N54939601', 9208);
+insert into compra values(1473, 2964, 'T61049099', 5063);
+insert into compra values(9249, 1816, 'Q33782636', 1380);
+insert into compra values(9519, 7119, 'T61049099', 2522);
+insert into compra values(4387, 3818, 'T61049099', 1581);
+insert into compra values(9387, 6614, 'A56251941', 5636);
+insert into compra values(1498, 9641, 'F83148409', 9517);
+insert into compra values(3232, 8405, 'P73410827', 3861);
+insert into compra values(7174, 9525, 'N54939601', 2110);
+insert into compra values(4534, 9782, 'A56251941', 1734);
+insert into compra values(2168, 6750, 'I22187016', 8172);
+insert into compra values(4577, 3051, 'T73203614', 9872);
+insert into compra values(9728, 7161, 'I22187016', 7483);
+insert into compra values(7788, 4714, 'F83148409', 3047);
+insert into compra values(1869, 4360, 'P73410827', 6999);
+insert into compra values(6935, 8682, 'T73203614', 5596);
+insert into compra values(4159, 4521, 'T61049099', 5514);
+insert into compra values(5803, 8051, 'T73203614', 9511);
+insert into compra values(4385, 6214, 'Q33782636', 6726);
+insert into compra values(9247, 9736, 'I22187016', 7863);
+insert into compra values(5015, 2811, 'F83148409', 7776);
+insert into compra values(9866, 2626, 'P73410827', 1630);
+insert into compra values(6781, 6695, 'P35052597', 6559);
+insert into compra values(7842, 9450, 'T73203614', 5539);
+insert into compra values(5823, 3391, 'T73203614', 4005);
+insert into compra values(2154, 3340, 'I22187016', 6643);
+insert into compra values(9054, 6222, 'N54939601', 6089);
+insert into compra values(1926, 1189, 'N54939601', 7348);
+insert into compra values(1666, 4093, 'P35052597', 1208);
+insert into compra values(8799, 6292, 'F83148409', 8650);
+insert into compra values(4707, 4296, 'Q33782636', 2286);
+insert into compra values(2420, 6916, 'I22187016', 9512);
+insert into compra values(8798, 7683, 'T61049099', 2042);
+insert into compra values(9724, 3085, 'N54939601', 9292);
+insert into compra values(7741, 6806, 'P73410827', 2928);
+insert into compra values(2126, 6113, 'I22187016', 9598);
+insert into compra values(9584, 2306, 'P73410827', 8342);
+insert into compra values(2063, 9797, 'T61049099', 8323);
+insert into compra values(6412, 5766, 'P73410827', 5118);
+insert into compra values(4868, 7902, 'T73203614', 1192);
+insert into compra values(7274, 9643, 'T61049099', 6673);
+insert into compra values(9260, 1852, 'T61049099', 1475);
+insert into compra values(8285, 9355, 'A56251941', 3043);
+insert into compra values(2123, 7405, 'P73410827', 8280);
+insert into compra values(2695, 5490, 'F83148409', 3606);
+insert into compra values(3374, 8371, 'P35052597', 3210);
+insert into compra values(6134, 4834, 'T61049099', 9846);
+insert into compra values(2896, 7760, 'P73410827', 2445);
+insert into compra values(7979, 6092, 'N37850252', 4906);
+insert into compra values(4084, 3515, 'F83148409', 5865);
+insert into compra values(4562, 7335, 'T61049099', 3040);
+insert into compra values(1316, 3737, 'T73203614', 8623);
+insert into compra values(7882, 2739, 'F83148409', 1817);
+insert into compra values(1517, 4999, 'N54939601', 9354);
+insert into compra values(5275, 4530, 'A56251941', 6744);
+insert into compra values(3638, 7967, 'T61049099', 8314);
+insert into compra values(5311, 6894, 'F83148409', 8877);
+insert into compra values(2191, 2936, 'T61049099', 3859);
+insert into compra values(8443, 5239, 'N54939601', 9859);
+insert into compra values(4294, 1029, 'A56251941', 8631);
+insert into compra values(2298, 8897, 'T61049099', 2105);
+***************************************Empleado**********************************
+insert into empleado values (7140, 3743, 'Emilia Giménez', '2015-5-25');
+insert into empleado values (2239, 1592, 'Simón Terán', '2012-5-3');
+insert into empleado values (5918, 4255, 'Carlos Figueroa', '2022-4-24');
+insert into empleado values (8829, 1512, 'Juan Maldonado', '2016-10-14');
+insert into empleado values (4491, 2379, 'Olivia Martínez', '2013-1-14');
+insert into empleado values (8174, 3405, 'José Guerra', '2018-12-19');
+insert into empleado values (8819, 3947, 'Juan Aranda', '2020-4-8');
+insert into empleado values (3010, 4107, 'Pedro Navarro', '2011-5-16');
+insert into empleado values (7295, 2901, 'Paula Soto', '2023-3-24');
+insert into empleado values (8244, 4080, 'Lucía Corona', '2022-11-11');
+insert into empleado values (6758, 3687, 'Daniela Ochoa', '2010-9-18');
+insert into empleado values (4548, 3148, 'Alejandro Guerrero', '2021-9-25');
+insert into empleado values (2045, 4289, 'Angela Navarro', '2020-11-30');
+insert into empleado values (5323, 2756, 'Isabel Zavala', '2020-1-15');
+insert into empleado values (4512, 1360, 'Clara Flores', '2018-5-10');
+insert into empleado values (4139, 4116, 'Ricardo Flores', '2010-8-24');
+insert into empleado values (1166, 3886, 'Raúl Guerrero', '2017-1-10');
+insert into empleado values (5048, 4205, 'Carlos Cortés', '2011-7-13');
+insert into empleado values (2419, 1579, 'Angela Serrano', '2017-5-5');
+insert into empleado values (5950, 1858, 'Alicia Medina', '2020-5-9');
+*****************************************supervisa**********************************
+insert into supervisa values (7140, 6758);
+insert into supervisa values (2239, 5950);
+insert into supervisa values (5918, 4491);
+insert into supervisa values (8829, 7295);
+insert into supervisa values (4491, 5918);
+****************************************gestion**********************************
+insert into gestion values (4548, 'P73410827', 3617);
+insert into gestion values (5918, 'N37850252', 5042);
+insert into gestion values (8829, 'N37850252', 5773);
+insert into gestion values (6758, 'T61049099', 2787);
+insert into gestion values (3010, 'P73410827', 5002);
+insert into gestion values (4139, 'T61049099', 9916);
+insert into gestion values (6758, 'P35052597', 9834);
+insert into gestion values (8819, 'I22187016', 9751);
+insert into gestion values (8829, 'P35052597', 7763);
+insert into gestion values (6758, 'T61049099', 4316);
+insert into gestion values (8174, 'P73410827', 7049);
+insert into gestion values (4512, 'F83148409', 7389);
+insert into gestion values (5323, 'Q33782636', 7762);
+insert into gestion values (6758, 'P35052597', 6484);
+insert into gestion values (8819, 'N54939601', 3300);
+insert into gestion values (3010, 'N37850252', 8302);
+insert into gestion values (5048, 'A56251941', 2234);
+insert into gestion values (2419, 'F83148409', 2209);
+insert into gestion values (1166, 'Q33782636', 3352);
+insert into gestion values (5950, 'N54939601', 9208);
+insert into gestion values (5048, 'T61049099', 5063);
+insert into gestion values (4512, 'Q33782636', 1380);
+insert into gestion values (2419, 'T61049099', 2522);
+insert into gestion values (5950, 'T61049099', 1581);
+insert into gestion values (4491, 'A56251941', 5636);
+insert into gestion values (5323, 'F83148409', 9517);
+insert into gestion values (7295, 'P73410827', 3861);
+insert into gestion values (4491, 'N54939601', 2110);
+insert into gestion values (3010, 'A56251941', 1734);
+insert into gestion values (7140, 'I22187016', 8172);
+insert into gestion values (4512, 'T73203614', 9872);
+insert into gestion values (6758, 'I22187016', 7483);
+insert into gestion values (5950, 'F83148409', 3047);
+insert into gestion values (2045, 'P73410827', 6999);
+insert into gestion values (5950, 'T73203614', 5596);
+insert into gestion values (7295, 'T61049099', 5514);
+insert into gestion values (6758, 'T73203614', 9511);
+insert into gestion values (2045, 'Q33782636', 6726);
+insert into gestion values (2419, 'I22187016', 7863);
+insert into gestion values (7295, 'F83148409', 7776);
+insert into gestion values (4512, 'P73410827', 1630);
+insert into gestion values (7295, 'P35052597', 6559);
+insert into gestion values (8244, 'T73203614', 5539);
+insert into gestion values (8244, 'T73203614', 4005);
+insert into gestion values (4491, 'I22187016', 6643);
+insert into gestion values (5950, 'N54939601', 6089);
+insert into gestion values (7140, 'N54939601', 7348);
+insert into gestion values (6758, 'P35052597', 1208);
+insert into gestion values (1166, 'F83148409', 8650);
+insert into gestion values (4548, 'Q33782636', 2286);
+insert into gestion values (2239, 'I22187016', 9512);
+insert into gestion values (2419, 'T61049099', 2042);
+insert into gestion values (2419, 'N54939601', 9292);
+insert into gestion values (5048, 'P73410827', 2928);
+insert into gestion values (4491, 'I22187016', 9598);
+insert into gestion values (7295, 'P73410827', 8342);
+insert into gestion values (4491, 'T61049099', 8323);
+insert into gestion values (2045, 'P73410827', 5118);
+insert into gestion values (3010, 'T73203614', 1192);
+insert into gestion values (8819, 'T61049099', 6673);

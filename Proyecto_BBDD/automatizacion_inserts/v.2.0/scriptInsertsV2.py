@@ -116,7 +116,7 @@ stock = ["S", "N"]
 # Array para fk
 arrayIdProducto = []
 
-for i in range(0, 40):
+for i in range(0, 80):
     precio = random.uniform(0, 9999)
     redondeado = round(precio, 2)
     fabricantess = fabricantes[random.randint(0, 6)]
@@ -288,7 +288,7 @@ def evaluar_mes(mes_intro, anio):
     return dia_entero
 
 
-for i in range(0, 40):
+for i in range(0, 80):
     cif_pedido = arrayCIF[random.randint(0, 9)]
     anno = (random.randint(2012, 2023))
     mes = (random.randint(1, 12))
@@ -318,7 +318,7 @@ correo = ["@gmail.com", "@hotmail.com", "@outlook.com", "@icloud.com"]
 
 arrayCliente = []
 
-for i in range(0, 40):
+for i in range(0, 80):
     while True:
         idCliente = random.randint(1000, 9999)
         if idCliente not in arrayCliente:
@@ -378,7 +378,7 @@ print(
 
 # Insert compra --> Alberto
 
-for i in range(0, 40):
+for i in range(0, 80):
     id_producto_compra = arrayIdProducto
     id_cliente_compra = arrayCliente
     cif_compra = array_cif_pedido[i]
@@ -396,6 +396,27 @@ print(
 nombre_emp = "nom"
 array_id_empleado = []
 
+nombres = [
+    "Ana", "Juan", "María", "Carlos", "Laura", "Pedro", "Lucía", "Diego", "Sofía", "Alejandro",
+    "Valentina", "Miguel", "Paula", "José", "Carmen", "Manuel", "Isabel", "Javier", "Elena", "Andrés",
+    "Adriana", "Raúl", "Victoria", "Fernando", "Luisa", "Gabriel", "Natalia", "Ricardo", "Clara", "Emilio",
+    "Rosa", "Francisco", "Esther", "Martín", "Alicia", "Héctor", "Lorena", "Gonzalo", "Olivia", "Pablo",
+    "Daniela", "Roberto", "Angela", "Simón", "Marina", "Alberto", "Inés", "Emilia", "Renata", "Alex"
+]
+
+apellidos = [
+    "García", "González", "López", "Rodríguez", "Martínez", "Pérez", "Sánchez", "Ramírez", "Romero", "Sosa",
+    "Álvarez", "Torres", "Fernández", "Ruiz", "Díaz", "Vázquez", "Rojas", "Morales", "Suárez", "Ortiz",
+    "Castro", "Flores", "Núñez", "Herrera", "Jiménez", "Silva", "Medina", "Vargas", "Aguirre", "Mendoza",
+    "Castillo", "Giménez", "Luna", "Chávez", "Martiñón", "Maldonado", "Pacheco", "Zamora", "Soto", "Peña",
+    "Ibarra", "Cabrera", "Campos", "Domínguez", "Guerrero", "Cruz", "Orozco", "Vega", "Ramos", "Navarro",
+    "Guerrero", "Valenzuela", "Salazar", "Hernández", "Moreno", "Ríos", "Andrade", "Molina", "Aguilar", "Delgado",
+    "Salinas", "Miranda", "Montes", "Escobar", "Gómez", "Ponce", "Cortés", "Chacón", "Santos", "Valencia",
+    "Ochoa", "Rosales", "Estrada", "Juárez", "Cisneros", "Bautista", "Castañeda", "Guerra", "Serrano", "Lara",
+    "Mercado", "Rangel", "Fuentes", "Terán", "Aranda", "Serrano", "Landa", "Zavala", "León", "Olvera",
+    "Figueroa", "Beltrán", "Escamilla", "Montoya", "Corona", "Barajas", "Téllez", "Zúñiga", "Aguilera", "Mulero"
+]
+
 for i in range(0, 20):
     anno = (random.randint(2010, 2023))
     mes = (random.randint(1, 12))
@@ -407,7 +428,11 @@ for i in range(0, 20):
         if id_empleado not in array_id_empleado:
             break
 
-    print(f"insert into empleado values {id_empleado, salario, nombre_emp, fecha_incorporacion};")
+    nombrerand = random.choice(nombres)
+    apellidorand = random.choice(apellidos)
+    nombre_empleado = str(nombrerand + " " + apellidorand)
+
+    print(f"insert into empleado values {id_empleado, salario, nombre_empleado, fecha_incorporacion};")
 
     array_id_empleado.append(id_empleado)
 
@@ -421,7 +446,7 @@ for i in range(0, 5):
     id_empleado_supervisa = array_id_empleado[i]
 
     while True:
-        id_empleado_supervisado = array_id_empleado[random.randint(0, 9)]
+        id_empleado_supervisado = random.choice(array_id_empleado)
         if id_empleado_supervisado not in [id_empleado_supervisa]:
             break
 
@@ -432,8 +457,8 @@ print(
 )
 
 # Tabla gestion --> Alberto
-for i in range(0, 20):
-    id_empleado_gestion = array_id_empleado[i]
+for i in range(0, 60):
+    id_empleado_gestion = random.choice(array_id_empleado)
     cif_gestion = array_cif_pedido[i]
     id_pedido_gestion = arrayPedido[i]
 
