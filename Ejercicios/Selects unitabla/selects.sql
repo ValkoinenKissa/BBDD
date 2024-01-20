@@ -241,4 +241,28 @@ select ISBN_N, Titulo from Novela where timestampdiff(month, Lanzamiento, Ultima
 select substring(ISBN_N, -1) from Novela;
 
 
-select nombre_departamento, presupuesto_departamento,(presupuesto_departamento / 12 * 7.32 /100) + presupuesto_departamento / 10 as incremento  from t_departamentos;
+select nombre_departamento, presupuesto_departamento, (presupuesto_departamento * 0.0732) / 4 as incremento, (presupuesto_departamento * 0.0732) / 4 + presupuesto_departamento as nuevo_presupuesto  from t_departamentos where (presupuesto_departamento / 12) > 710 order by nombre_departamento;
+
+select nombre_empleado, salario_base_empleado from t_empleados where year(fecha_ingreso_empleado) >= 1997 or year(fecha_ingreso_empleado) = 1976 order by nombre_empleado;
+
+select substring_index(nombre_empleado, ",", -1) as nombre, fecha_nacimiento_empleado as nacimiento, fecha_ingreso_empleado as ingreso from t_empleados where timestampdiff(year, fecha_ingreso_empleado, "2020-1-1") <= round(timestampdiff(year, fecha_nacimiento_empleado,"2020-1-1" ) / 2);
+
+
+select nombre_empleado, salario_base_empleado from t_empleados where (codigo_departamento = 110 or codigo_departamento = 111) and (numero_hijos_empleado = 0 or salario_base_empleado / numero_hijos_empleado > 1000);
+
+
+select ISBN_N, Titulo from Novela where timestampdiff(month, Lanzamiento, Ultima_edicion) > 6 and locate(substring_index(ISBN_N, "-", -1), ISBN_N) = 1;
+
+select Titulo, concat(SW_Era,",", date_format(Lanzamiento, "%Y-%m"),":", Id_dir) as identif from Pelicula where timestampdiff(year, "2000-1-1", Lanzamiento) > 13 and substring_index(Titulo, ":", 1) like "%VI%" or substring_index(Titulo, ":", 1) like "%VII%" or substring_index(Titulo, ":", 1) like "%VIII%";
+
+
+select substring_index(nombre_empleado, ",", -1) as nombre, fecha_nacimiento_empleado as nacimiento, fecha_ingreso_empleado as ingreso from t_empleados where timestampdiff(day, fecha_ingreso_empleado, "2020-1-1") <= round(timestampdiff(day, fecha_nacimiento_empleado,"2020-1-1" ) / 2);
+
+
+select nombre_empleado from t_empleados where ((numero_hijos_empleado * 100) < salario_base_empleado / 10) and (numero_hijos_empleado * 100) >= 100 order by nombre_empleado;
+
+
+
+select nombre_empleado, salario_base_empleado from t_empleados where year(fecha_ingreso_empleado) >= 1997 or year(fecha_ingreso_empleado) = 1976 order by nombre_empleado;
+
+
