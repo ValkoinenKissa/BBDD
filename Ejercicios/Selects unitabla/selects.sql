@@ -266,3 +266,9 @@ select nombre_empleado from t_empleados where ((numero_hijos_empleado * 100) < s
 select nombre_empleado, salario_base_empleado from t_empleados where year(fecha_ingreso_empleado) >= 1997 or year(fecha_ingreso_empleado) = 1976 order by nombre_empleado;
 
 
+select date_format(max(tiempo), "%H:%i") as Hora from peticiones where tiempo_procesado > 3 and (tipo_peticion like "%consulta%");
+
+
+select count(*) as exitos from peticiones where exito = 1;
+
+select min(tiempo) as Antigua, max(megabytes_ficheros) as Mb, max(tiempo_procesado) as "Tiempo procesado" from peticiones where tipo_peticion like "%actualizacion%";
