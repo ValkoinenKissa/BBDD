@@ -272,3 +272,60 @@ select date_format(max(tiempo), "%H:%i") as Hora from peticiones where tiempo_pr
 select count(*) as exitos from peticiones where exito = 1;
 
 select min(tiempo) as Antigua, max(megabytes_ficheros) as Mb, max(tiempo_procesado) as "Tiempo procesado" from peticiones where tipo_peticion like "%actualizacion%";
+
+select codigo_cliente, truncate(avg(megabytes_ficheros), 2) as media_megas, truncate(avg(numero_ficheros),2) as media_ficheros from peticiones group by codigo_cliente;
+
+select hour(tiempo) as hora, count(*) as num_peticiones from peticiones group by hora order by hora asc;
+
+select month(tiempo) as mes, sum(numero_ficheros) as num_ficheros, truncate(sum(megabytes_ficheros) / 1024, 2) as gigabytes from peticiones where tipo_peticion like "%insercion%" group by mes order by mes asc;
+
+
+select codigo_cliente, max(tiempo_procesado) as max_t, max(megabytes_ficheros) as max_f, min(tiempo_procesado) as min_t, min(megabytes_ficheros) as min_f from peticiones where codigo_cliente like "%ES%" group by codigo_cliente;
+
+
+select codigo_cliente, month(tiempo) as mes, max(tiempo) as ultima, min(tiempo) as primera from peticiones group by codigo_cliente, mes order by mes asc;
+
+select codigo_cliente, count(exito) as fracasos from peticiones where tipo_peticion like "%consulta%" and exito = 0 group by codigo_cliente having fracasos < 800 order by fracasos desc;
+
+select tipo_peticion, avg(tiempo_procesado) as tiempo_medio, sum(exito) as aceptadas from peticiones where codigo_cliente like "%ES%" group by tipo_peticion;
+
+select codigo_cliente, hour(tiempo) as franja, sum(exito) as peticiones from peticiones where exito > 700 or exito < 1000 group by codigo_cliente, franja;
+
+select count(*) as empleados from t_empleados where salario_base_empleado < (select avg(salario_base_empleado) from t_empleados);
+
+select nombre_departamento from t_departamentos where codigo_departamento IN(select codigo_departamento from t_empleados where salario_base_empleado=(select max(salario_base_empleado) from t_empleados));
+
+
+select codigo_empleado, nombre_empleado from t_empleados where year(fecha_ingreso_empleado) between 1980 and 1989 and codigo_departamento in (select codigo_departamento from t_departamentos where presupuesto_departamento < 10000);
+
+
+select codigo_departamento, presupuesto_departamento from t_departamentos;
+
+select id from rol where nombre like "%Alumno%";
+
+select min(fechaPermCirc) as "Fecha mas antigua", marca from automoviles group by marca having count(marca) > 40;
+
+
+select nombre, apellidos from persona where id in (select ida from alumno where idg in (select idg from (select count(*) as alumnos, idg from alumno group by idg) as subtabla where alumnos = 1));
+
+select codigo_cliente, month(tiempo) as mes, truncate((count(*) * 0.01 + sum(megabytes_ficheros) * 0.005 + sum(numero_ficheros) * 0.005), 2) as coste from peticiones where tipo_peticion not like "%consulta%" and exito != 0 group by codigo_cliente, mes order by mes;
+
+
+select month(tiempo) as mes, substring(codigo_cliente, 1, 2) as pais, tipo_peticion, count(exito) as fallidas, sum(tiempo_procesado) as tiempo from peticiones where exito = 0 group by mes, pais, tipo_peticion having tiempo > 300 order by pais, tiempo desc;
+
+
+select codigo_cliente, month(tiempo) as mes, count(exito) as peticiones from peticiones where exito = 1 group by codigo_cliente, mes having peticiones < 4000 order by mes;
+
+
+select nombre_empleado from t_empleados where salario_base_empleado < (select avg(salario_base_empleado) from t_empleados);
+
+select nombre_departamento from t_departamentos where codigo_departamento in (select codigo_departamento from t_empleados where salario_base_empleado = (select max(salario_base_empleado) from t_empleados));
+
+
+
+
+select cliente, max(total_factura) as "Factura mas alta"  from (select num, cliente, sum(precio_unidad * unidades) as total_factura from facturas group by cliente, num) as subconsulta group by cliente;
+
+
+select codigo_empleado, nombre_empleado from t_empleados where year(fecha_ingreso_empleado) between 1980 and 1989 and codigo_departamento in (select codigo_departamento from t_departamentos where presupuesto_departamento < 10000);
+
