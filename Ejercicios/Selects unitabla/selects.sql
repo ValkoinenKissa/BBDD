@@ -329,3 +329,11 @@ select cliente, max(total_factura) as "Factura mas alta"  from (select num, clie
 
 select codigo_empleado, nombre_empleado from t_empleados where year(fecha_ingreso_empleado) between 1980 and 1989 and codigo_departamento in (select codigo_departamento from t_departamentos where presupuesto_departamento < 10000);
 
+select nombre_empleado, salario_base_empleado from t_empleados where salario_base_empleado = any (select salario_base_empleado from t_empleados where codigo_departamento in (select codigo_departamento from t_departamentos where codigo_centro = (select codigo_centro from t_centros where ubicacion like "%C/ Atocha%" ))) and codigo_departamento not in (select codigo_departamento from t_departamentos where codigo_centro = (select codigo_centro from t_centros where ubicacion like "%C/ Atocha%"));
+
+
+select producto, count(producto) as lineas, sum(unidades) as unidades, avg(unidades) as media from facturas where unidades group by producto order by media;
+
+select substring(cliente, 1, length(cliente) / 2) as cod_cli, producto, avg(precio_unidad) as media, count(unidades) as num from facturas where precio_unidad >= 4 group by cod_cli, producto order by producto, cod_cli;
+
+select concat(right(cliente, 2), left(cliente, 2)) as cod_cli, sum(unidades * precio_unidad) as total, count(*) as num from facturas where dayofweek(fecha_fac) between 5 and 7 group by cod_cli order by total desc limit 3;
