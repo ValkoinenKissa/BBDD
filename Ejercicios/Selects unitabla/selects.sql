@@ -337,3 +337,54 @@ select producto, count(producto) as lineas, sum(unidades) as unidades, avg(unida
 select substring(cliente, 1, length(cliente) / 2) as cod_cli, producto, avg(precio_unidad) as media, count(unidades) as num from facturas where precio_unidad >= 4 group by cod_cli, producto order by producto, cod_cli;
 
 select concat(right(cliente, 2), left(cliente, 2)) as cod_cli, sum(unidades * precio_unidad) as total, count(*) as num from facturas where dayofweek(fecha_fac) between 5 and 7 group by cod_cli order by total desc limit 3;
+
+select nombre_empleado, salario_base_empleado from t_empleados where salario_base_empleado > 3000 and codigo_departamento in (select codigo_departamento from t_empleados group by codigo_departamento having avg(salario_base_empleado) <3000);
+
+
+
+Mostrar por departamento cuánto presupuesto de departamento tendría cada empleado.
+cod_dep	presupuesto_medio
+100	40000.0000
+110	5000.0000
+111	1375.0000
+112	1285.7143
+120	3000.0000
+121	500.0000
+122	1200.0000
+130	666.6667
+
+
+select codigo_departamento as cod_dep, presupuesto_departamento / (select count(*) from t_empleados where codigo_departamento = cod_dep group by codigo_departamento) as presupuesto_medio from t_departamentos;
+
+
+Si se despidiese al empleado que más gana de cada departamento, y un salario mensual pasase al presupuesto del departamento, ¿a cuánto ascendería cada presupuesto de departamento?
+cod_dep	presupuesto_departamento + (select max(salario_base_empleado) from t_empleados where codigo_departamento = cod_dep)
+100	127200
+110	19800
+111	14100
+112	12800
+120	5700
+121	6400
+122	10500
+130	6200
+
+select codigo_departamento as cod_dep, presupuesto_departamento + (select max(salario_base_empleado) from t_empleados where codigo_departamento = cod_dep) as presupuesto from t_departamentos;
+
+
+Selecciona la diferencia de la media de las pólizas de la aseguradora Direct Seguros por año con la media de todas las pólizas de cada año.
+
+Solución 9 filas:
+
+año	difMedia
+2000	20.7500
+2001	-75.3167
+2002	24.4649
+2003	-148.5645
+2004	-466.0784
+2005	-212.7480
+2006	-0.4848
+2007	25.7143
+2009	48.5000
+
+
+select year(fechaAlta) as año, avg(cuantia) - (select avg(cuantia) as media from polizas where nombreAseguradora like "Direct Seguros" and year(fechaAlta) = año ) as difMedia from polizas group by año order by año;
