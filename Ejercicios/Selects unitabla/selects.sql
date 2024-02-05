@@ -388,3 +388,16 @@ año	difMedia
 
 
 select year(fechaAlta) as año, avg(cuantia) - (select avg(cuantia) as media from polizas where nombreAseguradora like "Direct Seguros" and year(fechaAlta) = año ) as difMedia from polizas group by año order by año;
+
+
+select truncate(avg(salario_base_empleado),2) from t_empleados where codigo_departamento in (select codigo_departamento from t_departamentos where presupuesto_departamento < 10000);
+
+select nombre_departamento from t_departamentos where codigo_departamento in (select codigo_departamento from t_empleados where year(fecha_nacimiento_empleado) between 1978 and 1989);
+
+select nombre_empleado, year(fecha_nacimiento_empleado) as "año" from t_empleados where codigo_departamento in (select codigo_departamento from t_departamentos where presupuesto_departamento < 4000) and numero_hijos_empleado > 2;
+
+
+Selecciona el nombre del empleado sin el apellido, con la inicial siempre en minuscula y el cudrado de el salario de los empleados redondeado al entero más cercano sumado al salario base del empleado como Incremento_salario de aquellos empleados cuya longitud del apellido sea menor o igual a 10 caracteres y su nombre termine en s o en n ordenado por el nombre del empleado.
+
+
+select substring_index(lower(substring(nombre, 1)), " ", 1) as Nombre, round(sqrt(salario), 2) + salario as Incremento_salario from empleado where length(substring_index(nombre, " ", -1)) <= 10 and substring_index(nombre, " ", 1) like "%s" or substring_index(nombre, " ", 1) like "%n";
