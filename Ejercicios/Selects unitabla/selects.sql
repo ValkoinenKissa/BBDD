@@ -332,9 +332,11 @@ select codigo_empleado, nombre_empleado from t_empleados where year(fecha_ingres
 select nombre_empleado, salario_base_empleado from t_empleados where salario_base_empleado = any (select salario_base_empleado from t_empleados where codigo_departamento in (select codigo_departamento from t_departamentos where codigo_centro = (select codigo_centro from t_centros where ubicacion like "%C/ Atocha%" ))) and codigo_departamento not in (select codigo_departamento from t_departamentos where codigo_centro = (select codigo_centro from t_centros where ubicacion like "%C/ Atocha%"));
 
 
-select producto, count(producto) as lineas, sum(unidades) as unidades, avg(unidades) as media from facturas group by producto order by media;
+select producto, count(producto) as lineas, sum(unidades) as unidades, avg(unidades) as media from facturas where unidades group by producto order by media;
 
 select substring(cliente, 1, length(cliente) / 2) as cod_cli, producto, avg(precio_unidad) as media, count(unidades) as num from facturas where precio_unidad >= 4 group by cod_cli, producto order by producto, cod_cli;
+
+select concat(right(cliente, 2), left(cliente, 2)) as cod_cli, sum(unidades * precio_unidad) as total, count(*) as num from facturas where dayofweek(fecha_fac) between 5 and 7 group by cod_cli order by total desc limit 3;
 
 select nombre_empleado, salario_base_empleado from t_empleados where salario_base_empleado > 3000 and codigo_departamento in (select codigo_departamento from t_empleados group by codigo_departamento having avg(salario_base_empleado) <3000);
 
@@ -388,64 +390,17 @@ año	difMedia
 select year(fechaAlta) as año, avg(cuantia) - (select avg(cuantia) as media from polizas where nombreAseguradora like "Direct Seguros" and year(fechaAlta) = año ) as difMedia from polizas group by año order by año;
 
 
-select concat(right(cliente, 2), left(cliente, 2)) as cod_cli, sum(unidades * precio_unidad) as total, count(*) as num from facturas where weekday(fecha_fac) between 3 and 6 group by cod_cli order by total desc limit 3;
+select truncate(avg(salario_base_empleado),2) from t_empleados where codigo_departamento in (select codigo_departamento from t_departamentos where presupuesto_departamento < 10000);
+
+select nombre_departamento from t_departamentos where codigo_departamento in (select codigo_departamento from t_empleados where year(fecha_nacimiento_empleado) between 1978 and 1989);
+
+select nombre_empleado, year(fecha_nacimiento_empleado) as "año" from t_empleados where codigo_departamento in (select codigo_departamento from t_departamentos where presupuesto_departamento < 4000) and numero_hijos_empleado > 2;
 
 
-select cliente, day(fecha_fac) as dia, count(*) as numero, sum(precio_unidad * unidades) as coste from facturas where length(cliente) <= 14 and precio_unidad > 0.50 group by dia, cliente order by dia;
+Selecciona el nombre del empleado sin el apellido, con la inicial siempre en minuscula y el cudrado de el salario de los empleados redondeado al entero más cercano sumado al salario base del empleado como Incremento_salario de aquellos empleados cuya longitud del apellido sea menor o igual a 10 caracteres y su nombre termine en s o en n ordenado por el nombre del empleado.
 
 
-
-select producto, count(producto) as lineas, sum(unidades) as unidades, avg(unidades) as media from facturas group by producto order by media limit 3;
-
-
-
-select substring(cliente, 1, length(cliente) /2) as cod_cli, producto, avg(precio_unidad) as media, count(unidades) as num from facturas where precio_unidad >= 4 group by producto, cod_cli order by producto, cod_cli;
-
-Selecciona la inicial del nombre con un punto y el apellido separado por espacio y 
-la fecha de nacimiento con el formato 00 de January de 90 de 
-aquellos que viven en una ciudad donde viven menos de 3 personas de la base de datos.
-Resultado 4 filas:
-persona	fechaNac
-C. Jimemenz	28 de February de 76
-J. Sanz	16 de June de 91
-A. Beltran	30 de November de 00
-A. Gomez	23 de December de 98
-
-
-select concat(left(nombre, 1), ".", apellidos) as Persona, date_format(fnac, " %d de %M de %y ") from persona where ciudad in (select ciudad from persona group by ciudad having count(ciudad) < 3);
-
-Selecciona el código, el rango y la sanción de las infracciones muy graves cuyo importe es igual o superior al doble de la que tiene mayor cuantía de las graves.
-Solución 3 filas:
-codigo	rango	importe
-10	Muy Grave	600
-11	Muy Grave	600
-18	Muy Grave	1500
-
-
-select codigo, rango, importe from sanciones where importe >= (select max(importe) *2  from sanciones where rango like "Grave");
-
-
-Selecciona el nombre y el apellido de las personas que son alumnos de grupos con un solo alumno:
-Resultado 4 filas:
-
-nombre	apellidos
-Ana	Beltran
-Belen	Figar
-Sarai	Agbar
-Alberto	Zara
-
-select nombre, apellidos from persona where id in (select id from alumno where idg in (select id from grupo group by id having count(id) = 1));
-
-
-Selecciona la matrícula de los coches de marca KIA que tienen
- pólizas de seguro a todo riesgo sin franquicia y su mes de alta de la póliza es noviembre.
-Solución 2 filas:
-matricula
-1000CNY
-1000CPB
-
-select matricula from automoviles where marca like "KIA" and matricula in (select matricula from polizas where descripcion like "Todo riesgo sin franquicia" and month(fechaAlta) = 11);
-
+select substring_index(lower(substring(nombre, 1)), " ", 1) as Nombre, round(sqrt(salario), 2) + salario as Incremento_salario from empleado where length(substring_index(nombre, " ", -1)) <= 10 and substring_index(nombre, " ", 1) like "%s" or substring_index(nombre, " ", 1) like "%n";
 
 #Selecciona todos los nacidos en Cádiz (CA), Toledo (TO) o Valencia (V).
 
@@ -600,3 +555,197 @@ Selecciona el número de etapa, los metros que tiene la etapa y de dónde sale d
 Total 4 filas:
 
 select numetapa, kms * 1000 as metros, salida from etapa where length(salida) >= 5 and (kms * 1000) < 100000 or length(salida) = 4 order by salida;
+
+
+Mostrar el código de empleado, el la extensión telefónica y el nombre del empleado de aquellos donde no hay más de 100 de diferencia entre su código de empleado y su extensión telefónica y cuyo apellido no comienza por la letra L.
+Total filas: 4
+
+select codigo_empleado, extension_telefonica_empleado, nombre_empleado from t_empleados where abs(codigo_empleado - extension_telefonica_empleado) < 100 and nombre_empleado not like "L%";
+
+Selecciona el código de empleado, su nombre y apellidos y su paga, sabiendo que la paga será el salario mas un 25% de la comisión por cada hijo que tenga. 
+Solo ha de mostrar de aquellos que tienen comisiones y se incorporaron a la empresa el 1 de enero de 1990 o posterior.
+
+select codigo_empleado, nombre_empleado, salario_base_empleado + comision_empleado * 0.25 * numero_hijos_empleado as Paga from t_empleados where comision_empleado is not null and year(fecha_ingreso_empleado) > "1990-1-1";
+
+Mostrar el nombre, la comisión y el número de hijos de los empleados, de aquellos que tengan dos letras "a" en el nombre
+ (no tiene por qué en el apellido, solo obligatorio en el nombre: por ejemplo "Alvarez, Rosa" no lo cumple, pero sí "Veiga, Juliana"), y que o no tengan hijos o no tengan comisión.
+Total filas: 9
+
+select nombre_empleado, comision_empleado, numero_hijos_empleado from t_empleados where substring_index(nombre_empleado, " ", -1) like "%a%%a%" and (numero_hijos_empleado <1 or comision_empleado is null);
+
+
+Mostrar el nombre, y las fechas de nacimiento e ingreso de aquellos empleados que contengan las letras "a" y "r" (en ese orden) en el apellido (no tiene por qué en el nombre, solo obligatorio en el apellido: por ejemplo 
+"Lasa, Mario" no lo cumple, pero sí "Aguirre, Pablo") y, además de esto, que hayan nacido desde 1960 o se hayan incorporado desde 1987
+
+select nombre_empleado, fecha_nacimiento_empleado, fecha_ingreso_empleado from t_empleados where substring_index(nombre_empleado, " ", 1) like "%a%%r%" and (year(fecha_nacimiento_empleado) > "1960-1-1" or year(fecha_ingreso_empleado) > "1987-1-1");
+
+De la tabla FACTURAS visualizar la fecha de factura, el producto y las unidades de aquellas filas en que las  unidades sean divisibles entre 12, ordenados por la columna de fecha de factura.
+
+Total 62 filas:
+
+
+select fecha_fac, producto, unidades from facturas where unidades % 12 = 0 order by fecha_fac;
+
+De la tabla FACTURAS visualizar las unidades de aquellas filas en que el número de unidades sea menor que 10, visualizando además una nueva columna con el valor de las unidades elevadas al cubo y con el alias Unid. al cubo. Pista: Función pow.
+
+Total 28 filas:
+
+select unidades, pow(unidades, 3)as "Alias unid" from facturas where unidades < 10;
+
+De la tabla FACTURAS visualizar el número de factura, las unidades, la diferencia entre el número de factura y las unidades con el alias VAL_SIGNO y el valor absoluto de la diferencia entre el número de factura y las unidades con el alias VAL_ABSOLUTO 
+de aquellas filas donde el número de unidades supere al doble del número de factura. Pista: Función abs
+
+Total 57 filas:
+
+select num, unidades, num - unidades as "VAL_SIGNO", abs(num - unidades) as "VAL_ABSOLUTO" from facturas where unidades > num * 2;
+
+De la tabla EMPLEADOS visualizar las columnas del valor de la diferencia en entre DIETAS y COMISION con el alias “Diferencia”, 
+el valor absoluto de la diferencia entre DIETAS y COMISION con el alias “Absoluto”, el valor del signo de la diferencia entre DIETAS y 
+COMISION con el alias “Signo” y por último el va lor de la suma del SUELDO, DIETAS y COMISION con el alias “Total”. Pista: Función sign.
+
+Total 6 filas:
+
+select dietas - comision as diferencia, abs(dietas - comision) as Absoluto, sign(dietas - comision) as signo, sueldo+dietas+comision as Total from empleados;
+
+De la tabla FECHAS visualizar en mayúsculas la columna FIESTA de aquellas filas cuya fecha de celebración sea anterior al mes de agosto. Pista: Función upper y month.
+
+Total 5 filas:
+
+select upper(fiesta) from fechas where month(fecha_ce) < 8;
+
+De la tabla LIBROS visualizar en minúscula el nombre del autor y relleno por la derecha del carácter punto (.) hasta 25 posiciones. Pista: Función rpad.
+
+Total 12 filas:
+
+select rpad(lower(NOM_AUTOR), 25, ".") as autor from libros;
+
+
+
+De la tabla LIBROS visualizar el nombre del autor cambiando las letras ‘A’ por letras ‘O’ y el título cambiando las letras ‘E’ por letras ‘U’. Pista: Función replace.
+
+Total 12 filas:
+
+
+select replace(NOM_AUTOR, "A", "O") as "Nombre Autor", replace(TITULO, "E", "U") as titulo from libros;
+
+De la tabla FECHAS visualizar en mayúsculas la columna FIESTA de aquellas filas cuya longitud de FIESTA sea par. Pista: Función length.
+
+Total 4 filas:
+
+select upper(fiesta) as Fiesta from fechas where length(fiesta) % 2 = 0;
+
+De la tabla DATOSPERSONALES visualizar en minúsculas la dirección con el alias Direc., código postal con el alias CP, población con el alias Pob., provincia con el alias Prov., teléfono con el alias Tlf. 
+y estado civil con el alias Est. Civ. de aquellas filas que no tengan como población MADRID. Pista: Función lower.
+
+Total 3 filas:
+
+select lower(direccion) as Direc, codigo_postal as CP, poblacion as Pob, provincia as Prov, telefono as Tlf, estado_civil as "Est. Civ." from datospersonales where POBLACION not like "%MADRID%";
+
+Muestra los 4 primeros caracteres del cliente junto a los 5 primeros del producto entre paréntesis en 
+un campo llamado cli(prod), y el precio de cada unidad, de los productos cuyas unidades valen entre 0.25 y 1. 11 filas
+
+cli(prod)   | precio_unidad |
+
++-------------+---------------+
+
+| Supe(Cuaja) |          0.25 |
+
+| Ahor(Cuaja) |          0.25 |
+
+| Ahor(Cuaja) |          0.25 |
+
+| Bara(Cuaja) |          0.25 |
+
+| Bara(Cuaja) |          0.25 |
+
+| Supe(Cuaja) |          0.25 |
+
+| Comp(Cuaja) |          0.25 |
+
+| El B(Cuaja) |          0.25 |
+
+| El C(Cuaja) |          0.25 |
+
+| Blan(Cuaja) |          0.25 |
+
+| Supe(Cuaja) |          0.25 |
+
++-------------+---------------+
+
+11 rows in set (0,00 sec)
+
+
+
+select concat(left(cliente, 4), "(", left(producto, 5), ")") as "cli(prod)", precio_unidad from facturas where precio_unidad between 0.25 and 1.11;
+
+
+Muestra los 10 productos con menor coste total (precio por unidades), mostrando del nombre del producto los mismos caracteres que
+ tiene el nombre del cliente. Ordenarlo por el coste total ascendente. 10 filas
+
+
+
+select left(producto, length(cliente)) as prodlen, precio_unidad * unidades as coste_total from facturas order by coste_total limit 10;
+
+
+Muestra los 4 primeros caracteres del cliente y los 4 últimos del producto, de las facturas que tienen menos de 6 unidades. (11 filas)
+
+select left(cliente, 4) as cli4, right(producto, 4) as pro4 from facturas where unidades < 6;
+
+De la tabla LIBROS visualizar la columna del título del libro con la primera en minúscula y el resto en mayúscula con el alias “Titulo”, visualizando así mismo la columna del nombre
+del autor rellena por la izquierda con el carácter subra yado (_) hasta un total de 25 posiciones y con el alias “Autor”. Pista: Función lpad.
+
+
+select concat(lower(left(Titulo, 1)), upper(substring(titulo, 2))) as Titulo, lpad(NOM_AUTOR, 25, "_") as Autor from libros;
+
+De la tabla LIBROS visualizar la concatenación del nombre del autor y el primer apellido todo ello en minúscula y separados por un espacio en blanco con el alias “Autor”. 
+Visualizar además la columna del título con la primera letra de la columna en mayúscula y el resto en minúscula con el alias “Título”. Pista: función concat y substr.
+
+
+select lower(concat(NOM_AUTOR, " ", APE1_AUTOR)) as Autor, concat(upper(left(titulo, 1)), lower(substring(titulo, 2, length(titulo)))) as titulo from libros;
+
+
+De la tabla LIBROS visualizar el título en minúscula y el nombre del autor con la primera en mayúsculas y el resto en minúsculas con el alias “Autor”,
+de aquellas filas cuyos libros tengan más de 200 páginas, ordenado  descendentemente por título.
+
+select lower(TITULO) as titulo, concat(upper(left(NOM_AUTOR, 1)), lower(substring(NOM_AUTOR, 2, length(NOM_AUTOR)))) as Autor from libros where NUM_PAGINAS > 200 order by titulo desc;
+
+
+Mostrar el nombre del producto relleno con puntos hasta 15 caracteres seguido de dos puntos, espacio y el nombre del cliente llamado "procli", después el coste total resultante de multiplicar unidades por precio unidad,
+y finalmente el número de monedas de 50 céntimos necesarias para pagar ese coste total, 
+de aquellas filas cuyo nombre de producto tiene menor longitud que la posición de la primera "o" en el nombre del cliente. Total 28 filas:
+
+| procli                          | coste_total | monedas50 |
+
++---------------------------------+-------------+-----------+
+
+| Yogurt lim¢n...: Super Paquito  |        1.20 |         3 |
+
+| Leche entera...: Super Paquito  |       72.00 |       144 |
+
+| Leche semi.....: Super Paquito  |       74.88 |       150 |
+
+| Leche calcio...: Super Paquito  |       37.44 |        75 |
+
+| Cuajada........: Super Paquito  |        2.50 |         5 |
+
+| Yogurt fresa...: Super Paquito  |        0.60 |         2 |
+
+| Leche entera...: Super Paquito  |       72.00 |       144 |
+
+| Flan...........: Super Paquito  |       36.00 |        72 |
+
+| Cuajada........: Super Paquito  |        1.50 |         3 |
+
+| Queso fresco...: Super Paquito  |       18.06 |        37 |
+
+| Yogurt lim¢n...: Super Paquito  |        1.80 |         4 |
+
+| Yogurt fresa...: Super Paquito  |        2.40 |         5 |
+
++---------------------------------+-------------+-----------+
+
+28 rows in set (0,01 sec)
+
+
+
+select concat(rpad(producto, 15, "."),": ", cliente) as procil, precio_unidad * unidades as coste_total, ceil(precio_unidad * unidades) / 0.50 as monedas50 from facturas where length(producto) < locate("o", cliente);
