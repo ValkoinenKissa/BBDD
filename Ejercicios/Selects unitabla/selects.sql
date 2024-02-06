@@ -401,3 +401,157 @@ Selecciona el nombre del empleado sin el apellido, con la inicial siempre en min
 
 
 select substring_index(lower(substring(nombre, 1)), " ", 1) as Nombre, round(sqrt(salario), 2) + salario as Incremento_salario from empleado where length(substring_index(nombre, " ", -1)) <= 10 and substring_index(nombre, " ", 1) like "%s" or substring_index(nombre, " ", 1) like "%n";
+
+#Selecciona todos los nacidos en Cádiz (CA), Toledo (TO) o Valencia (V).
+
+Total filas: 6
+
+
+select * from nacimientos where Provincia like "%to%" or Provincia like "%C%" or Provincia like "%V%";
+
+solucion carlos:
+
+Se puede utilizar el comparador de igualación ya que los datos son atomicos es decir solo CA o TO, pero si no obligatoriamente un like
+
+select * from nacimientos where provincia = "CA" or provincia = "TO" or provincia = "V";
+
+
+Selecciona todos los no nacidos en Málaga (MA) y que su primer apellido o nombre empiecen por A
+
+Total filas: 6
+
+Selecciona todos los no nacidos en Málaga (MA) y que su primer apellido o nombre empiecen por A
+
+select * from nacimientos where Provincia != "MA" and Apellido1 like "A%";
+
+
+Selecciona todos los no nacidos en Madrid (M) ordenados de más nuevo a más antiguo por fecha de nacimiento.
+
+Total filas: 17
+
+select * from nacimientos where Provincia not like "%M%" order by FechaNac desc;
+
+
+Selecciona el nombre y apellidos de los nacidos entre mayo de 2006 y abril de 2007, ordenados descendentemente por ambos apellidos.
+
+Total filas: 3
+
+select nombre, Apellido1, Apellido2 from nacimientos where FechaNac between "2006-05-01" and "2007-04-30" order by Apellido1, Apellido2 desc;
+
+
+Selecciona las columnas de apellido1, apellido2 y fecha de aquellas filas en las que su fecha de nacimiento se encuentre entre 2-1-2005 y 10-11-2005, ambos incluidos, ordenados por fecha.
+
+Total filas: 7
+
+
+select Apellido1, Apellido2, FechaNac from nacimientos where FechaNac between "2005-01-02" and "2005-11-10" order by FechaNac;
+
+
+Selecciona todos los que su primer apellido contenga dos letras 'a' o el segundo la letra 'z'.
+
+Total filas: 9
+
+select * from nacimientos where Apellido1 like "%a%%a%" or Apellido1 like "%z%";
+
+De la tabla FACTURAS visualizar el nombre del cliente, nombre del producto, el precio unitario, 
+las unidades pedidas y el valor total de las unidades pedidas bajo el título de columna TOTAL EUR, y otra columna TOTAL PST en pesetas en vez de euros. 
+Hay que tener en cuenta que no existían los céntimos de peseta hace 25 años, por lo que habrá que redondear para que no muestre céntimos.
+
+114 filas.
+
+select cliente, producto, precio_unidad as "Precio unitario", precio_unidad * unidades as TOTAL_EUR, round((precio_unidad * unidades) * 166.386) as TOTAL_PST from facturas;
+
+
+De la tabla FACTURAS visualizar el nombre del producto, el precio unitario, las unidades pedidas, el valor total de las unidades pedidas bajo el título PRECIO_TOTAL
+ y una última columna donde se aplicará un descuento del 15% bajo el título de PRECIO_FINAL. Se tendrá en cuenta que únicamente se seleccionarán las filas que superen las 15 unidades y ordenadas  
+ ascendentemente por su fecha de factura, aunque dicha fecha no se visualizará.
+
+55 filas:
+
+
+select producto, precio_unidad, unidades, precio_unidad * unidades as PRECIO_TOTAL, abs((precio_unidad * unidades * 0.15) - (precio_unidad * unidades)) as PRECIO_FINAL from facturas where unidades > 15 order by fecha_fac;
+
+
+De la tabla FACTURAS visualizar el nombre del producto y el valor total de las unidades pedidas bajo el título PRECIO_TOTAL y ajustando el precio al entero siguiente. 
+Se tendrá en cuenta que únicamente se seleccionarán aquellas filas que tengan 15 o menos unidades y se ordenarán ascendentemente por el PRECIO_TOTAL. Pista: Función Ceil.
+
+Total 59 filas:
+
+select producto,  ceil(precio_unidad * unidades) as PRECIO_TOTAL from facturas where unidades <= 15 order by PRECIO_TOTAL;
+
+
+De la tabla FACTURAS visualizar el número de factura, el nombre del producto, el precio unitario de las filas cuyo número de factura sea par, ordenadas descendentemente por número de factura y visualizando una nueva columna 
+con el valor de la raíz cuadrada del número de factura y con el alias “Raíz”  redondeada a dos decimales. Pista: Funciones Round y Sqrt.
+
+Total 61 filas:
+
+select num, producto, precio_unidad, round(sqrt(num), 2) as Raiz from facturas where num % 2 = 0 order by num desc;
+
+
+De la tabla FACTURAS visualizar la fecha de factura, el producto, las unidades, el número de paquetes y los huecos del último paquete de aquellas facturas en que las unidades sean inferiores a 36, 
+ordenados descendentemente por la columna de fecha de factura. Se ha de tener en cuenta que en un paquete caben 12 unidades.
+
+Total 87 filas:
+
+select fecha_fac, producto, unidades, ceil(unidades / 12) as num_paquetes, ceil(unidades / 12) * 12 - unidades as huecos from facturas where unidades < 36 order by fecha_fac desc;
+
+
+De la tabla FECHAS, visualizar aquellas fiestas cuyo día de celebración es distinto al de la fiesta real.
+
+Total 2 filas:
+
+select FIESTA from fechas where timestampdiff(day, FECHA_FI, FECHA_CE) != 0;
+
+
+De la tabla libros, los títulos y el precio por página en céntimos, de aquellos cuyas páginas cuesten más de 3 céntimos.
+
+Total 4 filas:
+
+select titulo, (precio / NUM_PAGINAS * 100) as "Precio pagina cts" from libros where (precio / NUM_PAGINAS) > 0.03;
+
+
+De la tabla empelados muestra el código, el sueldo y las dietas de los empleados que no tengan comisión y cuyo sueldo sea menos de 10 veces las dietas.
+
+Total 1 filas:
+
+select codigo, sueldo, dietas from empleados where  comision is null and sueldo < dietas * 10;
+
+
+De la tabla facturas, muestra todas las columnas cuyos clientes comienzan por "El" con más de 50 unidades, o que no comiencen por "El" y tengan menos de 5.
+
+Total 13 filas:
+
+select * from facturas where substring_index(cliente, " ", 1) like "%El%" and unidades > 50 or substring_index(cliente, " ", 1) not like "%El%" and unidades and unidades < 5;
+
+Muestra el nombre, la edad y el equipo de los ciclistas que tengan entre 20 y 25 años, o entre 30 y 35 años, pero que pertenezcan a equipos que empiezan por B.
+
+Total 7 filas:
+
+!!!!Mucho ciudado con los parentesis!!!!
+
+select nombre, edad, nomequipo from ciclista where nomequipo like "B%" and (edad between 20 and 25 or edad between 30 and 35);
+
+
+Selecciona el dorsal, nombre y edad de los ciclistas cuya cifra de unidad de dorsal coincide con la cifra de unidad de su edad. (Fijarse: 11 con 31, 17 con 37, 21 con 31, etc).
+
+Total 8 filas
+
+select dorsal, nombre, edad from ciclista where (dorsal % 10) = (edad % 10);
+
+Selecciona el nombre, la edad, el equipo y la diferencia entre la edad y el dorsal, de aquellos cuyo nombre empieza por M y el equipo por B, o el nombre por A y el equipo por M.
+
+Total 7 filas:
+
+select nombre, edad, nomequipo, abs(edad - dorsal) as diff from ciclista where nombre like "M%" and nomequipo like "B%" or nombre like "A%" and nomequipo like "M%";
+
+Selecciona los kilómetros, la salida, la llegada y el dorsal (del ganador) de las etapas cuya longitud en kilómetros es múltiplo del dorsal del ganador, pero de aquellas etapas que no sean circulares.
+
+Total 9 filas:
+
+select kms, salida, llegada, dorsal from etapa where kms % dorsal = 0 and salida != llegada;
+
+Selecciona el número de etapa, los metros que tiene la etapa y de dónde sale de aquellas etapas con 5 o más caracteres en el lugar de salida y menos de 100000 metros de longitud, o con solo cuatro caracteres en el lugar de salida sin importar la longitud. Mostrar ordenado alfabéticamente por la salida.
+
+Total 4 filas:
+
+select numetapa, kms * 1000 as metros, salida from etapa where length(salida) >= 5 and (kms * 1000) < 100000 or length(salida) = 4 order by salida;
