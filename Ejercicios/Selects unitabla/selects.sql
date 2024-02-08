@@ -1456,3 +1456,13 @@ select cliente, max(max_fac) from  (select num, cliente, sum(precio_unidad * uni
 
 
 select cliente, sum(precio_unidad * unidades) - (select count(distinct num) * 0.10 from facturas) as precio_descuento from facturas group by cliente;
+
+select count(*) as num, concat(marca, "(", left(gama, 1), ")") as marca_vehiculo from modelos group by marca_vehiculo having num > 5 order by right(marca_vehiculo, 2);
+
+select count(nombreAseguradora) as "Num. Polizas", matricula from polizas where fechaBaja is null and substring() group by matricula;
+
+
+select concat(left(matricula, 2), right(matricula, 3), substring(matricula, -5)) as matricula, abs(timestampdiff(day, fechaAlta, "2019-3-17")) as dias from polizas where abs(timestampdiff(day, fechaAlta, "2019-3-17")) between 4500 and 4999;
+
+
+select abs(timestampdiff(day, fechaAlta, "2019-3-17")) from polizas;
