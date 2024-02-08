@@ -1445,5 +1445,14 @@ select month(tiempo) as mes, left(codigo_cliente, 2) as pais, tipo_peticion, cou
 
 
 
+¿Cuántos empleados ganan menos que la media?: 20
 
 
+select count(*) from t_empleados where (select avg(salario_base_empleado) from t_empleados) > salario_base_empleado;
+
+select nombre_departamento from t_departamentos where presupuesto_departamento = (select max(presupuesto_departamento) from t_departamentos);
+
+select cliente, max(max_fac) from  (select num, cliente, sum(precio_unidad * unidades) as max_fac from facturas group by cliente, num) as Factua_mas_alta group by cliente order by cliente;
+
+
+select cliente, sum(precio_unidad * unidades) - (select count(distinct num) * 0.10 from facturas) as precio_descuento from facturas group by cliente;
