@@ -472,8 +472,8 @@ De la tabla FACTURAS visualizar el nombre del producto, el precio unitario, las 
 select producto, precio_unidad, unidades, precio_unidad * unidades as PRECIO_TOTAL, abs((precio_unidad * unidades * 0.15) - (precio_unidad * unidades)) as PRECIO_FINAL from facturas where unidades > 15 order by fecha_fac;
 
 
-De la tabla FACTURAS visualizar el nombre del producto y el valor total de las unidades pedidas bajo el título PRECIO_TOTAL y ajustando el precio al entero siguiente. 
-Se tendrá en cuenta que únicamente se seleccionarán aquellas filas que tengan 15 o menos unidades y se ordenarán ascendentemente por el PRECIO_TOTAL. Pista: Función Ceil.
+"De la tabla FACTURAS visualizar el nombre del producto y el valor total de las unidades pedidas bajo el título PRECIO_TOTAL y ajustando el precio al entero siguiente. 
+Se tendrá en cuenta que únicamente se seleccionarán aquellas filas que tengan 15 o menos unidades y se ordenarán ascendentemente por el PRECIO_TOTAL. Pista: Función Ceil."
 
 Total 59 filas:
 
@@ -749,3 +749,701 @@ de aquellas filas cuyo nombre de producto tiene menor longitud que la posición 
 
 
 select concat(rpad(producto, 15, "."),": ", cliente) as procil, precio_unidad * unidades as coste_total, ceil(precio_unidad * unidades) / 0.50 as monedas50 from facturas where length(producto) < locate("o", cliente);
+
+
+Mostrar el terminal y el cargo que usó dicho terminal, así como la fecha de inicio y final de uso 
+(en formato de fecha español día/mes/año con dos dígitos), de aquellos que estuvieron más de 6 meses en el cargo, y 
+los días del mes de la fecha de inicio y de final no difieren en más de 5.
+
+Total filas: 6
+
+select terminal, cargo, date_format(finicio, "%d/%m/%Y") as finicio, date_format(ffin, "%d/%m/%Y") as ffin from usa where timestampdiff(month, finicio, ffin) > 6 and abs(day(finicio) - day(ffin)) < 5;
+
+Muestra el número de remitente y de destino, así como las hora, minuto y segundo (en el formato indicado en la tabla) 
+del inicio y final de la llamada, de aquellas que comenzaron entre las 9 y las 11 pero no terminaron en esa franja.
+
+Total filas: 4
+
+ numerorem | numerodes | finicio     | ffin        |
+
++-----------+-----------+-------------+-------------+
+
+| 620020200 | 620020203 | 11h,55m,53s | 12h,10m,30s |
+
+| 620020200 | 620020203 | 11h,57m,28s | 12h,00m,13s |
+
+| 620020200 | 633909002 | 11h,55m,58s | 12h,07m,44s |
+
+| 620020207 | 620020200 | 10h,13m,20s | 12h,00m,01s |
+
++-----------+-----------+-------------+-------------
+
+!!!OPERADORES EXTRAÑOS IMPORTANTE NO VIENE EN APUNTES!!!
+
+
+select numerorem, numerodes, date_format(finicio, "%kh, %im, %ss") as finicio, date_format(ffin, "%kh, %im, %ss") as ffin from llamada where hour(finicio) between 9 and 11 and hour(ffin) not between 9 and 11;
+
+
+Selecciona los números que intervienen en las llamadas de más de 10 minutos cuyos 
+tres primeros dígitos están separados por más de 3 números, 
+mostrando las fechas de inicio y fin de llamada como se muestra en la tabla.
+
+9 filas
+
+ numerorem | numerodes | finicio          | fin              |
+
++-----------+-----------+------------------+------------------+
+
+| 620020200 | 620020207 | 23 de 12 de 2018 | 23 de 12 de 2018 |
+
+| 620020200 | 633909002 | 02 de 12 de 2019 | 02 de 12 de 2019 |
+
+| 620020205 | 635230101 | 22 de 11 de 2018 | 23 de 11 de 2018 |
+
+| 620020205 | 635230101 | 21 de 07 de 2019 | 21 de 07 de 2019 |
+
+| 620020205 | 635230101 | 07 de 02 de 2020 | 07 de 02 de 2020 |
+
+| 620020207 | 620020200 | 28 de 03 de 2019 | 28 de 03 de 2019 |
+
+| 635230103 | 620020200 | 17 de 01 de 2020 | 17 de 01 de 2020 |
+
+| 635230103 | 620020200 | 19 de 01 de 2020 | 19 de 01 de 2020 |
+
+| 635230103 | 620020200 | 23 de 01 de 2020 | 23 de 01 de 2020 
+
+
+select numerorem, numerodes, date_format(finicio, "%d de %m de %Y") as finicio, date_format(ffin, "%d de %m de %Y") as fin from llamada where timestampdiff(minute,finicio, ffin) > 10 and abs(right(numerorem, 3) - right(numerodes, 3)) > 3;
+
+
+
+Selecciona los terminales que usaron los cargos que estuvieron menos de 400 días en el cargo, pero añadiendo 1 mes y 5 días a la fecha de inicio, 
+en el formato mes-día (año), como se muestra en la tabla.
+
+Total filas: 7
+
+
+ terminal | cargo            | finincio     |
+
++----------+------------------+--------------+
+
+|      896 | Director         | 10-06 (2018) |
+
+|      897 | Director         | 10-06 (2018) |
+
+|      904 | Director         | 01-15 (2019) |
+
+|      906 | Director         | 02-07 (2019) |
+
+|      913 | Jefe de proyecto | 03-18 (2019) |
+
+|      929 | Director         | 01-24 (2019) |
+
+|      930 | Director         | 01-28 (2019) |
+
++----------+------------------+--------------+
+
+7 rows in set (0,02 sec)
+
+
+select terminal, cargo,  date_format(date_add(date_add(finicio, interval 1 month), interval 5 day), "%m-%d (%Y)") as finicio from usa where timestampdiff(day, finicio, ffin) < 400;
+
+Muestra el campo nombre_empleado completo de todos los empleados, pero ordenado por su nombre.
+
+Pista: usar función locate, ya que nombre no es un campo, 
+está dentro del campo nombre_empleado que incluye el nombre tras una coma.
+
+nombre_empleado  |
+
++------------------+
+
+| ALBA, ADRIANA    |
+
+| DIEZ, AMELIA     |
+
+| LOPEZ, ANTONIO   |
+
+| GARCIA, AUGUSTO  |
+
+| CAMPS, AURELIO   |
+
+| AGUIRRE, AUREO   |
+
+| MU�OZ, AZUCENA   |
+
+| MORAN, CARMEN    |
+
+| PONS, CESAR      |
+
+| FIERRO, CLAUDIA  |
+
+| SANZ, CORNELIO   
+
+
+Total filas: 34
+
+select nombre_empleado from t_empleados order by substring_index(nombre_empleado, ",", -1);
+
+#Funcion equivalente:
+
+select nombre_empleado from t_empleados order by substring(nombre_empleado,locate(",",nombre_empleado) +2,length(nombre_empleado));
+
+
+Mostrar los personajes de Starwars que nacieron en años acabados en 0 o 5, 
+sin importar si son ABY o DBY. Mostrar solo la primera y última parte del nombre y
+en medio la raza del personaje.
+
+select concat(substring_index(nombre, " ", 1), " ", "(", especie,  ")", " ", substring_index(nombre, " ", -1)) as personaje, Nacimiento from Personajes where substring_index(nacimiento, " ", 1) % 5 = 0;
+
+
+Mostrar el tercio intermedio del código ISBN_C y a su lado el código ISBN_C completo, de los títulos de Cómic que son el primer volumen. 
+Se indica el volumen al final del título siempre. Pista: hay que truncar la longitud de ISBN.
+
+Total filas: 7
+
+#DIFICIL!!!
+
+| tercio | ISBN_C            |
+
++--------+-------------------+
+
+| 6-060  | 759-6-060-9194-2  |
+
+| 6-060  | 759-6-060-9199-7  |
+
+| -302-9 | 978-1-302-90941-3 |
+
+| -416-2 | 978-8-416-24410-2 |
+
+| -416-4 | 978-8-416-47653-4 |
+
+| -416-6 | 978-8-416-69355-9 |
+
+| -491-4 | 978-8-491-46779-3 |
+
++--------+-------------------+
+
+7 rows in set (0,00 sec)
+
+
+select substring(ISBN_C, round(length(ISBN_C)/3,0), round(length(ISBN_C)/3,0)) as tercio, ISBN_C from Comic where right(Titulo,1) = "1";
+
+
+
+
+select substring(nombre, length(Profesion), length(Planeta)) as codigo from Personajes where length(nombre) >= length(concat(Planeta, Profesion));
+
+
+select Nombre, substring_index(nacimiento, " ", 1) as "edad en Batalla de Yavin" from Personajes where  substring_index(nacimiento, " ", -1) like "%ABY%";
+
+Muestra el ISBN y el Título de las novelas cuya última edición fue seis meses o más tarde que su lanzamiento y cuyo último dígito del ISBN aparece al menos una vez más en el propio ISBN.
+
+Total filas: 1
+
+ISBN_N
+Titulo
+978-1-101-88495-9	Discipulo Oscuro
+
+select ISBN_N, Titulo from Novela where timestampdiff(month, lanzamiento, Ultima_edicion) > 6 and locate(right(ISBN_N, 1), ISBN_N) between 1 and length(ISBN_N) -1 ;
+
+
+
+Mostrar el título de la película y un identificador formado por la era, año, mes y director (según se muestra en la tabla con comas y dos puntos) de las películas que siendo recomendadas
+ para mayores de 13 años pudo ir cumpliendo dicha recomendación alguien nacido el 1 de enero de 2000,
+ pero que sean del capítulo 6 o posterior. Nota: para el capítulo, al ser números romanos, como excepción podemos dar por hecho que no habrá más filas que las que hay en la propia tabla.
+
+Total filas: 2
+
++-----------------------------------------+--------------------------+
+
+| Titulo                                  | identif                  |
+
++-----------------------------------------+--------------------------+
+
+| Episodio VII: El Despertar de la Fuerza | First Order,2015-12:4    |
+
+| Episodio VIII: Los Ultimos Jedi         | New Jedi Order,2017-12:6 |
+
++-----------------------------------------+--------------------------
+
+
+select titulo, concat(SW_Era, ",", date_format(lanzamiento, "%Y-%m"), ":", Id_dir) as identif from Pelicula where timestampdiff(year, "2000-1-1", lanzamiento) > 13 and substring_index(substring_index(titulo, ":", 1), " ", -1) like "%VI%";
+
+
+
+Llamemos presupuesto medio mensual de un departamento al resultado de dividir su presupuesto anual entre 12. 
+Supongamos que se decide aumentar los presupuestos medios mensuales de todos los departamentos en un 7,32% a partir del mes de octubre inclusive. 
+Para los departamentos cuyo presupuesto mensual medio es de más de 710€, hallar por orden alfabético el nombre de departamento, su presupuesto inicial, su incremento y 
+su presupuesto anual total después del incremento. La dirección general, la primera, ha de resultar en 122169 (128676 es incorrecto) El último es Sector Servicios con 9162.675
+
+| nombre_departamento | presupuesto_departamento | incremento    | nuevo_presupuesto |
+
++---------------------+--------------------------+---------------+-------------------+
+
+| DIRECCION COMERCIAL |                    15000 |  274.50000000 |    15274.50000000 |
+
+| DIRECCION GENERAL   |                   120000 | 2196.00000000 |   122196.00000000 |
+
+| SECTOR INDUSTRIAL   |                    11000 |  201.30000000 |    11201.30000000 |
+
+| SECTOR SERVICIOS    |                     9000 |  164.70000000 |     9164.70000000 |
+
++---------------------+--------------------------+---------------+-------------------+
+
+
+
+select nombre_departamento, presupuesto_departamento, (presupuesto_departamento / 4) * 0.0732 as incremento, presupuesto_departamento + (presupuesto_departamento / 4) * 0.0732  as nuevo_presupuesto from t_departamentos where (presupuesto_departamento / 12) > 710 order by nombre_departamento;
+
+
+Muestra solo el nombre (sin apellido), la fecha de nacimiento y de ingreso de aquellos empleados 
+que llevaban la mitad de su vida o más en la empresa el 1 de enero de 2010.
+
++---------+------------+------------+
+
+| nombre  | nacimiento | ingreso    |
+
++---------+------------+------------+
+
+| CESAR   | 1949-10-11 | 1970-02-15 |
+
+| JULIO   | 1950-08-10 | 1968-01-15 |
+
+| MARCOS  | 1954-10-18 | 1976-03-18 |
+
+| PILAR   | 1960-09-28 | 1979-01-22 |
+
+| LAVINIA | 1962-02-26 | 1986-02-04 |
+
+| ADRIANA | 1966-10-27 | 1987-03-01 |
+
+| OCTAVIO | 1965-05-21 | 1986-09-10 |
+
+| OTILIA  | 1969-10-25 | 1988-02-15 |
+
+| GLORIA  | 1967-11-30 | 1988-02-14 |
+
++---------+------------+------------
+
+
+select substring_index(nombre_empleado, ",", -1) as nombre, fecha_nacimiento_empleado as nacimiento, fecha_ingreso_empleado as ingreso from t_empleados where timestampdiff(year, fecha_nacimiento_empleado, fecha_ingreso_empleado) <= timestampdiff(year, fecha_ingreso_empleado, "2010-01-01");
+
+
+Hallar, por orden alfabético, los nombres de los empleados tales que si se les da una gratificación de 100 € por hijo, 
+el total de esta gratificación no supera a la décima parte del salario, siempre que reciban al menos 100€.
+
+Total filas: 15
+
+| nombre_empleado |
+
++-----------------+
+
+| AGUIRRE, AUREO  |
+
+| CAMPOS, ROMULO  |
+
+| CAMPS, AURELIO  |
+
+| GALVEZ, PILAR   |
+
++-----------------+
+
+15 rows in set (0,02 sec)
+
+
+select nombre_empleado from t_empleados where salario_base_empleado / 10 >  numero_hijos_empleado * 100 and numero_hijos_empleado > 0 order by nombre_empleado;
+
+
+Hallar por orden alfabético los nombres y 
+salarios de empleados de los departamentos 110 y 111 que o bien no tengan hijos o bien su salario por hijo supere a 1.000€
+
+
+MUY IMPORTANTES LOS PARENTESIS CUANDO ESTA PRESENTE LA CLAUSULA OR
+
+select nombre_empleado, salario_base_empleado from t_empleados where (codigo_departamento = 110 or codigo_departamento = 111) and (numero_hijos_empleado = 0 or salario_base_empleado / numero_hijos_empleado > 1000 ) order by nombre_empleado;
+
+
+Obtener los nombres y sueldos de los empleados que hayan empezado a trabajar en la empresa el año 1997 en adelante o durante el año 1976, por orden alfabético
+
+Total filas: 12
+
+
+select nombre_empleado, salario_base_empleado from t_empleados where fecha_ingreso_empleado >= "1997-01-01" or year(fecha_ingreso_empleado) = 1976 order by nombre_empleado;
+
+
+¿Cuántos clientes tenemos? (BD_PETICIONES)
+
+
+select count(distinct codigo_cliente) from peticiones;
+
+
+¿Cuáles son los diferentes clientes que tenemos?
+
+select codigo_cliente from peticiones group by codigo_cliente;
+
+¿Cuántas peticiones han sido confirmadas?
+
+select count(exito) as exitos from peticiones where exito = 1;
+
+¿Cuántas peticiones han sido descartadas?
+
+select count(exito) as descartes from peticiones where exito = 0;
+
+
+¿Cual es el tiempo medio de procesado empleado para las peticiones cuyos ficheros ocupan3MB o más?
+
+select avg(tiempo_procesado) as tiempo_medio from peticiones where megabytes_ficheros >= 3;
+
+
+¿Cual es el mayor tiempo de procesado empleado para las peticiones cuyos ficheros ocupan
+2,5MB o menos?
+Resultado 1 filas:
+
+tiempo_mayor
+3
+
+select max(tiempo_procesado) as tiempo_mayor from peticiones where megabytes_ficheros <= 2.5;
+
+¿A qué hora se realizó la consulta más reciente, cuyo tiempo de procesado es mayor que 3?
+
+Resultado 1 fila:
+
+Hora
+12:02
+
+select date_format(max(tiempo), "%H : %i") as reciente from peticiones where tiempo_procesado >3 and tipo_peticion like "%consulta%";
+
+
+Muestra de cuándo es la petición más antigua, la petición con mayor peso en Mb y la petición con mayor tiempo de procesado, que no sea inserción ni consulta.
+
+Resultado 1 fila:
+
+MUCHO CUIDADO CON LOS ENUNCIADOS!!!
+
+select min(tiempo) as Antigua, max(megabytes_ficheros) as Mb, max(tiempo_procesado) as tiempo_procesado from peticiones where tipo_peticion not like "%insercion%" and tipo_peticion not like "%consulta%";
+
+
+¿Cuál es el mayor peso medio de los ficheros de una inserción, redondeado a dos decimales, siempre que dicha inserción tenga más de 1 fichero? Aclaración: 
+si hay más de un fichero, no se puede saber su peso ya que megabytes_ficheros indica el peso total de todos los ficheros, por ello hay que estimarlo.
+ Si hay tres ficheros y todo pesa 6, supondremos que cada uno pesa 2, pudiendo ser en realidad 4, 1 y 1.
+
+Resultado 1 fila:
+
+Mayor peso medio
+3.17
+
+
+select truncate(max(megabytes_ficheros / numero_ficheros), 2) as media from peticiones where tipo_peticion like "%insercion" and numero_ficheros > 1;
+
+
+
+¿Cual es el tiempo medio de procesado empleado para las peticiones cuyos ficheros están pordebajo de los 200KB?
+
+select avg(tiempo_procesado) as tiempo_medio from peticiones where (megabytes_ficheros * 1024) < 200;
+
+
+¿Cuántas peticiones de cada tipo se han registrado? Muestra las más comunes primero.
+
+
+
+| tipo_peticion | numero  |
+
++---------------+---------+
+
+| insercion     | 1447524 |
+
+| consulta      |  434418 |
+
+| actualizacion |  144345 |
+
++---------------+---------+
+
+3 rows in set (0,96 sec)
+
+
+select tipo_peticion, count(*) as numero from peticiones group by tipo_peticion order by numero desc;
+
+
+¿Cuántas peticiones han sido descartadas por mes? Ordena de enero a diciembre.
+
+| mes  | descartadas |
+
++------+-------------+
+
+|    1 |        2819 |
+
+|    2 |        3164 |
+
+|   12 |        5005 |
+
++------+-------------+
+
+12 rows in set (0,39 sec)
+
+
+
+
+select month(tiempo) as mes, count(*) as descartadas from peticiones where exito = 0 group by mes order by mes;
+
+
+
+¿Cuántas peticiones han sido confirmadas por país? El país se conoce por los dos primeros caracteres del codigo_cliente. Mostrar los países con menos tráfico primero.
+
+select left(codigo_cliente, 2) as pais, count(*) as numConfirmados from peticiones group by pais order by numConfirmados;
+
+¿Cuánto tiempo de procesado ha empleado cada cliente?
+
+select codigo_cliente, sum(tiempo_procesado) from peticiones group by codigo_cliente;
+
+¿Cuántas peticiones han sido registradas por hora?
+
+
+select hour(tiempo) as hora, count(tipo_peticion) as numero_peticiones from peticiones group by hora order by hora;
+
+¿Cuántas peticiones han sido registradas por día de la semana?
+
+select dayname(tiempo) as dia_semana, count(*) as "peticiones" from peticiones group by dia_semana;
+
+#"Aqui tenemos otra solucion: "
+
+select dayofweek(tiempo) as dia, count(*) as num_peticiones from peticiones group by dia order by dia;
+
+
+¿Cuántos ficheros han sido insertados por mes, y cuánto espacio de almacenamiento han
+consumido, en GB? Ordenar por mes y mostrar solo dos decimales.
+
+Resultado 12 filas:
+
+mes	num_ficheros	gigabytes
+1	59032	17.82
+2	63527	18.99
+3	68964	20.57
+4	88649	26.63
+5	80780	24.33
+6	85292	25.54
+7	460590	137.88
+8	550781	165.03
+9	278663	83.22
+10	93706	28.06
+11	93511	28.14
+12	102267	30.83
+
+
+select month(tiempo) as mes, sum(numero_ficheros) as "num_ficheros", truncate(sum(megabytes_ficheros) / 1024, 2) as gigabytes from peticiones where tipo_peticion like "%insercion%" group by mes order by mes;
+
+
+
+Cuál es el tamaño medio de las peticiones registradas, por cliente, así como la media de ficheros por petición? Limitar ambos resultados a dos decimales sin redondear.
+
+ codigo_cliente | media_megas | media_ficheros |
+
++----------------+-------------+----------------+
+
+| DE22222222B    |        0.42 |           1.39 |
+
+| DE66666666F    |        0.43 |           1.39 |
+
+| ES00000000L    |        0.43 |           1.39 |
+
+| ES11111111A    |        0.42 |           1.40 |
+
+| ES12345678M    |        0.42 |           1.39 |
+
+| ES44444444D    |        0.42 |           1.40 |
+
+| ES55555555E    |        0.42 |           1.39 |
+
+| ES87654321N    |        0.42 |           1.39 |
+
+| ES99999999H    |        0.42 |           1.39 |
+
+| IT88888888G    |        0.42 |           1.39 |
+
+| UK33333333C    |        0.43 |           1.39 |
+
+
+select codigo_cliente, truncate(avg(megabytes_ficheros), 2) as "media_megas", truncate(avg(numero_ficheros) ,2) as "media_ficheros" from peticiones group by codigo_cliente;
+
+
+Para cada cliente español, mostrar el mayor tiempo y tamaño máximo de ficheros de una petición, así como el menor tiempo y menor tamaño de ficheros.
+Resultado 7 filas:
+
+| codigo_cliente | max_t | max_f | min_t | min_f |
+
++----------------+-------+-------+-------+-------+
+
+| ES00000000L    |     4 |  6.04 |     1 |     0 |
+
+| ES11111111A    |     4 |  5.17 |     1 |     0 |
+
+| ES12345678M    |     4 |  6.01 |     1 |     0 |
+
+| ES44444444D    |     4 |  4.78 |     1 |     0 |
+
+| ES55555555E    |     4 |   5.1 |     1 |     0 |
+
+| ES87654321N    |     4 |  6.34 |     1 |     0 |
+
+| ES99999999H    |     4 |  4.44 |     1 |     0 |
+
++----------------+-------+-------+-------+-------+
+
+7 rows in set (13,21 sec)
+
+
+
+select codigo_cliente, max(tiempo_procesado) as max_t, max(megabytes_ficheros) as max_f, min(tiempo_procesado) as min_t, min(megabytes_ficheros) as min_f from peticiones where left(codigo_cliente, 2) like "%ES%" group by codigo_cliente;
+
+
+Para los clientes españoles, obtener el número de peticiones confirmadas, contando cada tipo de
+petición por separado, así como el tiempo medio de procesado.
+
+
+ tipo_peticion | tiempo_medio | aceptadas |
+
++---------------+--------------+-----------+
+
+| consulta      |       1.1845 |    337740 |
+
+| insercion     |       1.1795 |   1125469 |
+
+| actualizacion |       1.1674 |    112442 |
+
++---------------+--------------+-----------+
+
+3 rows in set (8,61 sec)
+
+select tipo_peticion, avg(tiempo_procesado) as tiempo_medio, count(exito) as aceptadas from peticiones where exito = 1 and left(codigo_cliente, 2) like "%ES%" group by tipo_peticion;
+
+¿Qué clientes y en qué meses han realizado menos de 4.000 peticiones con éxito? Mostrar los
+resultados asociados a cada cliente en filas consecutivas, con los meses ordenados de menor a mayor.
+
+Resultado 20 filas:
+
+select codigo_cliente, month(tiempo) as mes, count(exito) as peticiones_exito from peticiones where exito = 1 group by mes, codigo_cliente  having peticiones_exito < 4000 order by codigo_cliente, mes;
+
+Obtener los meses en los que ha estado activo cada cliente, junto con la fecha y hora de la primera y la última
+petición registrada, ordenados por mes. Se considera que un cliente ha estado activo un mes si ha realizado al menos una petición.
+
+select codigo_cliente, month(tiempo) as mes, max(tiempo) as ultima, min(tiempo) as primera from peticiones group by codigo_cliente, mes order by mes;
+
+Las tarifas se aplican por petición, y todos los clientes las comparten. No se facturan ni las peticiones descartadas, ni los borrados, ni las consultas.
+
+Coste base: 0,01€
+Coste por tamaño: +0,005€ por MB
+Coste por ficheros: +0,005€ por fichero
+¿Cuál ha sido la facturación mensual de cada cliente? Mostrar los datos de cada mes en filas
+consecutivas.
+
+codigo_cliente | mes  | coste   |
+
++----------------+------+---------+
+
+| ES00000000L    |    1 |  140.89 |
+
+| ES87654321N    |    1 |   94.79 |
+
+| ES11111111A    |    1 |  141.14 |
+
+| ES12345678M    |    1 |  117.58 |
+
+| 
+
+
+
+select codigo_cliente, month(tiempo) as mes, round(sum(0.01 + (0.005 * megabytes_ficheros + 0.005 * numero_ficheros)), 2) as coste from peticiones where exito = 1 and tipo_peticion not like "%consulta%" and tipo_peticion not like "%borrado%" group by codigo_cliente, mes order by mes;
+
+¿Qué clientes han realizado menos de 800 peticiones de tipo consulta sin éxito? Ordénalos por el número de fracasos de mayor a menor
+
+select codigo_cliente, count(*) as fracasos from peticiones where exito = 0 and tipo_peticion like "%consulta%" group by codigo_cliente having fracasos < 800 order by fracasos desc;
+
+Teniendo en cuenta las siguientes franjas horarias:
+Franja 0: 00:00-03:59
+Franja 1: 04:00-07:59
+Franja 2: 08:00-11:59
+Franja 3: 12:00-15:59
+Franja 4: 16:00-19:59
+Franja 5: 20:00-23:59
+Por cliente, mostrar las franjas horarias en las que, a lo largo de todo el primer trimestre, ha
+registrado un máximo 700 peticiones exitosas, o un mínimo de 10000.
+Resultado 28 filas:
+
+codigo_cliente	franja	peticiones
+DE22222222B	0	1
+DE22222222B	1	10
+DE22222222B	2	650
+DE22222222B	5	183
+DE66666666F	0	17
+DE66666666F	1	60
+ES00000000L	0	35
+ES00000000L	1	92
+ES00000000L	4	10229
+ES11111111A	0	29
+ES11111111A	1	83
+ES11111111A	4	10368
+ES12345678M	0	23
+ES12345678M	1	73
+ES44444444D	0	5
+ES44444444D	1	19
+ES44444444D	5	328
+ES55555555E	0	26
+ES55555555E	1	79
+ES87654321N	0	534
+ES87654321N	2	15412
+ES87654321N	3	13166
+ES87654321N	5	632
+IT88888888G	0	25
+IT88888888G	1	49
+UK33333333C	0	7
+UK33333333C	1	34
+UK33333333C	5	658
+
+Solución sencilla
+select codigo_cliente, truncate(hour(tiempo)/4,0) as franja, count(*) as peticiones from peticiones where month(tiempo) < 4 and exito group by codigo_cliente, franja having peticiones < 700 or peticiones > 10000 order by codigo_cliente, franja;
+
+Solución fácil pero larga
+select codigo_cliente,case
+when date_format(tiempo,"%H:%i") between '00:00' and '03:59' then 0
+when date_format(tiempo,"%H:%i") between '04:00' and '07:59' then 1
+when date_format(tiempo,"%H:%i") between '08:00' and '11:59' then 2
+when date_format(tiempo,"%H:%i") between '12:00' and '15:59' then 3
+when date_format(tiempo,"%H:%i") between '16:00' and '19:59' then 4
+when date_format(tiempo,"%H:%i") between '20:00' and '23:59' then 5
+end as franja, count(exito) as peticiones from peticiones where exito= 1 and month(tiempo)<=3 group by codigo_cliente,franja having peticiones<700 or peticiones>10000 order by codigo_cliente;
+
+
+Por cada combinación de mes, país y tipo de petición, obtener el número total de peticiones fallidas, 
+así como el tiempo total invertido en procesarlas, siempre y cuando dicho total supere los 5 minutos 
+( el tiempo en la tabla está indicado en segundos). Mostrar los resultados de cada país en filas consecutivas, 
+y los mayores tiempos totales primero.
+
+
+------+------+---------------+----------+--------+
+
+| mes  | pais | tipo_peticion | fallidas | tiempo |
+
++------+------+---------------+----------+--------+
+
+|    9 | DE   | insercion     |     1833 |   1927 |
+
+|    8 | DE   | insercion     |     1393 |   1486 |
+
+|   12 | DE   | insercion     |      582 |    619 |
+
+|   11 | DE   | insercion     |      561 |    587 |
+
+|    9 | DE   | consulta      |      557 |    586 |
+
+|    6 | DE   | insercion     |      551 |    576 |
+
+
++------+------+---------------+----------+--------+
+
+44 rows in set (0,95 sec)
+
+
+select month(tiempo) as mes, left(codigo_cliente, 2) as pais, tipo_peticion, count(*) as fallidas, sum(tiempo_procesado) as tiempo from peticiones where not exito group by mes, pais, tipo_peticion having tiempo > 300 order by pais, tiempo desc;
+
+
+
+
+
