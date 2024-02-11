@@ -36,7 +36,7 @@ total 5 filas
 
 D) 
 
-Seleccionar el cif agrupado por las diferentes empresas de paqueteria (segun sus cif), tambien contar la cantidad de pedidos que tramita cada agencia y mostar como "cantidad de pedidos". 
+Seleccionar el cif agrupado por las diferentes empresas de paqueteria (segun sus cif), además contar la cantidad de pedidos que tramita cada agencia y mostar como "cantidad de pedidos". 
 Tambien mostar la sección del CIF comprendida entre la posición equivalente al número de caracteres del id_cliente hasta la posición equivalente de la raiz cuadrada del 
 total de caracteres de todos los datos identificativos de la tabla, guardar esta columna como CIF_intermedio, mostrar las agencias de paqueteria que hayanm tramitado mas de 5 pedidos, y ordenar por la cantidad de pedidos
 
