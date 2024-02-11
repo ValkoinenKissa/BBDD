@@ -36,8 +36,53 @@ total 5 filas
 
 D) 
 
+Seleccionar el cif agrupado por las diferentes empresas de paqueteria (segun sus cif), tambien contar la cantidad de pedidos que tramita cada agencia y mostar como "cantidad de pedidos". 
+Tambien mostar la sección del CIF comprendida entre la posición equivalente al número de caracteres del id_cliente hasta la posición equivalente de la raiz cuadrada del 
+total de caracteres de todos los datos identificativos de la tabla, guardar esta columna como CIF_intermedio, mostrar las agencias de paqueteria que hayanm tramitado mas de 5 pedidos, y ordenar por la cantidad de pedidos
 
-select CIF, count(distinct id_pedido) as cantidad_pedidos, substring(CIF, length(id_cliente), sqrt((length(id_pedido)))) as CIF_pedido from compra group by CIF, CIF_pedido having cantidad_pedidos > 5;
 
-Mostrar la sección del CIF comprendida entre la 
-posición equivalente al número de caracteres del id_cliente hasta la posición equivalente de la division del numero de caracteres del id_pedido entre la raiz cuadrada de la longitud del propio cif
+select CIF, count(distinct id_pedido) as cantidad_pedidos, substring(CIF, length(id_cliente), sqrt((length(concat(id_pedido, id_cliente, id_producto))))) as CIF_Intermedio from compra group by CIF, CIF_Intermedio having cantidad_pedidos > 5 order by cantidad_pedidos;
+
++-----------+------------------+----------------+
+| CIF       | cantidad_pedidos | CIF_Intermedio |
++-----------+------------------+----------------+
+| A56251941 |                6 | 251            |
+| P35052597 |                6 | 052            |
+| I22187016 |                7 | 187            |
+| T73203614 |                7 | 203            |
+| N54939601 |                8 | 939            |
+| F83148409 |               10 | 148            |
+| P73410827 |               11 | 410            |
+| T61049099 |               16 | 049            |
++-----------+------------------+----------------+
+8 rows in set (0,04 sec)
+
+
+F) con funciones de sustitución y modificación de fechas.
+
+Selecciona el id del pedido, el metodo de pago con el que se realizo el mismo y la fecha de los pedidos que fueron enviados hace menos de 200 días contando la fecha de hoy, 
+pero añadiendo 1 mes y 5 días a la fecha de inicio, en el formato mes-día (año), como se muestra en la tabla.
+
+select id_pedido, metodo_pago, date_format(date_add(date_add(fecha_pedido, interval 1 month), interval 5 day), "%m-%d (%Y)") as fecha_pedido from pedido where timestampdiff(day, fecha_pedido, curdate()) < 200;
+
++-----------+------------------------+--------------+
+| id_pedido | metodo_pago            | fecha_pedido |
++-----------+------------------------+--------------+
+|      3210 | Tarjeta credito/debito | 11-08 (2023) |
+|      2286 | Transferencia bancaria | 09-29 (2023) |
++-----------+------------------------+--------------+
+2 rows in set (0,01 sec)
+
+G)
+
+Obtener el nombre y el salario del empleado que tienen el salario más alto y restale el precio de la consola más barata de entre las mas baratas de cada fabricante de su salario original.
+
+select nombre, salario - (select min(precioBajo) as consolaMasBarata from  (select fabricante, min(precio) as precioBajo from producto where id_categoria in (select id_categoria from categoria where nombre_categoria like "Consolas") group by fabricante) as tabla) as salarioFinal from empleado where salario = (select max(salario) from empleado);
+
+
++----------------+--------------+
+| nombre         | salarioFinal |
++----------------+--------------+
+| Angela Navarro |      3914.23 |
++----------------+--------------+
+total 1 fila
