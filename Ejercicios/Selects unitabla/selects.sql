@@ -1466,3 +1466,13 @@ select concat(left(matricula, 2), right(matricula, 3), substring(matricula, -5))
 
 
 select abs(timestampdiff(day, fechaAlta, "2019-3-17")) from polizas;
+
+
+
+select ID_usuario_destinatario as destinatario, ID_usuario_remitente as remitente, texto as mensaje, fecha_envio from Mensaje where (fecha_envio between "2000-01-01" and  fecha_envio = "2020-02-01") or (fecha_envio between "1990-01-01" and "2000-01-01") order by mensaje, fecha_envio;
+
+
+select nombre, date_format(fecha_estreno, "%d-%m-%Y") as fecha_formateada from Contenido  order by fecha_estreno limit 5;
+
+
+select upper(concat(left(nombre, 2), right(apellido, 2), day(f_nacimiento))) as codigo_persona, nombre, timestampdiff(year, f_nacimiento, curdate()) as edad from Persona where timestampdiff(year, f_nacimiento, curdate()) between 35 and 50 and weekday(f_nacimiento) != 5 and apellido is not null;
