@@ -1511,3 +1511,128 @@ select nombre_equipo from EQUIPO where nombre_reg like "%Iwate%";
 select avg(edad) as edad from MIEMBROS having edad < min(edad) * 2;
 
 select round(avg(edad)) as edad, rol from MIEMBROS where  nombre_equipo in (select nombre_equipo from EQUIPO where nombre_reg like "Iwate") group by rol having edad < (select min(edad)*2 from MIEMBROS);
+
+
+select  matricula from polizas where nombreAseguradora in (select nombreAseguradora from polizas group by nombreAseguradora having count(*) <= 11);
+
+select marca, count(*) as Num from automoviles where matricula in (select  matricula from polizas where nombreAseguradora in (select nombreAseguradora from polizas group by nombreAseguradora having count(*) < 11)) group by marca order by marca;
+
+
+Selecciona matricula, marca y modelo de los automóviles 
+cuya matrícula empiece y acabe por B o C, pero no ambas 
+y la letra del medio sea una M o una N, y el dni del propietario no tenga un 3 como último dígito del dni.
+
+Solución 3 filas:
+
+matricula	marca	modelo
+1000CNB	IVECO	DAILY
+5045BMC	JEEP	GRAND CHEROKEE
+8666BNC	LANCIA	YPSILON
+
+
+
+
+select matricula, marca, modelo from automoviles where matricula in (select matricula from automoviles where (left(substring(matricula, - 3), 1) in ("B," "C")  and right(substring(matricula, - 3), 1) not in  ("B", "C")) or (left(substring(matricula, - 3), 1) not in ("B," "C")  and right(substring(matricula, - 3), 1) in  ("B", "C")) and (matricula in (select matricula from automoviles where left(substring(matricula, -2), 1) in ("M", "N"))) and matricula in (select matricula from propietarios where left(right(dni, 2), 1) not like "3"));
+
+
+Selecciona cuántos coches por cada marca pertenecen a más de un propietario.
+Solución 15 filas:
+Num	marca
+1	ABARTH
+1	AUDI
+1	CITROEN
+1	FIAT
+3	FORD
+1	LAND ROVER
+2	MERCEDES
+1	MITSUBISHI
+1	PEUGEOT
+1	PIAGGIO
+1	PORSCHE
+1	SUBARU
+3	TOYOTA
+1	VOLKSWAGEN
+2	VOLVO
+
+
+select matricula from propietarios group by matricula having count(DNI) >= 2;
+
+subconsulta final -->
+
+select count(*) as Num, marca from automoviles where matricula in (select matricula from propietarios group by matricula having count(DNI) >= 2) group by marca;
+
+
+
+
+Selecciona nombre, apellido y el año de nacimiento junto con el día de la semana en que nació separado
+ por un guión, de aquellas personas que son propietarias de automóviles que tienen
+la aseguradora con un teléfono que incluye dos ceros seguidos y que además tengan fecha de baja o, 
+en caso contrario, que la fecha de alta sea anterior a 2001.
+Solución 2 filas:
+
+nombre	apellido1	diaNacimiento
+M.AZUCENA	CRESPO	1978-Sunday
+MERCEDES R	PALATUCCI	1988-Tuesday
+
+
+select nombre, apellido1, date_format(fechaNac, '%Y-%W') as "diaNacimiento"
+from personas
+where DNI in (
+    select DNI
+    from propietarios
+    where matricula in (
+        select matricula
+        from polizas
+        where nombreAseguradora in (
+            select nombre
+            from aseguradoras
+            where telefono like '%00%'
+        )
+        and (fechaBaja is not null or YEAR(fechaAlta) < 2001)
+    )
+);
+
+
+
+Selecciona la inicial del nombre y los apellidos de los madrileños con más de 17 coches.
+Solución 5 filas:
+Nombre y Apellidos
+M.LOPEZ LARA
+M.BERTOMEU HERNANDEZ
+I.GARCIA VERA
+C.WAZNE CHICHARRO
+A.ARROYO RODRIGUEZ
+
+
+select concat(left(nombre, 1), "." , apellido1) as "Nombre y apellidos"  from 
+personas where ciudad like "Madrid" 
+and DNI in (select DNI from propietarios where matricula in (
+       select matricula from automoviles where matricula in (select matricula from propietario )));
+
+
+Selecciona las fechas de nacimiento de las personas que tienen una matrícula 
+que tiene la primera y la tercera letras de la matrícula iguales 
+pero no la segunda y además que el primer dígito de la matrícula se repita al menos una vez.
+
+select fechaNac from personas where DNI in 
+(select DNI from propietarios where  left(substring(matricula, - 3), 1) = substring(matricula, -1)) and
+
+
+
+Selecciona el mes más tardío de cada año de la fecha del permiso de circulación de 
+los automóviles cuya duración de la póliza del seguro haya sido más de 25 meses.
+Solución 5 filas:
+año	mes
+2001	10
+2002	10
+2004	7
+2005	8
+2006	5
+
+select year(fechaPermCirc) as año, max(month(fechaPermCirc)) as mes from automoviles where matricula in 
+(select matricula from polizas where timestampdiff(month, fechaAlta, fechaBaja) > 25) group by año;
+
+
+
+
+
