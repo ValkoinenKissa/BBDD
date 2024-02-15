@@ -42,11 +42,6 @@ select fecha_fac, producto, unidades, round(unidades / 12) as num_paquetes, 12 *
 
 select nombre, edad, nomequipo, (edad- dorsal) as diferencia from ciclista where nombre like "M%" and nomequipo like "B%" or nombre like "A%" and nomequipo like "M%";
 
-
-
-
-
-
 select kms, salida, llegada, dorsal from etapa where salida != llegada and (kms % dorsal = 0);
 
 
@@ -1476,3 +1471,43 @@ select nombre, date_format(fecha_estreno, "%d-%m-%Y") as fecha_formateada from C
 
 
 select upper(concat(left(nombre, 2), right(apellido, 2), day(f_nacimiento))) as codigo_persona, nombre, timestampdiff(year, f_nacimiento, curdate()) as edad from Persona where timestampdiff(year, f_nacimiento, curdate()) between 35 and 50 and weekday(f_nacimiento) != 5 and apellido is not null;
+
+
+
+select codDonacion, date_format(fechaDonacion, "%d de %M de %Y") as fecha from Donacion where month(fechaDonacion) between 1 and 3 and (day(fechaDonacion) between 1 and 15);
+
+
+select month(fechaNacimiento) as MES, group_concat(nombre) as NOMBRES from Animal group by MES having count(nombre) in (select avg(month(fechaNacimiento)) as media_edad from Animal group by month(fechaNacimiento));
+
+select avg(month(fechaNacimiento)) as media_edad from Animal group by month(fechaNacimiento)
+
+
+select group_concat(nombre) as NOMBRES, year(fechaNacimiento) as EDAD from Animal where genero like "%macho%" and abs(year(fechaNacimiento) - 9) > 4
+
+
+select abs(year(fechaNacimiento) - year(9)) as diff from Animal;
+
+
+select nombre, contenido_referencia, material from RÉPLICA where (material like "%Metal%" or material like "%PVC%") and id not between 30 and 60 order by material, contenido_referencia;
+
+select Cliente, id_arma as Arma, timestampdiff(month, fecha_compra, curdate()) as Meses from COMPRA where timestampdiff(month, fecha_compra, curdate()) >= 18 order by Meses;
+
+
+select proveedor, count(*) as CantArmas, concat(round(avg(precio), 2), "€") as precioPromedio from ARMA group by proveedor order by CantArmas desc;
+
+
+select nombre_liga, date_format(año, "%D of %M %y") as fecha, date_format(año, "%a") as dia, dayofyear(año) as "dia del año" from LIGA where dayofyear(año) between 100 and 200 or left(nombre_liga, 1) like "%P%" order by dayofyear(año) desc;
+
+
+select upper(substring_index(nombre, " ", 1)) as apellido, concat(truncate((3.281 * altura), 2), " ft") as "Altura en pies" from JUGADORES where UPPER(length(substring_index(nombre, " ", 1))) = ceil((3.281 * altura)) order by apellido;
+
+
+select round(edad) as edad_media, rol from MIEMBROS where (select nombre_equipo from EQUIPO where nombre_reg like "%Iwate%") group by rol having (select avg(edad) as edad from MIEMBROS having edad < min(edad) * 2); 
+
+
+select nombre_equipo from EQUIPO where nombre_reg like "%Iwate%";
+
+
+select avg(edad) as edad from MIEMBROS having edad < min(edad) * 2;
+
+select round(avg(edad)) as edad, rol from MIEMBROS where  nombre_equipo in (select nombre_equipo from EQUIPO where nombre_reg like "Iwate") group by rol having edad < (select min(edad)*2 from MIEMBROS);
