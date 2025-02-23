@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS uem;
-CREATE DATABASE uem;
-USE uem;
+DROP DATABASE IF EXISTS actividad_trimestral;
+CREATE DATABASE actividad_trimestral;
+USE actividad_trimestral;
 
 
 CREATE TABLE personas(
