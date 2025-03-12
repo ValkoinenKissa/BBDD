@@ -2,6 +2,7 @@
 <module type="DBE_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
+    <content url="file://$USER_HOME$/OneDrive - Universidad Europea de Madrid/BBDD/Segundo trimestre/Tema 6 - SQL_DDL_DQL/Bases_de_dato_ejemplo" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
