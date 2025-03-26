@@ -5,12 +5,8 @@ genera una consulta para obtener los nombres de los ciclos
 junto con los id de sus módulos (LEFT JOIN)
  */
 
-select ciclo.nombreCiclo, modulo.idModulo from ciclo
-
-left join modulociclo on ciclo.idCiclo = modulociclo.idCiclo
-
-left join modulo on modulociclo.idModulo = modulo.idModulo;
-
+select ciclo.idCiclo, ciclo.nombreCiclo, modulociclo.idModulo from ciclo
+left join modulociclo on ciclo.idCiclo = modulociclo.idCiclo;
 
 /*
  En la base de datos instituto, genera una consulta para obtener los id, nombres de los ciclos
@@ -24,7 +20,7 @@ left join modulo on modulociclo.idModulo = modulo.idModulo;
 
  select ciclo.idCiclo, ciclo.nombreCiclo, modulo.idModulo, ciclo.horasCiclo, modulo.nombreModulo, modulo.horasModulo
  from ciclo left join modulociclo on ciclo.idCiclo = modulociclo.idCiclo
- left join modulo on modulociclo.idModulo = modulo.idModulo limit 3;
+ left join modulo on modulociclo.idModulo = modulo.idModulo;
 
 
 /*
@@ -32,17 +28,28 @@ left join modulo on modulociclo.idModulo = modulo.idModulo;
   módulos (SUM, GROUP BY). ¿Cuadran las horas obtenidas de esta forma con las de la columna horasCiclo?
  */
 
-select ciclo.idCiclo, ciclo.nombreCiclo, modulo.idModulo, sum(ciclo.horasCiclo) as horasCiclo, modulo.nombreModulo, modulo.horasModulo
- from ciclo left join modulociclo on ciclo.idCiclo = modulociclo.idCiclo
- left join modulo on modulociclo.idModulo = modulo.idModulo group by horasCiclo limit 3;
+select ciclo.idCiclo, ciclo.nombreCiclo, ciclo.horasCiclo, sum(modulo.horasModulo) as totalHorasModulo
+from ciclo left join modulociclo on ciclo.idCiclo = modulociclo.idCiclo
+left join modulo on modulociclo.idModulo = modulo.idModulo group by ciclo.idCiclo, ciclo.nombreCiclo, ciclo.horasCiclo;
+
 
 /*Filtra los resultados de la anterior agrupación de forma que no aparezcan aquellos ciclos
  que no tengan módulos asignados (HAVING, IS NOT NULL)
  */
 
- select ciclo.idCiclo, ciclo.nombreCiclo, modulo.idModulo, ciclo.horasCiclo, modulo.nombreModulo, modulo.horasModulo
- from ciclo left join modulociclo on ciclo.idCiclo = modulociclo.idCiclo
- left join modulo on modulociclo.idModulo = modulo.idModulo where modulo.idModulo is not null;
+select ciclo.idCiclo, ciclo.nombreCiclo, ciclo.horasCiclo, sum(modulo.horasModulo) as totalHorasModulo
+from ciclo left join modulociclo on ciclo.idCiclo = modulociclo.idCiclo
+left join modulo on modulociclo.idModulo = modulo.idModulo
+group by ciclo.idCiclo, ciclo.nombreCiclo, ciclo.horasCiclo having totalHorasModulo is not null;
+
+/*
+ Explica en pocas palabras los pasos que se ejecutan en la última consulta generada (EXPLAIN)
+ */
+
+explain select ciclo.idCiclo, ciclo.nombreCiclo, ciclo.horasCiclo, sum(modulo.horasModulo) as totalHorasModulo
+from ciclo left join modulociclo on ciclo.idCiclo = modulociclo.idCiclo
+left join modulo on modulociclo.idModulo = modulo.idModulo
+group by ciclo.idCiclo, ciclo.nombreCiclo, ciclo.horasCiclo having totalHorasModulo is not null;
 
 /*
   Vamos a modificar la información del módulo con id ‘0484’, introduciendo como número de horas 296 (UPDATE).
