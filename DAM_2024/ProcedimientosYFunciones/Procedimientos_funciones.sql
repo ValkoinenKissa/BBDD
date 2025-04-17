@@ -103,11 +103,48 @@ end$$
 
 delimiter ;
 
-select concat('Los numeros pares son: ' + numerosPares(1, 10)) as numPares;
+select concat('Los numeros pares son: ' + numerosPares(15, 10)) as numPares;
 
+/*
+ Realiza de nuevo el ejercicio del Caso práctico anterior. pero esta vez en forma de procedimiento.
+ El funcionamiento debe ser el mismo: devolverá la cantidad de números pares que hay entre los dos
+ parámetros que le pasemos, y –1 en caso de que el primero sea mayor que el segundo. También debes comprobar el
+ funcionamiento del procedimiento, tal como has hecho con la función.
+ */
+delimiter $$
+create procedure procedimientoNumerosPares(in num1 int, in num2 int, out resultado int)
+begin
+declare contadorIteraciones int default 0;
+set resultado = 0;
 
+    if num1 <= num2 then
+        set contadorIteraciones = num1;
+        label1 :
+        loop
+            if contadorIteraciones % 2 = 0 then
+                set resultado = resultado + 1;
+            end if;
+            set contadorIteraciones = contadorIteraciones + 1;
+
+            if contadorIteraciones >= num2 then
+                leave label1;
+            end if;
+        end loop;
+    else
+        set resultado = -1;
+    end if;
+end $$
+
+delimiter ;
+set @num1 = 10;
+set @num2 = 15;
+
+call procedimientoNumerosPares(@num1, @num2, @num3);
+
+select concat('Los numeros pares son: ' + @num3) as numPares;
 
 -- ejemplo bucle loop
+
 DELIMITER $$
 
 CREATE PROCEDURE ejemplo_bucle_loop()
