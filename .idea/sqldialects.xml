@@ -2,6 +2,7 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/DAM_2024/Actividad_Trimestral/DML/inserts.sql" dialect="MariaDB" />
+    <file url="file://$PROJECT_DIR$/DAM_2024/CursoresYTriggers/Triggers.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/DAM_2024/CursoresYTriggers/cursorAlumnos.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/DAM_2024/CursoresYTriggers/cursores.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/DAM_2024/DCL/Ejemplos_DCL.sql" dialect="MariaDB" />
