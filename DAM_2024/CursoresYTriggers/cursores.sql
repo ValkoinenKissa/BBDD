@@ -52,5 +52,3 @@ END //
 DELIMITER ;
 
 call cuentaPersonajes();
-
-
