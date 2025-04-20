@@ -1,9 +1,9 @@
 /*
  1.	Crea una función EsPar que reciba un número y devuelva 1 si el número es par o 0 si es impar
  */
-
-delimiter $
-create or replace function EsPar(numero int)
+drop function if exists EsPar;
+delimiter //
+create function EsPar(numero int)
     returns int
 begin
     if numero % 2 = 0 then
@@ -11,7 +11,7 @@ begin
     else
         return 0;
     end if;
-end;
+end //
 
 delimiter ;
 
@@ -28,15 +28,17 @@ select EsPar(5);
  2.	Crea una función que reciba un número de cliente (customerNumber) y devuelva la suma de todos sus pagos.
  */
 
-delimiter $
+drop function if exists mostrarPagosCliente;
 
-create or replace function mostrarPagosCliente(idCliente int)
+delimiter //
+
+create function mostrarPagosCliente(idCliente int)
     returns decimal(10, 2)
 begin
     declare sumaPagos decimal(10, 2);
     select sum(amount) into sumaPagos from payments where customerNumber = idCliente;
     return sumaPagos;
-end;
+end //
 
 delimiter ;
 
@@ -49,9 +51,11 @@ select mostrarPagosCliente(103);
  customerNumber es par o el número total de pagos si el customerNumber es impar.
  */
 
+drop function if exists mostrarPagosClienteParImpar;
+
 delimiter //
 
-create or replace function mostrarPagosClienteParImpar(idCliente int)
+create function mostrarPagosClienteParImpar(idCliente int)
     returns decimal(10, 2)
 begin
     declare sumaPagos decimal(10, 2);
@@ -63,7 +67,7 @@ begin
         return sumaPagos;
     end if;
 
-end;
+end //
 
 delimiter ;
 
@@ -83,8 +87,11 @@ select mostrarPagosClienteParImpar(103) as totalPagosCliente;
  enteros desde 1 hasta N (incluido). Si el número introducido es <= 0 debe devolver 0.
  */
 
+drop function if exists sumaHastaN;
+
 delimiter //
-create or replace function sumaHastaN(numeroN int)
+
+create function sumaHastaN(numeroN int)
     returns int
 begin
     declare contador int default 0;
@@ -100,7 +107,7 @@ begin
             end while;
         return sumatorio;
     end if;
-end;
+end //
 
 delimiter ;
 
