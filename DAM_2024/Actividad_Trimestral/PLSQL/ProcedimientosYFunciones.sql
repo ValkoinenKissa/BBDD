@@ -51,7 +51,7 @@ select mostrarPagosCliente(103);
 
 delimiter //
 
-create or replace function mostarPagosClienteParImpar(idCliente int)
+create or replace function mostrarPagosClienteParImpar(idCliente int)
     returns decimal(10, 2)
 begin
     declare sumaPagos decimal(10, 2);
@@ -59,7 +59,7 @@ begin
     if idCliente % 2 = 0 then
         return sumaPagos;
     else
-        select count(payments.checkNumber) into sumaPagos from payments where customerNumber = idCliente;
+        select count(*) into sumaPagos from payments where customerNumber = idCliente;
         return sumaPagos;
     end if;
 
@@ -69,13 +69,13 @@ delimiter ;
 
 -- Numero par, muestra la suma de todos sus pagos
 
-select mostarPagosClienteParImpar(112) as sumaDeTodosLosPagos;
+select mostrarPagosClienteParImpar(112) as sumaDeTodosLosPagos;
 
 
 -- Numero impar, muestra el numero total de pagos de el cliente
 
 
-select mostarPagosClienteParImpar(103) as totalPagosCliente;
+select mostrarPagosClienteParImpar(103) as totalPagosCliente;
 
 
 /*
