@@ -23,7 +23,6 @@ select EsPar(2);
 
 select EsPar(5);
 
-
 /*
  2.	Crea una función que reciba un número de cliente (customerNumber) y devuelva la suma de todos sus pagos.
  */
@@ -99,7 +98,6 @@ begin
     if numeroN <= 0 then
         return 0;
     else
-        bucle:
         while contador < numeroN
             do
                 set contador = contador + 1;
