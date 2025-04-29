@@ -78,3 +78,24 @@ limit 5;
 /*
  7.	Muestra para cada cliente de cuántas líneas de producto han comprado productos.
  */
+
+select c.customerNumber, c.customerName, count(distinct p.productLine) as numLineasCompradas
+from customers c
+         join orders o on c.customerNumber = o.customerNumber
+         join orderdetails od on o.orderNumber = od.orderNumber
+         join products p on od.productCode = p.productCode
+group by c.customerNumber, c.customerName;
+
+
+/*
+ 8.	Muestra el número de pedidos realizados en los que aparece cada línea de producto.
+ */
+
+select pl.productLine, count(distinct orderNumber) as numPedidosRealizados
+from productlines pl
+         join products p
+              on pl.productLine = p.productLine
+         join orderdetails od
+              on p.productCode = od.productCode
+group by pl.productLine
+order by numPedidosRealizados desc;
