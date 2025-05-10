@@ -2,13 +2,12 @@
  1.	Muestra el número de empleados por oficina, ordenadas de mayor a menor.
  */
 
-select offices.officeCode, offices.addressLine1, count(*) as numEmpleados
+select offices.officeCode, offices.city, count(*) as numEmpleados
 from offices
          inner join employees
                     on offices.officeCode = employees.officeCode
-group by offices.officeCode, offices.addressLine1
+group by offices.officeCode, offices.city
 order by numEmpleados desc;
-
 
 /*
  2.	Muestra el número de productos distintos que ha pedido cada cliente en todos sus pedidos. (COUNT DISTINCT)
