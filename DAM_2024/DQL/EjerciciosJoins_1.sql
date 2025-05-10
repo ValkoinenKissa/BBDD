@@ -26,53 +26,45 @@ from employees
 group by employees.employeeNumber, employees.lastName, employees.firstName
 order by totalVentas desc
 limit 5;
-;
-
 
 /*
  Muestra los productos, su precio de compra, la cantidad de producto vendido y su precio unitario. (JOIN)
  */
 
+
 select products.productCode,
        products.productName,
        products.buyPrice,
-       quantityOrdered as cantidadPedida,
+       orderdetails.quantityOrdered,
        orderdetails.priceEach
-from productlines
-         inner join products on productlines.productLine = products.productLine
-         inner join orderdetails
-                    on products.productCode = orderdetails.productCode
-where products.productCode = 'S10_1678'
-group by productName;
-
+from products
+         inner join orderdetails using (productCode);
 
 /*
  Muestra los productos, su precio de compra, la cantidad de producto vendido, su precio, su beneficio unitario
  (beneficio = precio de venta – precio de compra) y el beneficio total de cada compra. (JOIN, operaciones con columnas)
  */
 
+
 select products.productCode,
        products.productName,
        products.buyPrice,
-       orderdetails.priceEach,
-       (orderdetails.priceEach - products.buyPrice)    as unitProfit,
        orderdetails.quantityOrdered,
-       sum(orderdetails.priceEach - products.buyPrice) as totalProfit
-from productlines
-         inner join products
-                    on productlines.productLine = products.productLine
-         inner join
-     orderdetails on products.productCode = orderdetails.productCode
-where products.productCode = 'S10_1678'
-group by products.productCode, productName, buyPrice;
-
+       orderdetails.priceEach,
+       (orderdetails.priceEach - products.buyPrice) * orderdetails.quantityOrdered
+           as totalProfit
+from products
+         inner join orderdetails on products.productCode = orderdetails.productCode;
 
 /*
  Muestra el beneficio total de la compañía por cada producto de mayor a menor. (JOIN, operaciones con columnas, GROUP BY, ORDER BY)
  */
 
 
-select products.productCode, products.productName, sum((priceEach - buyPrice) * quantityOrdered) as totalProfit
+select
+products.productCode,
+products.productName,
+sum((priceEach - buyPrice) * quantityOrdered) as totalProfit
 from productlines
          inner join products
                     on productlines.productLine = products.productLine
