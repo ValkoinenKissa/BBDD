@@ -3,6 +3,7 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/DAM_2024/Actividad_Trimestral/PLSQL/ProcedimientosYFunciones.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/DAM_2024/DQL/EjerciciosJoins_2.sql" dialect="MariaDB" />
+    <file url="file://$PROJECT_DIR$/DAM_2024/DQL/RepasoExamen.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/DAM_2024/Simulacro_examen_v2/Pregunta2.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/DAM_2024/Simulacro_examen_v2/Pregunta3.sql" dialect="MariaDB" />
     <file url="PROJECT" dialect="MariaDB" />
