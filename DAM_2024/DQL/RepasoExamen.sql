@@ -55,10 +55,11 @@ group by p.nombre_producto;
 
 select c.id_cliente,
        c.nombre,
-       count(distinct p.id_pedido)      as numPedidos,
-       sum(dp.subtotal) as importeTotal
-from clientes c left join pedidos p on c.id_cliente = p.id_cliente
-left join detalles_pedido dp on p.id_pedido = dp.id_pedido
+       count(distinct p.id_pedido) as numPedidos,
+       sum(dp.subtotal)            as importeTotal
+from clientes c
+         left join pedidos p on c.id_cliente = p.id_cliente
+         left join detalles_pedido dp on p.id_pedido = dp.id_pedido
 group by c.id_cliente, c.nombre;
 
 /*
@@ -120,9 +121,10 @@ group by c.nombre, pe.fecha_pedido, p.nombre_producto;
 producto, utilizando JOIN entre clientes, comentarios_producto y productos.
  */
 
- select c.nombre, cp.comentario, p.nombre_producto from clientes c
- join comentarios_producto cp on c.id_cliente = cp.id_cliente
- join productos p on cp.id_producto = p.id_producto;
+select c.nombre, cp.comentario, p.nombre_producto
+from clientes c
+         join comentarios_producto cp on c.id_cliente = cp.id_cliente
+         join productos p on cp.id_producto = p.id_producto;
 
 
 /*
@@ -130,68 +132,68 @@ producto, utilizando JOIN entre clientes, comentarios_producto y productos.
 productos, categorías y detalles_pedido.
  */
 
- select lp.nombre_linea, p.nombre_producto, sum(dp.cantidad * dp.precio_unitario) as total_ventas from lineas_producto lp
- left join productos p on lp.id_linea_producto = p.id_linea_producto
- left join detalles_pedido dp on p.id_producto = dp.id_producto
- group by lp.nombre_linea, p.nombre_producto;
+select lp.nombre_linea, p.nombre_producto, sum(dp.cantidad * dp.precio_unitario) as total_ventas
+from lineas_producto lp
+         left join productos p on lp.id_linea_producto = p.id_linea_producto
+         left join detalles_pedido dp on p.id_producto = dp.id_producto
+group by lp.nombre_linea, p.nombre_producto;
 
 /*
 13. Listar para cada cliente y cada año el número de pedidos realizados y el monto total gastado,
 usando las tablas clientes y pedidos.
  */
 
- select c.id_cliente, c.nombre, year(p.fecha_pedido) as anio, count(distinct p.id_pedido)
-     as num_pedidos, sum(dp.subtotal) as total_gastado
- from clientes c left join pedidos p on c.id_cliente = p.id_cliente
- left join detalles_pedido dp on p.id_pedido = dp.id_pedido
- group by c.id_cliente, c.nombre, year(p.fecha_pedido)
- order by c.nombre, anio;
+select c.id_cliente,
+       c.nombre,
+       year(p.fecha_pedido) as anio,
+       count(distinct p.id_pedido)
+                            as num_pedidos,
+       sum(dp.subtotal)     as total_gastado
+from clientes c
+         left join pedidos p on c.id_cliente = p.id_cliente
+         left join detalles_pedido dp on p.id_pedido = dp.id_pedido
+group by c.id_cliente, c.nombre, year(p.fecha_pedido)
+order by c.nombre, anio;
 
 /*
  14. Determinar para cada categoría de producto la cantidad total en inventario y la cantidad total
  vendida, combinando las tablas productos y detalles_pedido.
  */
 
- select lp.nombre_linea, sum(distinct p.stock) as cantidad_proc_en_stock, sum(dp.cantidad) as cantidad_proc_vendido
- from lineas_producto lp left join productos p on lp.id_linea_producto = p.id_linea_producto
- left join detalles_pedido dp on p.id_producto = dp.id_producto
- group by lp.nombre_linea;
+select lp.nombre_linea, sum(distinct p.stock) as cantidad_proc_en_stock, sum(dp.cantidad) as cantidad_proc_vendido
+from lineas_producto lp
+         left join productos p on lp.id_linea_producto = p.id_linea_producto
+         left join detalles_pedido dp on p.id_producto = dp.id_producto
+group by lp.nombre_linea;
 
 /*
  15. Listar los clientes con el número de comentarios que han realizado y la calificación promedio que
 han dado, uniendo clientes con comentarios_producto.
  */
 
- select c.nombre, count(cp.id_comentario) as num_comentarios, avg(cp.valoracion) as valoracion_promedio
- from clientes c left join comentarios_producto cp on c.id_cliente = cp.id_cliente
- group by c.nombre;
+select c.nombre, count(cp.id_comentario) as num_comentarios, avg(cp.valoracion) as valoracion_promedio
+from clientes c
+         left join comentarios_producto cp on c.id_cliente = cp.id_cliente
+group by c.nombre;
 
 /*
  16. Mostrar los productos que han vendido más unidades que el promedio de todos los productos (usar
 subconsulta para calcular el promedio general de unidades vendidas).
  */
 
-SELECT
-  p.id_producto,
-  p.nombre_producto,
-  SUM(dp.cantidad) AS unidades_vendidas
+SELECT p.id_producto,
+       p.nombre_producto,
+       SUM(dp.cantidad) AS unidades_vendidas
 FROM productos p
-JOIN detalles_pedido dp
-  ON p.id_producto = dp.id_producto
-GROUP BY
-  p.id_producto,
-  p.nombre_producto
-HAVING
-  SUM(dp.cantidad) > (
-    SELECT AVG(total_unidades)
-    FROM (
-      SELECT SUM(cantidad) AS total_unidades
-      FROM detalles_pedido
-      GROUP BY id_producto
-    ) AS sub
-  )
-ORDER BY
-  unidades_vendidas DESC;
+         JOIN detalles_pedido dp
+              ON p.id_producto = dp.id_producto
+GROUP BY p.id_producto,
+         p.nombre_producto
+HAVING SUM(dp.cantidad) > (SELECT AVG(total_unidades)
+                           FROM (SELECT SUM(cantidad) AS total_unidades
+                                 FROM detalles_pedido
+                                 GROUP BY id_producto) AS sub)
+ORDER BY unidades_vendidas DESC;
 
 
 /*
@@ -199,32 +201,23 @@ ORDER BY
 todos los clientes.
  */
 
-SELECT
-  c.id_cliente,
-  c.nombre,
-  SUM(dp.subtotal) AS gasto_total
+SELECT c.id_cliente,
+       c.nombre,
+       SUM(dp.subtotal) AS gasto_total
 FROM clientes c
-LEFT JOIN pedidos p
-  ON c.id_cliente = p.id_cliente
-LEFT JOIN detalles_pedido dp
-  ON p.id_pedido = dp.id_pedido
-GROUP BY
-  c.id_cliente,
-  c.nombre
-HAVING
-  SUM(dp.subtotal) > (
-    SELECT AVG(gasto_cliente)
-    FROM (
-      SELECT SUM(dp2.subtotal) AS gasto_cliente
-      FROM pedidos p2
-      JOIN detalles_pedido dp2
-        ON p2.id_pedido = dp2.id_pedido
-      GROUP BY p2.id_cliente
-    ) AS sub
-  )
-ORDER BY
-  gasto_total DESC;
-
+         LEFT JOIN pedidos p
+                   ON c.id_cliente = p.id_cliente
+         LEFT JOIN detalles_pedido dp
+                   ON p.id_pedido = dp.id_pedido
+GROUP BY c.id_cliente,
+         c.nombre
+HAVING SUM(dp.subtotal) > (SELECT AVG(gasto_cliente)
+                           FROM (SELECT SUM(dp2.subtotal) AS gasto_cliente
+                                 FROM pedidos p2
+                                          JOIN detalles_pedido dp2
+                                               ON p2.id_pedido = dp2.id_pedido
+                                 GROUP BY p2.id_cliente) AS sub)
+ORDER BY gasto_total DESC;
 
 
 /*
@@ -232,17 +225,14 @@ ORDER BY
 una subconsulta para el precio promedio por categoría).
  */
 
-SELECT
-  p.nombre_producto,
-  p.coste_unitario
+SELECT p.nombre_producto,
+       p.coste_unitario
 FROM productos p
-WHERE
-  p.coste_unitario > (
+WHERE p.coste_unitario > (
     -- subconsulta que calcula el promedio solo de la misma categoría del producto exterior
     SELECT AVG(p2.coste_unitario)
     FROM productos p2
-    WHERE p2.id_linea_producto = p.id_linea_producto
-  );
+    WHERE p2.id_linea_producto = p.id_linea_producto);
 
 
 /*
@@ -250,32 +240,139 @@ WHERE
 supera el promedio de montos de todos los pedidos.
  */
 
-SELECT
-  dp.id_pedido,
-  SUM(dp.cantidad * dp.precio_unitario) AS monto_total
+SELECT dp.id_pedido,
+       SUM(dp.cantidad * dp.precio_unitario) AS monto_total
 FROM detalles_pedido dp
-GROUP BY
-  dp.id_pedido
-HAVING
-  SUM(dp.cantidad * dp.precio_unitario) > (
-    SELECT AVG(monto)
-    FROM (
-      SELECT SUM(cantidad * precio_unitario) AS monto
-      FROM detalles_pedido
-      GROUP BY id_pedido
-    ) AS sub
-  )
-ORDER BY
-  monto_total DESC;
+GROUP BY dp.id_pedido
+HAVING SUM(dp.cantidad * dp.precio_unitario) > (SELECT AVG(monto)
+                                                FROM (SELECT SUM(cantidad * precio_unitario) AS monto
+                                                      FROM detalles_pedido
+                                                      GROUP BY id_pedido) AS sub)
+ORDER BY monto_total DESC;
 
 /*
  20. Mostrar los clientes que no han realizado pedidos (utilizar subconsulta o LEFT JOIN y filtrar donde no
 hay coincidencias).
  */
 
- select c.nombre from clientes c
- left join pedidos p on c.id_cliente = p.id_cliente
- where p.id_pedido is null;
+select c.nombre
+from clientes c
+         left join pedidos p on c.id_cliente = p.id_cliente
+where p.id_pedido is null;
 
 
-;
+/*
+ 21. Encontrar los productos que no han sido solicitados en ningún pedido (utilizando subconsulta o LEFT
+JOIN sobre detalles_pedido).
+ */
+
+select p.id_producto, p.nombre_producto
+from productos p
+         left join detalles_pedido dp on p.id_producto = dp.id_producto
+where dp.id_producto is null;
+
+
+/*
+ 22. Crear una función que reciba el ID de un producto y devuelva un resumen con el total vendido y la
+calificación promedio de ese producto.
+ */
+
+
+drop function if exists cantidadResumen;
+
+delimiter //
+
+create function cantidadResumen(idProducto int)
+    returns varchar(255)
+begin
+    declare totalVendido int;
+    declare promedioValoracion double;
+    declare mensaje varchar(255);
+
+    select sum(dp.cantidad)
+    into totalVendido
+    from detalles_pedido dp
+    where idProducto = dp.id_producto;
+
+    select avg(cp.valoracion)
+    into promedioValoracion
+    from comentarios_producto cp
+    where idProducto = cp.id_producto;
+
+
+    set mensaje = concat('Total vendido: ', totalVendido, ', Valoracion promedio: ', promedioValoracion);
+
+    return mensaje;
+end;
+
+delimiter ;
+
+select p.id_producto, cantidadResumen(p.id_producto) as resumen
+from productos p;
+
+
+/*
+23. Crear una función que reciba el ID de un cliente y retorne la cantidad de pedidos realizados y el
+monto total gastado por ese cliente.
+ */
+
+
+drop function if exists cantidadPedidosTotal;
+
+delimiter //
+
+create function cantidadPedidosTotal(idCliente int)
+    returns varchar(255)
+begin
+    declare pedidosRealizados int;
+    declare cantidadGastoCliente decimal(20, 2);
+    declare mensaje varchar(255);
+
+    select count(id_pedido)
+    into pedidosRealizados
+    from pedidos p
+    where p.id_cliente = idCliente;
+
+    select sum(p.total_pedido)
+    into cantidadGastoCliente
+    from pedidos p
+    where p.id_cliente = idCliente;
+
+
+    set mensaje = concat('Cantidad pedidos: ', pedidosRealizados, ', Monto total gastado: ', cantidadGastoCliente);
+
+    return mensaje;
+end;
+
+delimiter ;
+
+select p.id_cliente, cantidadPedidosTotal(p.id_cliente) as resumen
+from pedidos p;
+
+
+/*
+ 24. Crear una función que reciba el ID de un pedido y devuelva el monto total del pedido (calculado
+sumando cantidad vendida * precio unitario en detalles_pedido).
+ */
+
+drop function if exists cantidadPedido;
+
+delimiter //
+
+create function cantidadPedido(idPedido int)
+    returns varchar(255)
+begin
+    declare subtotalPedido decimal(20,2);
+
+    select sum(dp.precio_unitario * dp.cantidad)
+    into subtotalPedido
+    from detalles_pedido dp
+    where dp.id_pedido = idPedido;
+
+    return subtotalPedido;
+end;
+
+delimiter ;
+
+select distinct dp.id_pedido, cantidadPedido(dp.id_pedido) as monto_total_pedido
+from detalles_pedido dp;
