@@ -3,11 +3,12 @@
 (calculado con la cantidad vendida en cada pedido).
  */
 
-select p.id_producto, p.nombre_producto, (avg(p.coste_unitario) * dp.cantidad) as precioMedio
+select p.id_producto,
+       p.nombre_producto,
+       sum(dp.precio_unitario * dp.cantidad) / sum(dp.cantidad) as precioMedioProducto
 from productos p
          left join detalles_pedido dp on p.id_producto = dp.id_producto
 group by p.id_producto, p.nombre_producto;
-
 
 /*
 2. Obtener el total de ingresos generados por cada producto sumando la cantidad vendida
@@ -15,7 +16,7 @@ multiplicada por el precio unitario.
  */
 
 select p.nombre_producto,
-       (sum(dp.cantidad) * dp.precio_unitario) as ingresosGenerados
+       sum(dp.cantidad * dp.precio_unitario) as ingresosGenerados
 from productos p
          left join detalles_pedido dp
                    on p.id_producto = dp.id_producto
@@ -26,10 +27,13 @@ group by p.nombre_producto;
 producto
  */
 
-select lp.nombre_linea, count(dp.cantidad) as unidadesVnedidas, sum(dp.subtotal) as ingresoTotal
+select lp.nombre_linea,
+       sum(dp.cantidad) as unidadesVnedidas,
+       sum(dp.subtotal) as ingresoTotal
 from lineas_producto lp
-         left join productos p
-                   on lp.id_linea_producto = p.id_linea_producto
+         left join
+     productos p
+     on lp.id_linea_producto = p.id_linea_producto
          left join detalles_pedido dp on p.id_producto = dp.id_producto
 group by lp.nombre_linea
 order by ingresoTotal desc;
@@ -51,11 +55,10 @@ group by p.nombre_producto;
 
 select c.id_cliente,
        c.nombre,
-       count(p.id_pedido)      as numPedidos,
-       sum(pa.cantidad_pagada) as importeTotal
-from clientes c
-         left join pedidos p on c.id_cliente = p.id_cliente
-         left join pagos pa on c.id_cliente = pa.id_cliente
+       count(distinct p.id_pedido)      as numPedidos,
+       sum(dp.subtotal) as importeTotal
+from clientes c left join pedidos p on c.id_cliente = p.id_cliente
+left join detalles_pedido dp on p.id_pedido = dp.id_pedido
 group by c.id_cliente, c.nombre;
 
 /*
@@ -73,11 +76,10 @@ limit 1;
 7. Calcular el promedio de unidades vendidas por pedido para cada producto.
  */
 
-select p.nombre_producto, (count(dp.id_pedido) / dp.cantidad) as promedioUnidadesVendidas
+select p.nombre_producto, avg(dp.cantidad) as promedioUnidadesVendidas
 from productos p
          left join detalles_pedido dp on p.id_producto = dp.id_producto
-group by p.nombre_producto
-order by promedioUnidadesVendidas desc;
+group by p.nombre_producto;
 
 /*
  8. Listar el número de clientes únicos que han comprado cada producto.
@@ -94,10 +96,10 @@ order by numClientesQueHanComprado desc;
 9. Obtener los productos que no tienen comentarios asociados en la tabla comentarios_producto.
  */
 
-select distinct p.nombre_producto
+select p.nombre_producto
 from productos p
          left join comentarios_producto cp on p.id_producto = cp.id_producto
-where cp.comentario is not null;
+where cp.comentario is null;
 
 
 /*
