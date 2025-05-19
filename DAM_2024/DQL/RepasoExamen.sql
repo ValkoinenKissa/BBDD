@@ -360,7 +360,7 @@ drop function if exists cantidadPedido;
 delimiter //
 
 create function cantidadPedido(idPedido int)
-    returns varchar(255)
+    returns decimal(20,2)
 begin
     declare subtotalPedido decimal(20, 2);
 
@@ -408,7 +408,7 @@ begin
 
         insert into pedidos (id_cliente, fecha_pedido) values (idCliente, fechaPedido);
         set subTotalPedido = precioUnitario * cantidad;
-        select p.id_pedido into idPedido from pedidos p where p.id_cliente = idCliente limit 1;
+        set idPedido = last_insert_id();
         insert into detalles_pedido (id_pedido, id_producto, cantidad, precio_unitario, subtotal)
         values (idPedido, idProducto, cantidad, precioUnitario, subTotalPedido);
 
@@ -555,4 +555,4 @@ from pedidos p
          left join detalles_pedido dp
                    on p.id_pedido = dp.id_pedido
 where year(p.fecha_pedido) = year(curdate())
-group by mes;
+group by month(p.fecha_pedido);
