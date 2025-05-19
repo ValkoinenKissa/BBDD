@@ -362,7 +362,7 @@ delimiter //
 create function cantidadPedido(idPedido int)
     returns varchar(255)
 begin
-    declare subtotalPedido decimal(20,2);
+    declare subtotalPedido decimal(20, 2);
 
     select sum(dp.precio_unitario * dp.cantidad)
     into subtotalPedido
@@ -376,3 +376,183 @@ delimiter ;
 
 select distinct dp.id_pedido, cantidadPedido(dp.id_pedido) as monto_total_pedido
 from detalles_pedido dp;
+
+/*
+25. Crear un procedimiento almacenado para registrar un nuevo pedido: recibirá el ID de cliente, la
+fecha del pedido y los detalles de los productos (IDs y cantidades). Debe validar que el cliente exista
+y que haya suficiente stock de cada producto antes de confirmar el pedido
+ */
+
+
+drop procedure if exists crearNuevoPedido;
+
+delimiter //
+
+create procedure crearNuevoPedido(in idCliente int, in fechaPedido date, in idProducto int, in cantidad int,
+                                  in precioUnitario decimal(20, 2))
+begin
+    declare contadorIdCliente int;
+    declare contadorStockProducto int;
+    declare subTotalPedido decimal(20, 2);
+    declare idPedido int;
+    select count(c.id_cliente) into contadorIdCliente from clientes c where c.id_cliente = idCliente;
+    select pr.stock into contadorStockProducto from productos pr where pr.id_producto = idProducto;
+    if (contadorIdCliente = 0) then
+        select 'El idCliente introducido no existe!!';
+
+    elseif (contadorStockProducto < 1) then
+
+        select 'No hay suficiente stock del producto introducido';
+
+    else
+
+        insert into pedidos (id_cliente, fecha_pedido) values (idCliente, fechaPedido);
+        set subTotalPedido = precioUnitario * cantidad;
+        select p.id_pedido into idPedido from pedidos p where p.id_cliente = idCliente limit 1;
+        insert into detalles_pedido (id_pedido, id_producto, cantidad, precio_unitario, subtotal)
+        values (idPedido, idProducto, cantidad, precioUnitario, subTotalPedido);
+
+        select 'Inserccion completada con exito';
+
+    end if;
+
+
+end;
+
+
+delimiter ;
+
+call crearNuevoPedido(1, curdate(), 40, 2, 39.99);
+
+
+/*
+26. Crear un procedimiento almacenado que permita insertar un nuevo comentario para un producto:
+recibirá el ID de cliente, el ID de producto, la calificación y el comentario. Debe verificar que el cliente
+y el producto existan, y que el cliente haya comprado previamente ese producto.
+ */
+
+drop procedure if exists insertarComentario;
+
+delimiter //
+
+create procedure insertarComentario(in idCliente int, in idProducto int, in valoracionProc int,
+                                    in comentarioProc text)
+begin
+    declare contadorIdCliente int;
+    declare contadorIdProducto int;
+    declare confirmacionCompra int;
+    select count(c.id_cliente) into contadorIdCliente from clientes c where c.id_cliente = idCliente;
+    select count(p.id_producto) into contadorIdProducto from productos p where p.id_producto = idProducto;
+    select count(*)
+    into confirmacionCompra
+    from productos p
+             left join detalles_pedido dp
+                       on p.id_producto = dp.id_producto
+             left join pedidos pe on
+        dp.id_pedido = pe.id_pedido
+    where dp.id_producto = idProducto
+      and pe.id_cliente = idCliente;
+
+    if (contadorIdCliente = 0) then
+        select 'El idCliente introducido no existe!!';
+
+    elseif (contadorIdProducto = 0) then
+        select 'El idProducto introducido no existe!!';
+
+    elseif (confirmacionCompra = 0) then
+        select 'No se ha comprado el producto por el cliente que has introducido';
+
+    else
+
+        insert into comentarios_producto (id_cliente, id_producto, valoracion, comentario, fecha_comentario)
+        values (idCliente, idProducto, valoracionProc, comentarioProc,
+                curdate());
+        select 'Comentario insertado con exito!!';
+    end if;
+end;
+
+delimiter ;
+
+call insertarComentario(1, 40, 4, 'Bailarinas muy comodas');
+
+/*
+ 27. Crear un procedimiento almacenado para actualizar el stock de un producto: recibirá el ID de
+producto y la cantidad a descontar, validando que la cantidad solicitada no supere el stock actual.
+ */
+
+drop procedure if exists actualizarStock;
+
+delimiter //
+
+create procedure actualizarStock(in idProducto int, in cantidadADescontar int)
+begin
+    declare stockActual int;
+    declare cantidadDescontada int;
+    select p.stock into stockActual from productos p where p.id_producto = idProducto;
+
+    if (cantidadADescontar > stockActual) then
+        select 'No se puede decontar la cantidad introducida ya que no se dispone de suficiente stock';
+
+    else
+        set cantidadDescontada = stockActual - cantidadADescontar;
+        UPDATE productos p
+        SET p.stock = cantidadDescontada
+        WHERE p.id_producto = idProducto;
+        select 'Stock actualizado con exito!!';
+    end if;
+
+end;
+
+delimiter ;
+
+call actualizarStock(40, 10);
+
+
+/*
+ 29. Crear un procedimiento almacenado que actualice la información de un cliente: recibirá el ID de
+cliente y nuevos datos (nombre, correo electrónico, edad, etc.), validando que el correo electrónico
+tenga formato correcto y que la edad sea mayor de 18 años.
+ */
+
+
+drop procedure if exists actualizarCliente;
+
+delimiter //
+
+create procedure actualizarCliente(in idCliente int, in nombreCliente varchar(50), in correoCliente varchar(50),
+                                   in edadCliente int)
+begin
+    if (correoCliente not like '_%@_%._%') then
+        select 'El correo que has introducido no es valido';
+
+    elseif (edadCliente < 18) then
+        select 'El cliente no puede ser menor de edad';
+
+    else
+        update clientes c
+        set c.nombre             = nombreCliente,
+            c.correo_electronico = correoCliente,
+            c.edad               = edadCliente
+        where c.id_cliente = idCliente;
+        select 'Cliente actualizado con exito';
+    end if;
+end;
+
+delimiter ;
+
+call actualizarCliente(1, 'Juan Rodriguez', 'juan@gmail.com', 31);
+
+
+/*
+ 30. Mostrar el total de ventas (cantidad vendida * precio unitario) agrupado por mes para el año en
+curso, utilizando las tablas pedidos y detalles_pedido y funciones de fecha.
+ */
+
+select monthname(p.fecha_pedido) as mes,
+       sum(dp.precio_unitario * dp.cantidad)
+                                 as total_ventas
+from pedidos p
+         left join detalles_pedido dp
+                   on p.id_pedido = dp.id_pedido
+where year(p.fecha_pedido) = year(curdate())
+group by mes;
